@@ -1,0 +1,35 @@
+name: Baseline change proposal
+description: Propose a new or changed declarative software baseline
+title: "[Baseline]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: Thank you for proposing a baseline change.
+  - type: textarea
+    id: desired-state
+    attributes:
+      label: Desired state
+      description: Describe what Puppet should ensure.
+    validations:
+      required: true
+  - type: textarea
+    id: systems
+    attributes:
+      label: Affected systems and roles
+      description: List operating systems, roles, or environments that are in scope.
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Rationale
+      description: Explain why the state should be centrally managed.
+    validations:
+      required: true
+  - type: textarea
+    id: risk
+    attributes:
+      label: Risk and rollback
+      description: Describe operational risk, restart requirements, and recovery options.

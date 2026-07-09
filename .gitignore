@@ -1,0 +1,34 @@
+# Puppet modules downloaded by r10k or librarian-puppet
+/modules/*
+!/modules/.gitkeep
+
+# Local test and tool output
+/.bundle/
+/.cache/
+/.pdk/
+/.rerun.json
+/coverage/
+/log/
+/spec/fixtures/modules/
+/tmp/
+/vendor/
+
+# Local environment files and secrets
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.csr
+
+# Editor and operating-system files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
