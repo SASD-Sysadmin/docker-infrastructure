@@ -15,3 +15,14 @@ verwalten technischen Sollzustand, `sasd_reporting` liefert den datensparsamen
 Reportprozessor, Hiera enthält Werte und Skripte führen explizite Bootstrap-,
 Promotion-, CA-, Backup- und Betriebsaktionen aus. CA, Zugangsdaten, deployte
 Environments, Datenbank und Backups gehören niemals ins Repository.
+
+## Paketauflösung über Betriebssystemfamilien
+
+```text
+Rolle -> Profilabsicht -> Hiera-OS-Familie -> nativer Paketprovider
+                                         Debian -> apt
+                                         RedHat -> dnf
+```
+
+Hiera wählt nur geprüfte Paketnamen und keine Klassen oder beliebigen Befehle.
+EL9 erweitert ausschließlich die Agents und verändert die Serverarchitektur nicht.

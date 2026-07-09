@@ -12,6 +12,7 @@ describe 'role::baseline' do
 
       it { is_expected.to compile.with_all_deps }
       it { is_expected.to contain_class('profile::baseline') }
+  it { is_expected.to contain_class('profile::platform_state') }
       it { is_expected.to contain_package('git').with_ensure('installed') }
       it { is_expected.to contain_file('/etc/sasd/puppet-baseline.conf') }
     end

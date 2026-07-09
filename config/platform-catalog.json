@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "version": "0.7.0",
+  "platforms": {
+    "debian-12": {
+      "os_name": "Debian",
+      "os_family": "Debian",
+      "major": "12",
+      "architectures": [
+        "x86_64",
+        "aarch64"
+      ],
+      "central_agent": true,
+      "standalone_local": true,
+      "package_sources": [
+        "distribution",
+        "puppet-core"
+      ],
+      "hiera_data": "data/os/family/Debian.yaml"
+    },
+    "debian-13": {
+      "os_name": "Debian",
+      "os_family": "Debian",
+      "major": "13",
+      "architectures": [
+        "x86_64",
+        "aarch64"
+      ],
+      "central_agent": true,
+      "standalone_local": true,
+      "package_sources": [
+        "distribution",
+        "puppet-core"
+      ],
+      "hiera_data": "data/os/family/Debian.yaml"
+    },
+    "ubuntu-24.04": {
+      "os_name": "Ubuntu",
+      "os_family": "Debian",
+      "major": "24.04",
+      "architectures": [
+        "x86_64",
+        "aarch64"
+      ],
+      "central_agent": true,
+      "standalone_local": true,
+      "package_sources": [
+        "distribution",
+        "puppet-core"
+      ],
+      "hiera_data": "data/os/family/Debian.yaml"
+    },
+    "almalinux-9": {
+      "os_name": "AlmaLinux",
+      "os_family": "RedHat",
+      "major": "9",
+      "architectures": [
+        "x86_64",
+        "aarch64"
+      ],
+      "central_agent": true,
+      "standalone_local": false,
+      "package_sources": [
+        "puppet-core"
+      ],
+      "hiera_data": "data/os/family/RedHat.yaml"
+    },
+    "rocky-9": {
+      "os_name": "Rocky",
+      "os_family": "RedHat",
+      "major": "9",
+      "architectures": [
+        "x86_64",
+        "aarch64"
+      ],
+      "central_agent": true,
+      "standalone_local": false,
+      "package_sources": [
+        "puppet-core"
+      ],
+      "hiera_data": "data/os/family/RedHat.yaml"
+    }
+  },
+  "boundaries": {
+    "puppet_server_platforms": [
+      "Debian 12",
+      "Ubuntu 24.04"
+    ],
+    "redhat_server_supported": false,
+    "manage_selinux_policy": false,
+    "manage_firewall": false,
+    "enable_epel": false
+  }
+}

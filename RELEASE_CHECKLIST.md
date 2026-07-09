@@ -27,3 +27,10 @@
 - [ ] `main -> test -> production` promotion is fast-forward only.
 - [ ] Production deployment is performed manually with r10k.
 - [ ] Post-deployment health, reports, agent convergence, and backup are confirmed.
+
+## Milestone 7 platform checks
+
+- [ ] `python3 scripts/check_platform_catalog.py` passes.
+- [ ] `tests/smoke/redhat-family.sh` passes.
+- [ ] Rocky/Alma package-availability workflow passes.
+- [ ] No EL9 API key or generated repository credential is tracked.

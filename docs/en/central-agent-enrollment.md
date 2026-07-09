@@ -41,3 +41,7 @@ sudo ./scripts/activate-central-agent.sh --apply --enable-service
 ## Re-enrollment
 
 When replacing a host, first clean the old CA identity with the explicit confirmation wrapper, then run `puppet ssl clean` on the agent and bootstrap again. See [certificate management](certificate-management.md).
+
+## AlmaLinux and Rocky Linux
+
+Use `--package-source puppet-core` and a root-only `--api-key-file`. See [AlmaLinux 9 and Rocky Linux 9 agents](redhat-family-agents.md). Distribution package mode is rejected on EL9.

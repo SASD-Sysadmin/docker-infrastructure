@@ -1,98 +1,58 @@
 # puppet-software-baseline
 
-[Deutsche Dokumentation](README.de.md) · [English documentation index](docs/en/README.md)
+[Deutsche Dokumentation](README.de.md)
 
-Puppet control repository for reviewed application installation, consistent system state, central Puppet operations, node lifecycle, fleet compliance, and an opt-in encrypted-data foundation across SASD systems.
+> **Status:** Milestone 7 complete (`0.7.0`). Central agents now include AlmaLinux 9 and Rocky Linux 9, with reviewed OS-family package mappings and unchanged security boundaries.
 
-> **Status:** Milestone 6 complete (`0.6.0`). The repository adds reviewed node lifecycle states, Git-native inventory and compliance tooling, guarded decommissioning, and a deliberately opt-in Hiera eyaml foundation.
+A conservative Puppet control repository for installing reviewed applications and maintaining consistent package, file, service, lifecycle, and operational state across SASD systems. Puppet manifests describe durable state; operational scripts and runbooks cover enrollment, promotion, backup, recovery, and lifecycle actions.
 
-## Scope
+## Supported platforms
 
-Puppet declares persistent desired state. It does not replace Ansible runbooks, the Linux admin toolkit, incident response, or one-time repairs.
+| Platform | Central agent | Standalone local | Package source |
+|---|---:|---:|---|
+| Debian 12 | yes | yes | distribution or Puppet Core |
+| Debian 13 | yes | yes | distribution or Puppet Core |
+| Ubuntu 24.04 | yes | yes | distribution or Puppet Core |
+| AlmaLinux 9 | yes | no | authenticated Puppet Core |
+| Rocky Linux 9 | yes | no | authenticated Puppet Core |
 
-Milestone 6 supports:
+Puppet Server remains supported on Debian 12 and Ubuntu 24.04 only.
 
-- reviewed distribution package profiles;
-- explicit roles and central Puppet agent consistency;
-- Puppet Server health, reporting, backup, rollback, and promotion;
-- lifecycle states `active`, `maintenance`, and `retired`;
-- machine-readable node-data contracts and inventory;
-- fleet compliance correlation with compact Puppet reports;
-- exact-confirmation certificate and node decommissioning;
-- Hiera eyaml preparation without automatic activation.
+## Milestone 7 highlights
 
-No role adds third-party repositories, pulls container images, creates users, opens firewall ports, commits secrets, or runs general shell remediation.
+- complete Debian-family and RedHat-family package maps in Hiera;
+- EL9 central-agent bootstrap with protected Puppet Core credentials;
+- fixed allowlisted roles and reviewed node lifecycle;
+- local platform evidence under `/etc/sasd/platform.d/current.conf`;
+- package, platform, role, lifecycle, secret, promotion, backup, and release policy gates;
+- CI package-availability tests on Rocky Linux 9 and AlmaLinux 9;
+- no EPEL, firewall, SELinux, arbitrary repair commands, or automatic production deployment.
 
-## Node classification
-
-```yaml
----
-sasd::role: development
-sasd::lifecycle_state: active
-sasd::owner: operations
-sasd::description: Command-line development host
-```
-
-Save the file as `data/nodes/<trusted-certname>.yaml`. Classification remains allowlisted in [`manifests/site.pp`](manifests/site.pp), roles are mirrored in [`config/role-catalog.json`](config/role-catalog.json), and node requirements are defined in [`config/node-data-contract.json`](config/node-data-contract.json).
-
-## Lifecycle
-
-- `active`: normal convergence and regular agent service;
-- `maintenance`: assigned role converges once, lifecycle evidence is written, then the periodic agent is stopped and disabled;
-- `retired`: catalog compilation is rejected until the guarded decommission workflow is completed.
-
-```bash
-ruby scripts/manage-node.rb register --certname node01.example.net --role server --owner operations
-ruby scripts/manage-node.rb maintenance --certname node01.example.net \
-  --reason 'Kernel maintenance' --ticket CHG-42 --expires-at 2026-07-10T18:00:00Z
-ruby scripts/manage-node.rb activate --certname node01.example.net
-ruby scripts/manage-node.rb retire --certname node01.example.net --reason 'Removed' --ticket CHG-51
-```
-
-## Inventory and compliance
-
-```bash
-ruby scripts/check_node_data.rb
-ruby scripts/node-inventory.rb
-ruby scripts/node-inventory.rb --format json --include-retired
-ruby scripts/fleet-compliance.rb --reports /var/lib/sasd-puppet/reports
-```
-
-## Secure-data foundation
-
-Hiera eyaml remains disabled by default. Install the pinned backend and create keys outside Git only after key custody, backup, and recovery have been agreed:
-
-```bash
-sudo ./scripts/setup-hiera-eyaml.sh --mode server
-./scripts/prepare-hiera-eyaml.sh --output /tmp/hiera.yaml.candidate
-python3 scripts/check_secret_policy.py
-```
-
-## Quality and release gates
+## First commands
 
 ```bash
 ./scripts/validate.sh
-bundle exec rake
-./scripts/release-readiness.sh --require-branch main
+ruby scripts/node-inventory.rb
+python3 scripts/check_platform_catalog.py
 ```
 
-Operational flow remains:
+EL9 enrollment starts with a dry run:
 
-```text
-feature branch -> main -> test -> production -> r10k -> Puppet Server -> signed agents
+```bash
+sudo ./scripts/bootstrap-central-agent.sh   --server puppet.example.test   --certname rocky01.example.test   --package-source puppet-core   --api-key-file /root/puppet-core-api-key   --dry-run
 ```
 
 ## Documentation
 
-- [Milestone 6](docs/en/milestone-6.md)
-- [Node lifecycle](docs/en/node-lifecycle.md)
-- [Inventory and compliance](docs/en/inventory-and-compliance.md)
-- [Maintenance windows](docs/en/maintenance-windows.md)
-- [Decommissioning](docs/en/decommissioning.md)
-- [Secure-data foundation](docs/en/secure-data-foundation.md)
-- [Milestone 6 runbook](docs/en/milestone-6-runbook.md)
-- [German documentation](docs/de/README.md)
+- [Milestone 7](docs/en/milestone-7.md)
+- [EL9 agent enrollment](docs/en/redhat-family-agents.md)
+- [Cross-platform package data](docs/en/cross-platform-package-data.md)
+- [SELinux and firewall boundary](docs/en/selinux-and-firewall-boundary.md)
+- [Milestone 7 runbook](docs/en/milestone-7-runbook.md)
+- [Architecture](docs/en/architecture.md)
+- [Security](docs/en/security.md)
+- [Roadmap](docs/en/roadmap.md)
 
 ## License
 
-Licensed under the [MIT License](LICENSE).
+MIT — see [LICENSE](LICENSE).

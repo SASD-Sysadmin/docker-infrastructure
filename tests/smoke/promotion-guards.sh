@@ -2,7 +2,7 @@
 set -euo pipefail
 ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd -P)"; tmp=$(mktemp -d); trap 'rm -rf -- "$tmp"' EXIT
 cp -a "$ROOT" "$tmp/repo"; cd "$tmp/repo"
-git config user.name 'Milestone 6 Test'; git config user.email 'test@example.invalid'
+git config user.name 'Milestone 7 Test'; git config user.email 'test@example.invalid'; git config commit.gpgsign false
 git switch main >/dev/null
 # Validation is covered by the outer suite; this fixture isolates branch guards.
 cat > scripts/validate.sh <<'STUB'

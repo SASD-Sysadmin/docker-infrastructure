@@ -1,6 +1,6 @@
 # @summary Install the reviewed daemonless OCI container-tool package group.
 #
-# Milestone 6 deliberately selects distribution-provided Podman tooling. The
+# Milestone 7 deliberately selects distribution-provided Podman tooling. The
 # profile does not configure registries, pull images, create containers, open
 # network ports, or enable a long-running Docker-compatible daemon.
 #
@@ -14,7 +14,8 @@ class profile::container_tools (
   $os_major = $facts['os']['release']['major']
   $supported_platform = (
     ($os_name == 'Debian' and $os_major in ['12', '13']) or
-    ($os_name == 'Ubuntu' and $os_major == '24.04')
+    ($os_name == 'Ubuntu' and $os_major == '24.04') or
+    ($os_name in ['AlmaLinux', 'Rocky'] and $os_major == '9')
   )
   unless $supported_platform {
     fail("profile::container_tools does not support ${os_name} ${os_major}")

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Apply each Milestone 6 application profile twice in a disposable container.
+# Apply each Milestone 7 application profile twice in a disposable container.
 set -euo pipefail
 ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd -P)"
 image="${1:?Usage: container-application-profiles.sh IMAGE PROFILE}"

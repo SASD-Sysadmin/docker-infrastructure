@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.7.0] - 2026-07-09
+
+### Added
+
+- AlmaLinux 9 and Rocky Linux 9 central-agent support on x86_64 and aarch64;
+- authenticated Puppet Core RPM repository setup with protected credentials;
+- complete Debian-family and RedHat-family Hiera package mappings;
+- machine-readable platform catalog and cross-code parity checker;
+- non-secret platform-state marker and profile;
+- EL9 facts/os-release fixtures, RSpec coverage, package availability workflow, ADRs, and bilingual runbooks.
+
+### Changed
+
+- repository and module versions are 0.7.0;
+- application package names moved from common data to OS-family data;
+- central roles now include `profile::platform_state`;
+- validation now enforces platform, package-source, SELinux/firewall, and agent-only EL9 boundaries.
+
+### Security
+
+- EL9 agents require a root-owned Puppet Core API-key file and a mode-0600 repository file;
+- EPEL, SELinux changes, firewall changes, and RedHat-family Puppet Server installation remain out of scope.
+
 ## [0.6.0] - 2026-07-09
 
 ### Added

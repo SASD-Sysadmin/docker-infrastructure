@@ -4,5 +4,7 @@ os:
   name: Ubuntu
   release:
     major: '24.04'
+  architecture: x86_64
+architecture: x86_64
 networking:
   fqdn: ubuntu2404.example.test

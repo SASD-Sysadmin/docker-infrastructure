@@ -1,5 +1,5 @@
 ---
-# Milestone 6 example node data.
+# Reviewed example node data.
 sasd::role: development
 sasd::lifecycle_state: active
 sasd::owner: sasd-sysadmin

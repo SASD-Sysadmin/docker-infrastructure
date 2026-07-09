@@ -13,3 +13,7 @@ sasd::owner: operations
 
 Wartung benötigt zusätzlich Grund, Ticket und UTC-Ablaufzeit. Bei `retired`
 wird die Katalogerstellung vor der Rollenkompilierung abgebrochen.
+
+Plattformunterstützung und Rollenklassifizierung sind getrennt. AlmaLinux 9 und
+Rocky Linux 9 dürfen dieselben zentralen Rollen wie Debian-/Ubuntu-Agents nutzen;
+die Rolle `puppet_server` wird durch das Rollenmanifest außerhalb von Debian 12 und Ubuntu 24.04 begrenzt.

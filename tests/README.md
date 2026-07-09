@@ -13,3 +13,10 @@ Milestone 6 validation layers:
 `bundle exec rake` runs the complete development suite. Smoke scripts are also
 individually executable and avoid modifying the host by using dry-runs, fixtures,
 temporary clones, and disposable containers.
+
+## Milestone 7
+
+`tests/smoke/redhat-family.sh` checks platform and package-source guards.
+`tests/integration/redhat-package-availability.sh` installs the reviewed EL9
+package groups in disposable Rocky Linux 9 and AlmaLinux 9 containers. Catalog
+fixtures cover both operating systems without requiring repository credentials.

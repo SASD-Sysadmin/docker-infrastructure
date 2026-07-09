@@ -1,0 +1,48 @@
+---
+# Complete package mapping for AlmaLinux 9 and Rocky Linux 9.
+# EPEL is deliberately not enabled; every package must come from the configured
+# BaseOS/AppStream/CRB repositories of the selected distribution.
+profile::baseline::packages:
+  - ca-certificates
+  - curl
+  - git
+  - jq
+  - lsof
+  - procps-ng
+  - python3
+  - rsync
+  - tar
+  - tree
+  - unzip
+
+profile::administration_tools::packages:
+  - acl
+  - attr
+  - bash-completion
+  - bind-utils
+  - file
+  - less
+  - nano
+  - nmap-ncat
+  - psmisc
+  - sudo
+  - tcpdump
+  - vim-enhanced
+  - zip
+
+profile::development_tools::packages:
+  - gcc
+  - gcc-c++
+  - gdb
+  - make
+  - pkgconf-pkg-config
+  - python3-devel
+  - python3-pip
+
+profile::container_tools::packages:
+  - buildah
+  - fuse-overlayfs
+  - podman
+  - shadow-utils
+  - skopeo
+  - slirp4netns

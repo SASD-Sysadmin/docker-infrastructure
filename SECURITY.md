@@ -37,3 +37,11 @@ must be rejected unless a separate security review approves the exact fields.
 Open a private security advisory in the GitHub repository when possible. Do not
 include active secrets, private keys, personal data, or production reports in a
 public issue. Revoke exposed credentials before discussing implementation details.
+
+## Puppet Core repository credentials
+
+AlmaLinux 9 and Rocky Linux 9 agents require authenticated Puppet Core package
+access. Supply the API key only through a root-owned file without group or world
+permissions. The generated Yum repository file contains reusable credentials
+and is forced to mode `0600`. Never commit either file, paste it into an issue,
+or include it unredacted in a support bundle.

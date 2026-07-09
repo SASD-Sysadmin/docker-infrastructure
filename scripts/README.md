@@ -23,3 +23,11 @@ Puppet uses manifests and classes; operational procedures are documented as runb
 - `setup-hiera-eyaml.sh`: dry-run-first backend/key setup outside Git.
 - `prepare-hiera-eyaml.sh`: generate or apply the reviewed hierarchy candidate.
 - `check_secret_policy.py`: reject private keys and likely plaintext credentials.
+
+## Milestone 7 platform tools
+
+- `check_platform_catalog.py` verifies the machine-readable support matrix.
+- `check_milestone7_scope.py` blocks EL9 server expansion, EPEL, SELinux, and
+  firewall mutations.
+- `bootstrap-central-agent.sh` supports authenticated Puppet Core packages on
+  AlmaLinux 9 and Rocky Linux 9.

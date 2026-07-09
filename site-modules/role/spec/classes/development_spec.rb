@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 require 'spec_helper'
 describe 'role::development' do
-  let(:facts) { SUPPORTED_FACTS[:debian12] }
-  let(:trusted_facts) { { 'certname'=>'development.example.test','authenticated'=>'remote','extensions'=>{} } }
-  it { is_expected.to compile.with_all_deps }
-  it { is_expected.to contain_class('profile::baseline') }
-  it { is_expected.to contain_class('profile::administration_tools') }
-  it { is_expected.to contain_class('profile::development_tools') }
-  it { is_expected.to contain_class('profile::lifecycle_state') }
-  it { is_expected.to contain_class('profile::application_state') }
-  it { is_expected.to contain_class('profile::agent_service') }
+  SUPPORTED_FACTS.each do |platform,platform_facts|
+    context "on #{platform}" do
+      let(:facts){platform_facts}
+      let(:trusted_facts){{'certname'=>platform_facts[:networking]['fqdn'],'authenticated'=>'remote','extensions'=>{}}}
+      it { is_expected.to compile.with_all_deps }
+      %w[baseline platform_state administration_tools development_tools lifecycle_state application_state agent_service].each { |name| it { is_expected.to contain_class("profile::#{name}") } }
+    end
+  end
 end

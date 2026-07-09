@@ -1,0 +1,56 @@
+---
+name: Red Hat family agents
+on:
+  push:
+    branches: [main, test, production]
+    paths:
+      - 'config/platform-catalog.json'
+      - 'data/os/**'
+      - 'hiera.yaml'
+      - 'site-modules/profile/**'
+      - 'site-modules/role/**'
+      - 'scripts/bootstrap-central-agent.sh'
+      - 'scripts/lib/**'
+      - 'scripts/check_platform_catalog.py'
+      - 'tests/fixtures/**'
+      - 'tests/integration/redhat-package-availability.sh'
+      - 'tests/smoke/redhat-family.sh'
+      - '.github/workflows/redhat-family.yml'
+  pull_request:
+    paths:
+      - 'config/platform-catalog.json'
+      - 'data/os/**'
+      - 'hiera.yaml'
+      - 'site-modules/profile/**'
+      - 'site-modules/role/**'
+      - 'scripts/bootstrap-central-agent.sh'
+      - 'scripts/lib/**'
+      - 'scripts/check_platform_catalog.py'
+      - 'tests/fixtures/**'
+      - 'tests/integration/redhat-package-availability.sh'
+      - 'tests/smoke/redhat-family.sh'
+      - '.github/workflows/redhat-family.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  contract:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: Validate platform contract and bootstrap guards
+        run: |
+          tests/smoke/redhat-family.sh
+          tests/smoke/puppet-core-yum-credentials.sh
+  packages:
+    name: Package availability on ${{ matrix.image }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        image: ['rockylinux:9', 'almalinux:9']
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install every reviewed EL9 package group
+        run: tests/integration/redhat-package-availability.sh '${{ matrix.image }}' all

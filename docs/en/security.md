@@ -16,3 +16,7 @@
 Encrypted values can still appear in catalog/report contexts if manifests do not
 use Puppet's `Sensitive` type appropriately. Every future secret-consuming
 profile therefore requires its own threat model and tests.
+
+## EL9 repository credentials
+
+Puppet Core API keys are supplied only through root-owned files. The generated yum repository file is mode `0600`; support bundles must redact it. Milestone 7 does not modify SELinux or firewall policy.

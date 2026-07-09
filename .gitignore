@@ -47,3 +47,7 @@ Thumbs.db
 __pycache__/
 *.py[cod]
 hiera.yaml.eyaml-candidate
+
+# Local Puppet Core credentials and generated authenticated repository files
+*puppet-core-api-key*
+puppet8-release.repo

@@ -16,17 +16,18 @@ class profile::baseline (
   Boolean                                       $manage_marker    = true,
   String[1]                                     $marker_directory = '/etc/sasd',
   String[1]                                     $marker_file      = '/etc/sasd/puppet-baseline.conf',
-  String[1]                                     $baseline_version = '0.6.0',
+  String[1]                                     $baseline_version = '0.7.0',
   Optional[Enum['local-puppet-apply', 'puppet-server']] $management_mode = undef,
 ) {
   $os_name  = $facts['os']['name']
   $os_major = $facts['os']['release']['major']
   $supported_platform = (
     ($os_name == 'Debian' and $os_major in ['12', '13']) or
-    ($os_name == 'Ubuntu' and $os_major == '24.04')
+    ($os_name == 'Ubuntu' and $os_major == '24.04') or
+    ($os_name in ['AlmaLinux', 'Rocky'] and $os_major == '9')
   )
   unless $supported_platform {
-    fail("profile::baseline does not support ${os_name} ${os_major}; supported agents are Debian 12/13 and Ubuntu 24.04")
+    fail("profile::baseline does not support ${os_name} ${os_major}; supported agents are Debian 12/13, Ubuntu 24.04, AlmaLinux 9, and Rocky Linux 9")
   }
 
   $effective_management_mode = $management_mode ? {

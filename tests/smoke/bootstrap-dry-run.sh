@@ -9,6 +9,10 @@ if "${ROOT}/scripts/bootstrap-agent.sh" --dry-run --os-release-file "${ROOT}/tes
   printf 'ERROR: unsupported Rocky fixture was accepted\n' >&2
   exit 1
 fi
+if "${ROOT}/scripts/bootstrap-agent.sh" --dry-run --os-release-file "${ROOT}/tests/fixtures/os-release/ubuntu-24.10" >/dev/null 2>&1; then
+  printf 'ERROR: unsupported Ubuntu 24.10 fixture was accepted\n' >&2
+  exit 1
+fi
 malicious="$(mktemp)"
 trap 'rm -f -- "${malicious}" /tmp/sasd-bootstrap-must-not-run' EXIT
 cat >"${malicious}" <<'EOF'

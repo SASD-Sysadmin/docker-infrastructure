@@ -16,3 +16,7 @@ sasd::owner: operations
 Maintenance additionally requires reason, ticket, and UTC expiry. Retired nodes
 are rejected before role compilation and must be processed through the
 decommission runbook. The standalone `baseline` role supports only `active`.
+
+Platform support is independent from role classification. AlmaLinux 9 and Rocky
+Linux 9 may use the same allowlisted central roles as Debian/Ubuntu agents, but
+`puppet_server` is rejected by the role manifest outside to Debian 12 and Ubuntu 24.04.

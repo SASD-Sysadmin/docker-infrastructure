@@ -1,0 +1,8 @@
+<%- | String $os_name, String $os_family, String $os_major, String $architecture, String $package_provider, String $certname | -%>
+# Managed by Puppet. Local edits are replaced.
+os_name=<%= $os_name %>
+os_family=<%= $os_family %>
+os_major=<%= $os_major %>
+architecture=<%= $architecture %>
+package_provider=<%= $package_provider %>
+trusted_certname=<%= $certname %>

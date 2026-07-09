@@ -18,3 +18,7 @@ The manifest metadata accepts Puppet `>= 7.23.0 < 9.0.0`. CI covers Puppet 7.23 
 ## Architecture limitations
 
 Bootstrap scripts target Apt/systemd hosts. Other architectures or operating-system families require a separate tested implementation rather than bypassing the platform check.
+
+## Milestone 7 agents
+
+AlmaLinux 9 and Rocky Linux 9 are supported as central agents on x86_64 and aarch64. They require authenticated Puppet Core packages. They are not supported by the standalone local bootstrap or as Puppet Server hosts.

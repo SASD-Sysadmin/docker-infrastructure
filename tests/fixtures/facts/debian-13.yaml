@@ -4,5 +4,7 @@ os:
   name: Debian
   release:
     major: '13'
+  architecture: x86_64
+architecture: x86_64
 networking:
   fqdn: debian13.example.test

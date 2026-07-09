@@ -1,6 +1,6 @@
 {
   "name": "sasd-sasd_reporting",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "author": "SASD SysAdmin",
   "summary": "Compact JSON Puppet report processor for SASD control-plane monitoring.",
   "license": "MIT",

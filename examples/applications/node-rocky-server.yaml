@@ -1,0 +1,6 @@
+---
+# Save as data/nodes/<trusted-certname>.yaml after review.
+sasd::role: server
+sasd::lifecycle_state: active
+sasd::owner: operations
+sasd::description: Rocky Linux 9 server managed through Puppet Core agent packages

@@ -30,3 +30,7 @@ Packages use the target system's configured Debian/Ubuntu repositories with `ens
 6. Run `ruby scripts/check_package_policy.rb`.
 7. Run no-op/apply/idempotence tests in a disposable target.
 8. Promote through test before production.
+
+## OS-family package mappings
+
+Since Milestone 7, profile package names are supplied by `data/os/family/Debian.yaml` or `data/os/family/RedHat.yaml`. The EL9 mapping intentionally excludes packages that would require EPEL.

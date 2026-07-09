@@ -24,3 +24,15 @@ Code layers:
 
 The CA, package credentials, deployed environments, caches, reports, database,
 and backups are host state and never repository content.
+
+## Cross-family package resolution
+
+```text
+role -> profile intent -> Hiera OS-family map -> native package provider
+                                      Debian -> apt
+                                      RedHat -> dnf
+```
+
+The manifests keep a fixed supported-platform allowlist. Hiera selects reviewed
+package names; it cannot select classes or arbitrary commands. EL9 is an agent
+extension only and does not change the Puppet Server architecture.

@@ -30,3 +30,7 @@ Erst nach Prüfung des No-op:
 ```bash
 sudo ./scripts/activate-central-agent.sh --apply --enable-service
 ```
+
+## AlmaLinux und Rocky Linux
+
+EL9 benötigt `--package-source puppet-core` und eine rootgeschützte `--api-key-file`. Siehe [AlmaLinux-9- und Rocky-Linux-9-Agents](redhat-family-agents.md).

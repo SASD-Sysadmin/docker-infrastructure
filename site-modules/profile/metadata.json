@@ -1,6 +1,6 @@
 {
   "name": "sasd-profile",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "author": "SASD SysAdmin",
   "summary": "SASD implementation profiles for the puppet-software-baseline control repository.",
   "license": "MIT",
@@ -26,6 +26,18 @@
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
         "24.04"
+      ]
+    },
+    {
+      "operatingsystem": "AlmaLinux",
+      "operatingsystemrelease": [
+        "9"
+      ]
+    },
+    {
+      "operatingsystem": "Rocky",
+      "operatingsystemrelease": [
+        "9"
       ]
     }
   ]

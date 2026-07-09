@@ -1,0 +1,10 @@
+---
+os:
+  family: RedHat
+  name: AlmaLinux
+  release:
+    major: '9'
+  architecture: x86_64
+architecture: x86_64
+networking:
+  fqdn: almalinux9.example.test

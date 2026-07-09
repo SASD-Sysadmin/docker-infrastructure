@@ -1,11 +1,12 @@
 {
   "schema_version": 1,
-  "version": "0.6.0",
+  "version": "0.7.0",
   "roles": {
     "baseline": {
       "central_only": false,
       "profiles": [
-        "baseline"
+        "baseline",
+        "platform_state"
       ],
       "purpose": "Minimal standalone/local package baseline."
     },
@@ -13,6 +14,7 @@
       "central_only": true,
       "profiles": [
         "baseline",
+        "platform_state",
         "lifecycle_state",
         "application_state",
         "agent_service"
@@ -23,6 +25,7 @@
       "central_only": true,
       "profiles": [
         "baseline",
+        "platform_state",
         "administration_tools",
         "lifecycle_state",
         "application_state",
@@ -34,6 +37,7 @@
       "central_only": true,
       "profiles": [
         "baseline",
+        "platform_state",
         "administration_tools",
         "development_tools",
         "lifecycle_state",
@@ -46,6 +50,7 @@
       "central_only": true,
       "profiles": [
         "baseline",
+        "platform_state",
         "administration_tools",
         "container_tools",
         "lifecycle_state",
@@ -58,6 +63,7 @@
       "central_only": true,
       "profiles": [
         "baseline",
+        "platform_state",
         "administration_tools",
         "lifecycle_state",
         "application_state",

@@ -1,5 +1,5 @@
 ---
-# Milestone 6 example node data.
+# Reviewed example node data.
 sasd::role: container_host
 sasd::lifecycle_state: active
 sasd::owner: sasd-sysadmin

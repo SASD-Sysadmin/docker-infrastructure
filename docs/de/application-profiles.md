@@ -19,3 +19,7 @@ Ein Profil besitzt genau einen technischen Verantwortungsbereich. Eine Rolle kom
 ## Paketquelle und Versionen
 
 Die Pakete stammen aus den konfigurierten Debian-/Ubuntu-Repositories und werden mit `ensure => installed` verwaltet. Dadurch bleibt der Sicherheitsupdate-Zyklus der Distribution erhalten. Exakte Versionsbindungen benötigen später eine eigene Architekturentscheidung, Rückfallplanung und Plattformtests.
+
+## Paketabbildungen nach OS-Familie
+
+Seit Milestone 7 stammen Paketnamen aus `data/os/family/Debian.yaml` oder `data/os/family/RedHat.yaml`. Die EL9-Abbildung enthält bewusst keine Pakete, die EPEL erfordern.

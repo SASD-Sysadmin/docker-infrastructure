@@ -14,7 +14,8 @@ class profile::administration_tools (
   $os_major = $facts['os']['release']['major']
   $supported_platform = (
     ($os_name == 'Debian' and $os_major in ['12', '13']) or
-    ($os_name == 'Ubuntu' and $os_major == '24.04')
+    ($os_name == 'Ubuntu' and $os_major == '24.04') or
+    ($os_name in ['AlmaLinux', 'Rocky'] and $os_major == '9')
   )
   unless $supported_platform {
     fail("profile::administration_tools does not support ${os_name} ${os_major}")

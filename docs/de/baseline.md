@@ -1,7 +1,7 @@
 # Baseline
 
-Milestone 6 behält die konservative Paket-/Datei-Basis und die geprüften
-Anwendungsprofile. `/etc/sasd/puppet-baseline.conf` enthält Version `0.6.0`,
+Milestone 7 behält die konservative Paket-/Datei-Basis und die geprüften
+Anwendungsprofile. `/etc/sasd/puppet-baseline.conf` enthält Version `0.7.0`,
 Plattform, Verwaltungsart und vertrauenswürdigen Certname.
 
 Zentrale Rollen schreiben zusätzlich den Anwendungsnachweis unter

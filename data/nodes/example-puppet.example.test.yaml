@@ -1,5 +1,5 @@
 ---
-# Milestone 6 example node data.
+# Reviewed example node data.
 sasd::role: puppet_server
 sasd::lifecycle_state: active
 sasd::owner: sasd-sysadmin

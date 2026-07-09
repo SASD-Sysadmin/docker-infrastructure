@@ -1,9 +1,17 @@
 # sasd-profile
 
-Implementation profiles for the SASD Puppet control repository. Milestone 6 contains baseline, administration tools, development tools, container tools, application-state evidence, agent service, and Puppet Server operations.
+Implementation profiles for the SASD Puppet control repository. Profiles own
+resources; roles compose profiles. Nodes are never classified by dynamically
+including profile names from Hiera.
 
-Profiles own resources; roles compose profiles. Do not classify nodes by including profiles directly in `site.pp`.
+Milestone 7 profiles cover:
 
-Milestone 6 adds `profile::lifecycle_state`. Central roles use it together with
-`profile::agent_service` so maintenance is visible and the periodic agent is
-stopped until an explicit reactivation run.
+- baseline packages and marker;
+- non-secret platform evidence;
+- administration, development, and daemonless container tools;
+- lifecycle and application-assignment evidence;
+- lifecycle-aware Puppet agent service;
+- Puppet Server operational health/reporting support.
+
+Package names are supplied by reviewed OS-family Hiera mappings. Profiles do not
+enable EPEL, change SELinux/firewall policy, or run troubleshooting commands.

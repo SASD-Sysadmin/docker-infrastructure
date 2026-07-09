@@ -1,0 +1,6 @@
+NAME="AlmaLinux"
+VERSION="9 (Turquoise Kodkod)"
+ID="almalinux"
+ID_LIKE="rhel centos fedora"
+VERSION_ID="9"
+PLATFORM_ID="platform:el9"

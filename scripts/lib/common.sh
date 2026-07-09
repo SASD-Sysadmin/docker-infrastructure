@@ -64,11 +64,39 @@ read_os_release() {
 }
 
 is_supported_agent_platform() {
-  case "${ID}:${VERSION_ID}" in debian:12|debian:13|ubuntu:24.04) return 0;; *) return 1;; esac
+  case "${ID}" in
+    debian) [[ "${VERSION_ID}" == '12' || "${VERSION_ID}" == '13' ]] ;;
+    ubuntu) [[ "${VERSION_ID}" == '24.04' ]] ;;
+    almalinux|rocky) [[ "${VERSION_ID%%.*}" == '9' ]] ;;
+    *) return 1 ;;
+  esac
 }
 
-# Backward-compatible name used by the standalone Milestone 2 bootstrap.
-is_supported_platform() { is_supported_agent_platform; }
+
+normalize_architecture() {
+  case "$1" in
+    amd64) printf '%s\n' 'x86_64' ;;
+    arm64) printf '%s\n' 'aarch64' ;;
+    *) printf '%s\n' "$1" ;;
+  esac
+}
+
+is_supported_agent_architecture() {
+  case "$(normalize_architecture "$1")" in x86_64|aarch64) return 0;; *) return 1;; esac
+}
+
+is_redhat_family_agent() {
+  case "${ID}:${VERSION_ID%%.*}" in almalinux:9|rocky:9) return 0;; *) return 1;; esac
+}
+
+# Standalone local bootstrap deliberately remains Debian/Ubuntu only.
+is_supported_platform() {
+  case "${ID}" in
+    debian) [[ "${VERSION_ID}" == '12' || "${VERSION_ID}" == '13' ]] ;;
+    ubuntu) [[ "${VERSION_ID}" == '24.04' ]] ;;
+    *) return 1 ;;
+  esac
+}
 
 is_supported_server_platform() {
   case "${ID}:${VERSION_ID}" in debian:12|ubuntu:24.04) return 0;; *) return 1;; esac

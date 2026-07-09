@@ -23,3 +23,11 @@ require a new ADR, tests, documentation, and explicit scope change.
 
 Never force-push `test` or `production`, bypass test promotion, enable broad
 autosigning, or add secrets/backups/reports to Git.
+
+## Cross-platform package changes
+
+For Milestone 7 and later, package names belong in the complete OS-family maps,
+not in `data/common.yaml`. A change affecting Debian-family or RedHat-family
+packages must pass `ruby scripts/check_package_policy.rb`, platform catalog
+validation, catalog tests, and the appropriate container availability workflow.
+Do not add EPEL or another vendor repository as an incidental package fix.

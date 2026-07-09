@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Validate source formats, documentation, manifests, and Milestone 6 boundaries.
+# Validate source formats, documentation, manifests, and Milestone 7 boundaries.
 set -euo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"; ROOT="$(cd -- "${SCRIPT_DIR}/.." && pwd -P)"
 strict=false; promotion_context=false
@@ -13,6 +13,8 @@ ruby scripts/validate_yaml.rb
 python3 scripts/validate_repository.py
 python3 scripts/check_markdown_links.py
 python3 scripts/check_milestone6_scope.py
+python3 scripts/check_milestone7_scope.py
+python3 scripts/check_platform_catalog.py
 ruby scripts/check_package_policy.rb
 python3 scripts/check_role_catalog.py
 ruby scripts/check_node_data.rb
@@ -35,6 +37,8 @@ if [[ "${promotion_context}" == false ]]; then
   tests/smoke/inventory-compliance.sh
   tests/smoke/secret-policy.sh
   tests/smoke/decommission-guards.sh
+  tests/smoke/redhat-family.sh
+  tests/smoke/puppet-core-yum-credentials.sh
 fi
 if require_or_warn yamllint; then mapfile -d '' fs < <(find . -path './.git' -prune -o -path './vendor' -prune -o -path './modules' -prune -o -path './dist' -prune -o -type f \( -name '*.yaml' -o -name '*.yml' \) -print0 | sort -z); yamllint "${fs[@]}"; fi
 if command -v systemd-analyze >/dev/null 2>&1; then systemd-analyze verify systemd/*.service; fi
