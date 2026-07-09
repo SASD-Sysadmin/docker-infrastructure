@@ -1,5 +1,3 @@
 ---
-# Example only. Copy to the real trusted certname and review before use.
+# Minimal centrally managed agent.
 sasd::role: managed_agent
-profile::baseline::packages:
-  - htop

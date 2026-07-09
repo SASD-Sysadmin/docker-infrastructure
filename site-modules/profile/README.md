@@ -1,12 +1,5 @@
-# profile module
+# sasd-profile
 
-Implementation profiles for SASD systems.
+Implementation profiles for the SASD Puppet control repository. Milestone 5 contains baseline, administration tools, development tools, container tools, application-state evidence, agent service, and Puppet Server operations.
 
-Milestone 4 provides:
-
-- `profile::baseline`: conservative packages and managed marker;
-- `profile::agent_service`: keeps an already enrolled native Puppet agent service running and enabled;
-- `profile::server_operations`: installs compact report/health state directories, the health command, and its hardened systemd timer.
-
-Identity-bearing agent settings remain in reviewed bootstrap scripts. Profiles do
-not change certnames, CA paths, private keys, DNS identities, or server names.
+Profiles own resources; roles compose profiles. Do not classify nodes by including profiles directly in `site.pp`.

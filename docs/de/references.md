@@ -1,15 +1,15 @@
-# Upstream-Referenzen
+# Referenzen
 
-Für Milestone 4 am 09.07.2026 geprüft:
+Für Milestone 5 am 09.07.2026 geprüft:
 
-- Puppet-Agent-Dienst und Laufzeitsteuerung: https://help.puppet.com/core/current/Content/PuppetCore/services_agent_unix.htm
-- Puppet-Konfigurationsreferenz (`runinterval`, `splay`, `splaylimit`, `report`): https://help.puppet.com/core/current/Content/PuppetCore/Markdown/configuration.htm
-- Puppet-Reports und eigene Report-Prozessoren: https://help.puppet.com/core/current/Content/PuppetCore/reporting_about.htm
-- PuppetDB-Überblick und Voraussetzungen: https://help.puppet.com/pdb/current/topics/overview.html
-- PuppetDB-Installation mit dem unterstützten Modul: https://help.puppet.com/pdb/current/topics/install_via_module.html
-- Anbindung des Puppet Servers an PuppetDB: https://help.puppet.com/pdb/current/topics/connect_puppet_server.html
-- PuppetDB-Wartung und Datenaufbewahrung: https://help.puppet.com/pdb/current/topics/maintain_and_tune.html
-- r10k-Environment-Deployment: https://help.puppet.com/pe/current/topics/r10k_deploy_env.htm
-- Modul `puppetlabs-puppetdb`: https://forge.puppet.com/modules/puppetlabs/puppetdb
+- Puppet-Core-Konfigurationsreferenz 8.20.0: https://help.puppet.com/core/current/Content/PuppetCore/Markdown/configuration.htm
+- Puppet-Reports: https://help.puppet.com/core/current/Content/PuppetCore/reporting.htm
+- Eigene Reportprozessoren: https://help.puppet.com/core/current/Content/PuppetCore/reporting_write_processors.htm
+- r10k und Puppetfile: https://help.puppet.com/pe/2025.10/topics/set-up-r10k.htm
+- r10k-Deployment: https://help.puppet.com/pe/2025.9/topics/r10k_deploy_subcommands.htm
+- Puppet-Server/PuppetDB-Verbindung: https://help.puppet.com/pdb/current/topics/connect_puppet_server.htm
+- Podman unter Debian 12: https://packages.debian.org/bookworm/podman
+- Podman unter Ubuntu 24.04: https://packages.ubuntu.com/noble/podman
 
-Paketzugang, Plattformunterstützung, Modulkompatibilität, Lifecycle-Informationen und Kommandozeilenschnittstellen können sich ändern. Vor einer echten Installation, einem Upgrade oder der Aktivierung von PuppetDB muss die aktuelle Upstream-Dokumentation erneut geprüft werden.
+Die Tests des Repositories bleiben das verbindliche Abnahmekriterium für die
+gewählten Plattform-/Profilkombinationen.

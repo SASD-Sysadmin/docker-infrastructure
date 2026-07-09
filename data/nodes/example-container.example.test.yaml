@@ -1,0 +1,3 @@
+---
+# Daemonless OCI container host.
+sasd::role: container_host

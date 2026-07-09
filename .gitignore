@@ -39,3 +39,6 @@ Thumbs.db
 *.tar
 *.tar.gz
 /reports/
+
+# Generated release evidence and archives
+/dist/

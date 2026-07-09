@@ -1,6 +1,5 @@
 ---
-# Debian-family defaults shared by Debian and Ubuntu.
-# Product-specific or release-specific differences belong in deeper files.
+# Debian-family additions shared by Debian and Ubuntu.
 profile::baseline::packages:
   - lsof
   - procps

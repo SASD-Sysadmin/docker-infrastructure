@@ -1,28 +1,14 @@
 # Scripts
 
-## Bootstrap and enrollment
+The scripts are defensive entry points for bootstrap, central operation, validation, application policy, and releases. Destructive or production-changing behavior requires explicit options.
 
-- `bootstrap-agent.sh`, `apply-local.sh`: standalone mode.
-- `bootstrap-server.sh`: Puppet Server/CA/r10k bootstrap.
-- `bootstrap-central-agent.sh`, `activate-central-agent.sh`: central enrollment.
-- `configure-agent-service.sh`: run interval, splay, reports, and native service.
+Milestone 5 additions:
 
-## Code operation
+- `check_package_policy.rb` — validates sorted, unique package ownership;
+- `check_role_catalog.py` — compares JSON role contract with Puppet code;
+- `release-readiness.sh` — clean-tree/version/policy/validation gate;
+- `generate-release-manifest.py` — per-file SHA-256 release evidence;
+- `verify-release-manifest.py` — verifies a release tree;
+- `check_milestone5_scope.py` — enforces the allowed Puppet resource boundary.
 
-- `deploy-environment.sh`: deploy one matching branch/environment through r10k.
-- `promote-environment.sh`: fast-forward `main -> test -> production`.
-- `prepare-rollback.sh`: create a new rollback commit in a separate worktree.
-
-## Certificates and reporting
-
-- `list-certificates.sh`, `sign-certificate.sh`, `clean-certificate.sh`.
-- `configure-reporting.sh`, `report-status.py`.
-- `server-health.sh`, `status-server.sh`.
-
-## Backup and optional PuppetDB
-
-- `backup-control-plane.sh`, `verify-backup.sh`.
-- `bootstrap-puppetdb.sh`, `status-puppetdb.sh`.
-
-All destructive or identity-bearing actions require explicit options. Dry-run or
-plan-only behavior is the default where practical.
+Puppet uses manifests and classes; operational procedures are documented as runbooks rather than Ansible-style playbooks.

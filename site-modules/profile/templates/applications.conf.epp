@@ -1,0 +1,4 @@
+# Managed by Puppet. Manual changes are overwritten.
+role=<%= $role_name %>
+profiles=<%= $enabled_profiles.join(',') %>
+trusted_certname=<%= $certname %>

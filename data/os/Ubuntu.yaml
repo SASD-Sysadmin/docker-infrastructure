@@ -1,2 +1,2 @@
 ---
-# Ubuntu-specific package overrides are intentionally empty in Milestone 4.
+# Ubuntu 24.04 requires the Universe component for several optional profiles.

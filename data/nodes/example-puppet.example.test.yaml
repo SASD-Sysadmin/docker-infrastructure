@@ -1,3 +1,3 @@
 ---
-# Example Puppet Server classification for Milestone 4 operations.
+# Puppet Server control-plane role.
 sasd::role: puppet_server

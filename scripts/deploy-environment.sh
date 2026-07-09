@@ -28,7 +28,7 @@ while (($#)); do case "$1" in
   *) usage >&2; die "unknown argument: $1" 64;;
 esac; shift; done
 validate_environment "${environment}"
-[[ "${environment}" == "${branch}" ]] || die 'Milestone 4 requires branch and environment names to match for r10k' 64
+[[ "${environment}" == "${branch}" ]] || die 'Milestone 5 requires branch and environment names to match for r10k' 64
 if [[ -z "${environmentpath}" ]]; then
   detected_puppet="$(find_puppet || true)"
   if [[ -n "${detected_puppet}" ]]; then environmentpath="$("${detected_puppet}" config print environmentpath)"

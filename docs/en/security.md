@@ -1,6 +1,6 @@
 # Security
 
-## Milestone 4 controls
+## Milestone 5 controls
 
 - no-op remains the default for standalone bootstrap/update and optional PuppetDB planning;
 - applying catalogs and all CA-changing operations require explicit action;

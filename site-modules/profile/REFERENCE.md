@@ -1,18 +1,22 @@
 # Reference
 
 ## `profile::baseline`
+Minimal common packages and `/etc/sasd/puppet-baseline.conf`.
 
-Installs the package baseline and manages `/etc/sasd/puppet-baseline.conf` on
-Debian 12/13 and Ubuntu 24.04.
+## `profile::administration_tools`
+Reviewed command-line administration packages.
+
+## `profile::development_tools`
+Distribution compiler, debugger, Python development, and shell-analysis packages.
+
+## `profile::container_tools`
+Daemonless Podman/Buildah/Skopeo and rootless support packages.
+
+## `profile::application_state`
+Writes non-secret intended role/profile evidence.
 
 ## `profile::agent_service`
-
-Requires a remotely authenticated catalog and keeps the native Puppet service
-running and enabled. Enrollment scripts own identity and cadence settings.
+Keeps an already-enrolled native Puppet agent enabled and running.
 
 ## `profile::server_operations`
-
-Manages SASD operational state, compact report/health directories, the health
-command, systemd service/timer, and one refresh-only daemon reload.
-
-Puppet Strings comments in each manifest define all parameters and boundaries.
+Puppet Server health/reporting directories, command, timer, and service.

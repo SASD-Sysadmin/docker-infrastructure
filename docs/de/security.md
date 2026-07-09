@@ -1,6 +1,6 @@
 # Sicherheit
 
-## Schutzmaßnahmen in Milestone 4
+## Schutzmaßnahmen in Milestone 5
 
 - No-op bleibt Standard bei lokalem Bootstrap/Update und PuppetDB-Planung;
 - Apply und CA-Änderungen benötigen eine ausdrückliche Aktion;

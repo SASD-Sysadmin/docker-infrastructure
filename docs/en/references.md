@@ -1,15 +1,16 @@
-# Upstream references
+# References
 
-Checked for Milestone 4 on 2026-07-09:
+Checked for Milestone 5 on 2026-07-09:
 
-- Puppet agent service and runtime settings: https://help.puppet.com/core/current/Content/PuppetCore/services_agent_unix.htm
-- Puppet configuration reference (`runinterval`, `splay`, `splaylimit`, `report`): https://help.puppet.com/core/current/Content/PuppetCore/Markdown/configuration.htm
-- Puppet reports and custom report processors: https://help.puppet.com/core/current/Content/PuppetCore/reporting_about.htm
-- PuppetDB overview and requirements: https://help.puppet.com/pdb/current/topics/overview.html
-- Installing PuppetDB with the supported module: https://help.puppet.com/pdb/current/topics/install_via_module.html
-- Connecting Puppet Server to PuppetDB: https://help.puppet.com/pdb/current/topics/connect_puppet_server.html
-- PuppetDB maintenance and data retention: https://help.puppet.com/pdb/current/topics/maintain_and_tune.html
-- r10k environment deployment: https://help.puppet.com/pe/current/topics/r10k_deploy_env.htm
-- puppetlabs-puppetdb module: https://forge.puppet.com/modules/puppetlabs/puppetdb
+- Puppet Core configuration reference (8.20.0): https://help.puppet.com/core/current/Content/PuppetCore/Markdown/configuration.htm
+- Puppet reports: https://help.puppet.com/core/current/Content/PuppetCore/reporting.htm
+- Writing custom report processors: https://help.puppet.com/core/current/Content/PuppetCore/reporting_write_processors.htm
+- r10k setup and Puppetfile model: https://help.puppet.com/pe/2025.10/topics/set-up-r10k.htm
+- r10k deployment subcommands: https://help.puppet.com/pe/2025.9/topics/r10k_deploy_subcommands.htm
+- Puppet Server to PuppetDB connection: https://help.puppet.com/pdb/current/topics/connect_puppet_server.htm
+- Debian 12 Podman package: https://packages.debian.org/bookworm/podman
+- Ubuntu 24.04 Podman package: https://packages.ubuntu.com/noble/podman
 
-Upstream package access, platform support, module compatibility, lifecycle information, and command-line interfaces can change. Review the current documentation before a real installation, upgrade, or PuppetDB activation.
+These references support architecture and package-availability decisions. The
+repository's tests remain the authoritative acceptance criteria for the selected
+platform/profile combinations.

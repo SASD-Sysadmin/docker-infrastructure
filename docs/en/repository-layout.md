@@ -1,6 +1,6 @@
 # Repository layout
 
-Important Milestone 4 paths:
+Important Milestone 5 paths:
 
 ```text
 manifests/site.pp                  allowlisted classification

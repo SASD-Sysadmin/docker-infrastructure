@@ -1,9 +1,3 @@
-# role module
+# sasd-role
 
-Node-purpose composition for SASD systems.
-
-- `role::baseline`: standalone/local baseline.
-- `role::managed_agent`: central baseline plus native agent service.
-- `role::puppet_server`: central baseline, agent service, reporting/health operations.
-
-Roles compose profiles and never declare technical resources directly.
+Complete node roles for the SASD Puppet control repository. Milestone 5 roles: `baseline`, `managed_agent`, `server`, `development`, `container_host`, and `puppet_server`.

@@ -1,0 +1,3 @@
+---
+# Standard centrally managed server.
+sasd::role: server

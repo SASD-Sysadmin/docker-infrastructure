@@ -1,11 +1,8 @@
 # Reference
 
-## `role::baseline`
-Composes `profile::baseline`.
-
-## `role::managed_agent`
-Composes baseline and agent-service profiles for a signed central agent.
-
-## `role::puppet_server`
-Composes baseline, agent-service, and server-operations profiles for the central
-Puppet Server node.
+- `role::baseline`: local minimum.
+- `role::managed_agent`: central minimum plus agent service.
+- `role::server`: administration server.
+- `role::development`: server plus development tools.
+- `role::container_host`: server plus daemonless OCI tools.
+- `role::puppet_server`: administration plus central health/reporting operations.

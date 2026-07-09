@@ -1,0 +1,48 @@
+---
+name: Application profile integration
+on:
+  push:
+    branches: [main, test, production]
+    paths:
+      - 'data/**'
+      - 'site-modules/profile/**'
+      - 'site-modules/role/**'
+      - 'tests/integration/container-application-profiles.sh'
+      - '.github/workflows/application-profiles.yml'
+  pull_request:
+    paths:
+      - 'data/**'
+      - 'site-modules/profile/**'
+      - 'site-modules/role/**'
+      - 'tests/integration/container-application-profiles.sh'
+      - '.github/workflows/application-profiles.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  apply:
+    name: ${{ matrix.profile }} on ${{ matrix.image }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - image: 'debian:12'
+            profile: administration_tools
+          - image: 'debian:13'
+            profile: administration_tools
+          - image: 'ubuntu:24.04'
+            profile: administration_tools
+          - image: 'debian:12'
+            profile: development_tools
+          - image: 'ubuntu:24.04'
+            profile: development_tools
+          - image: 'debian:12'
+            profile: container_tools
+          - image: 'ubuntu:24.04'
+            profile: container_tools
+    steps:
+      - uses: actions/checkout@v7
+      - name: Apply profile twice
+        run: tests/integration/container-application-profiles.sh '${{ matrix.image }}' '${{ matrix.profile }}'

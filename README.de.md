@@ -2,75 +2,74 @@
 
 [English README](README.md) · [Deutscher Dokumentationsindex](docs/de/README.md)
 
-Puppet-Control-Repository zur Installation von Anwendungen sowie zur Sicherstellung konsistenter Paket-, Dienst-, Konfigurations- und Betriebszustände auf SASD-Systemen.
+Puppet-Control-Repository zur Installation geprüfter Anwendungsgruppen und zur Sicherstellung konsistenter Paket-, Dienst-, Konfigurations-, Reporting- und Control-Plane-Baselines auf SASD-Systemen.
 
-> **Status:** Milestone 4 abgeschlossen (`0.4.0`). Der zentrale Regelbetrieb umfasst jetzt Test-/Produktions-Promotion, regelmäßige Agentläufe, kompaktes Reporting, Health-Checks, verifizierte Backups, Rollback-Vorbereitung und optional PuppetDB.
+> **Status:** Milestone 5 ist abgeschlossen (`0.5.0`). Das Repository enthält nun explizite Rollen für Server, Entwicklungsrechner, Container-Hosts, minimale Agents und den Puppet Server, geprüfte Anwendungspaketprofile sowie maschinenlesbare Qualitäts- und Release-Prüfungen.
 
 ## Abgrenzung
 
-Puppet beschreibt dauerhaften Sollzustand. Es ist kein Werkzeug für Incident-Response oder Ad-hoc-Reparaturen. Rollen kombinieren Profile, Profile besitzen technische Ressourcen und Hiera enthält Umgebungs- und Knotendaten.
+Puppet beschreibt dauerhaften Sollzustand. Es ersetzt keine Ansible-Runbooks, kein Admin-Toolkit, keine Incident Response und keine einmaligen Reparaturen. Milestone 5 installiert Anwendungen ausschließlich aus den bereits konfigurierten Distributions-Repositories:
 
-Milestone 4 verwaltet:
+- minimale Basispakete;
+- Administrationswerkzeuge;
+- Kommandozeilen-Entwicklungswerkzeuge;
+- daemonlose Podman-/OCI-Werkzeuge;
+- konsistenter nativer Puppet-Agent-Dienst;
+- Health- und Reporting-Betrieb des Puppet Servers;
+- kontrollierte Promotion `main -> test -> production`;
+- Release-Manifeste, Freigabeprüfungen, Backups und Rollback-Vorbereitung.
 
-- Basispakete und `/etc/sasd/puppet-baseline.conf`;
-- den nativen Puppet-Agent-Dienst nach Zertifikatsfreigabe;
-- Betriebswerkzeuge, Zustandsverzeichnisse und Health-Timer des Puppet Servers;
-- kompakte datensparsame JSON-Reportzusammenfassungen;
-- Promotion `main -> test -> production` und r10k-Deployment;
-- optional PuppetDB für historische Reports und Abfragen.
+Keine Rolle ergänzt Fremdrepositories, lädt Container-Images, legt Benutzer an, öffnet Firewall-Ports, speichert Secrets oder führt beliebige Shell-Befehle aus.
 
-## Schnelleinstieg Regelbetrieb
+## Rollen
 
-```bash
-./scripts/promote-environment.sh --from main --to test --full-validation
-./scripts/promote-environment.sh --from main --to test --push
-sudo ./scripts/deploy-environment.sh --environment test --branch test
+| Rolle | Zweck | Anwendungsgruppen |
+|---|---|---|
+| `baseline` | lokale/Standalone-Basis | Basis |
+| `managed_agent` | minimal zentral verwalteter Knoten | Basis |
+| `server` | allgemeiner Server | Basis, Administration |
+| `development` | CLI-Entwicklungsrechner | Basis, Administration, Entwicklung |
+| `container_host` | daemonloser OCI-Host | Basis, Administration, Container-Werkzeuge |
+| `puppet_server` | Puppet-Control-Plane | Basis, Administration, Serverbetrieb |
 
-./scripts/promote-environment.sh --from test --to production --full-validation
-./scripts/promote-environment.sh --from test --to production --push
-sudo ./scripts/deploy-environment.sh --environment production --branch production
+Die Klassifizierung bleibt in [`manifests/site.pp`](manifests/site.pp) fest freigegeben. [`config/role-catalog.json`](config/role-catalog.json) bildet denselben Vertrag maschinenlesbar ab.
+
+## Beispiel
+
+```yaml
+---
+sasd::role: development
 ```
 
-Agenttaktung und Reporting:
+Die Datei wird als `data/nodes/<vertrauenswürdiger-certname>.yaml` gespeichert, über `main`, `test` und `production` promoviert, mit r10k deployed und zunächst im No-op geprüft.
+
+## Qualitäts- und Release-Prüfungen
 
 ```bash
-sudo ./scripts/configure-agent-service.sh --runinterval 1h --splaylimit 15m
-sudo ./scripts/configure-reporting.sh
-sudo ./scripts/server-health.sh
-sudo ./scripts/report-status.py
+ruby scripts/check_package_policy.rb
+python3 scripts/check_role_catalog.py
+./scripts/release-readiness.sh --require-branch main
+python3 scripts/generate-release-manifest.py
+python3 scripts/verify-release-manifest.py dist/release-manifest.json
 ```
 
-Backup und optionale PuppetDB-Stufe:
+Vollständige Entwicklungsprüfung:
 
 ```bash
-sudo ./scripts/backup-control-plane.sh
-sudo ./scripts/verify-backup.sh /var/backups/sasd-puppet/puppet-control-plane-*.tar.gz
-sudo ./scripts/bootstrap-puppetdb.sh --dry-run
+gem install bundler
+./scripts/setup-development.sh
+bundle exec rake
 ```
-
-## Sicherheitsvorgaben
-
-- kein Autosigning und kein Bulk-Signing;
-- keine Secrets, Schlüssel, Zertifikate, Dumps oder Backups in Git;
-- nur Fast-Forward-Historie für `test` und `production`;
-- keine ungeprüften Webhooks oder automatischen Produktionsdeployments;
-- Identitätswerte des Agents werden nicht durch Manifeste umgeschrieben;
-- kompakte Reports enthalten keine Facts, Logs, Diffs oder Ressourcenwerte;
-- PuppetDB ist opt-in und benötigt Monitoring sowie Backup;
-- Rollback erfolgt als neuer geprüfter Commit.
 
 ## Dokumentation
 
-- [Milestone 4](docs/de/milestone-4.md)
-- [Zentraler Betriebsmodus](docs/de/operational-model.md)
-- [Environments und Promotion](docs/de/environments-and-promotion.md)
-- [Agent-Zeitplanung](docs/de/agent-scheduling.md)
-- [Reporting](docs/de/reporting.md)
-- [Health-Monitoring](docs/de/health-monitoring.md)
-- [Optionales PuppetDB](docs/de/puppetdb.md)
-- [Backup-Betrieb](docs/de/backup-operations.md)
-- [Rollback](docs/de/rollback-operations.md)
-- [Milestone-4-Runbook](docs/de/milestone-4-runbook.md)
+- [Milestone 5](docs/de/milestone-5.md)
+- [Anwendungsprofile](docs/de/application-profiles.md)
+- [Rollenkatalog](docs/de/role-catalog.md)
+- [Compliance und Drift](docs/de/compliance-and-drift.md)
+- [Release-Absicherung](docs/de/release-assurance.md)
+- [Produktionsbereitschaft](docs/de/production-readiness.md)
+- [Milestone-5-Runbook](docs/de/milestone-5-runbook.md)
 
 ## Lizenz
 

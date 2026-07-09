@@ -1,11 +1,10 @@
 # Klassifizierung
 
 Hiera liefert `sasd::role`; `manifests/site.pp` ordnet den Wert über eine feste
-Allowlist zu. Milestone 4 erlaubt:
+Allowlist zu. Milestone 5 erlaubt `baseline`, `managed_agent`, `server`,
+`development`, `container_host` und `puppet_server`.
 
-- `baseline` für lokale/Standalone-Systeme;
-- `managed_agent` für eingebundene zentrale Agents;
-- `puppet_server` für den Agent-Katalog des zentralen Servers.
-
-Klassennamen werden niemals dynamisch aus Hiera gebildet. Neue Rollen benötigen
-Profile, Tests, Dokumentation, Hiera-Beispiel und einen geprüften `site.pp`-Zweig.
+Klassennamen dürfen niemals dynamisch aus Hiera konstruiert werden.
+`config/role-catalog.json` spiegelt die Allowlist für Prüfungen, steuert sie aber
+nicht. Eine neue Rolle benötigt Profile, Tests, Dokumentation, Hiera-Beispiel und
+einen expliziten Zweig im Site-Manifest.

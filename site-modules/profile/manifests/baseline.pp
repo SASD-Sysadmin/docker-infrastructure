@@ -16,7 +16,7 @@ class profile::baseline (
   Boolean                                       $manage_marker    = true,
   String[1]                                     $marker_directory = '/etc/sasd',
   String[1]                                     $marker_file      = '/etc/sasd/puppet-baseline.conf',
-  String[1]                                     $baseline_version = '0.4.0',
+  String[1]                                     $baseline_version = '0.5.0',
   Optional[Enum['local-puppet-apply', 'puppet-server']] $management_mode = undef,
 ) {
   $os_name  = $facts['os']['name']

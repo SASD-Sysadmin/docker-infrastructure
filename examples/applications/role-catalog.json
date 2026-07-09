@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "version": "0.5.0",
+  "roles": {
+    "baseline": {
+      "central_only": false,
+      "profiles": [
+        "baseline"
+      ],
+      "purpose": "Minimal standalone/local package baseline."
+    },
+    "managed_agent": {
+      "central_only": true,
+      "profiles": [
+        "baseline",
+        "application_state",
+        "agent_service"
+      ],
+      "purpose": "Minimal centrally managed agent."
+    },
+    "server": {
+      "central_only": true,
+      "profiles": [
+        "baseline",
+        "administration_tools",
+        "application_state",
+        "agent_service"
+      ],
+      "purpose": "General-purpose centrally managed server."
+    },
+    "development": {
+      "central_only": true,
+      "profiles": [
+        "baseline",
+        "administration_tools",
+        "development_tools",
+        "application_state",
+        "agent_service"
+      ],
+      "purpose": "Command-line software-development host."
+    },
+    "container_host": {
+      "central_only": true,
+      "profiles": [
+        "baseline",
+        "administration_tools",
+        "container_tools",
+        "application_state",
+        "agent_service"
+      ],
+      "purpose": "Daemonless OCI container host."
+    },
+    "puppet_server": {
+      "central_only": true,
+      "profiles": [
+        "baseline",
+        "administration_tools",
+        "application_state",
+        "agent_service",
+        "server_operations"
+      ],
+      "purpose": "Central Puppet Server and CA control plane."
+    }
+  }
+}

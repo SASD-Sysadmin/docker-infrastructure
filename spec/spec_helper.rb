@@ -30,3 +30,7 @@ SUPPORTED_FACTS = {
 }.freeze
 
 EXPECTED_COMMON_PACKAGES = %w[ca-certificates curl git jq python3 rsync tree unzip lsof procps].freeze
+
+EXPECTED_ADMIN_PACKAGES = %w[acl attr bash-completion dnsutils file htop less nano netcat-openbsd psmisc sudo tcpdump vim zip].freeze
+EXPECTED_DEVELOPMENT_PACKAGES = %w[build-essential gdb pkg-config python3-dev python3-pip python3-venv shellcheck].freeze
+EXPECTED_CONTAINER_PACKAGES = %w[buildah fuse-overlayfs podman skopeo slirp4netns uidmap].freeze

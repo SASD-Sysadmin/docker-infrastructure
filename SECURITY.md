@@ -2,7 +2,7 @@
 
 ## Supported version
 
-Milestone 4 (`0.4.x`) is the current supported repository line.
+Milestone 5 (`0.5.x`) is the current supported repository line.
 
 ## Never commit
 

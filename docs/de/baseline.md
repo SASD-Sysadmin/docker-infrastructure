@@ -1,10 +1,11 @@
 # Baseline
 
-Milestone 4 behält die konservative Paket-/Datei-Baseline und ergänzt für
-zentral verwaltete Knoten einen kontrollierten Dienstzustand. Die Markerdatei
-enthält Version `0.4.0`, Plattform, vertrauenswürdigen Certname und Betriebsmodus.
+Milestone 5 behält die konservative gemeinsame Basis und ergänzt optionale
+Anwendungsprofile. `/etc/sasd/puppet-baseline.conf` enthält Version `0.5.0`,
+Plattform, vertrauenswürdigen Certname und Betriebsmodus. Zentrale Rollen schreiben
+zusätzlich `/etc/sasd/applications.d/assigned.conf` als nicht geheimen Nachweis
+der vorgesehenen Rolle und Profile.
 
-Gemeinsame Pakete sind CA-Zertifikate, curl, Git, jq, Python 3, rsync, tree,
-unzip sowie Debian-Familienwerkzeuge für Prozesse und offene Dateien.
-`managed_agent` und `puppet_server` halten den Agentdienst nur bei entfernter
-Zertifikatsauthentifizierung aktiv.
+Administrations-, Entwicklungs- und Container-Pakete werden nur durch Rollen
+installiert, die das jeweilige Profil ausdrücklich zusammensetzen. Der Agentdienst
+wird ausschließlich nach remote authentifizierter Zertifikatsanmeldung verwaltet.
