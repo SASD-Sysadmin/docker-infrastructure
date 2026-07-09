@@ -1,13 +1,5 @@
-# Baseline von Milestone 2
+# Baseline
 
-Die Paketliste ist klein und verwendet ausschließlich Standardquellen der
-Distribution. `common.yaml` enthält gemeinsame Werkzeuge; Familie, Produkt und
-Release ergänzen Unterschiede. Arrays werden eindeutig zusammengeführt.
+Der Anwendungs-Workload bleibt in Milestone 3 absichtlich klein: konservative Administrationspakete und `/etc/sasd/puppet-baseline.conf`. Die Markerdatei enthält Version `0.3.0`, Betriebssystem, vertrauenswürdigen Certname und den Modus `local-puppet-apply` oder `puppet-server`.
 
-Das Entfernen eines Paketnamens aus Hiera deinstalliert das Paket **nicht**.
-Milestone 2 nutzt `ensure => installed` und keine Purge-Policy. Eine Entfernung
-muss später ausdrücklich entworfen und geprüft werden.
-
-`/etc/sasd/puppet-baseline.conf` weist Datei-Ownership, Template-Rendering und
-plattformabhängige Kataloge nach. Sie enthält weder Secrets noch ausführbare
-Konfiguration. Manuelle Änderungen werden beim nächsten Apply ersetzt.
+Der Scope-Check erlaubt weiterhin ausschließlich `package` und `file`. Serverinstallation und Zertifikatsaktionen sind explizite Control-Plane-Skripte und keine versteckten Katalogressourcen.

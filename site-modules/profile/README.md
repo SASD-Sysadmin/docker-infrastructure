@@ -2,13 +2,14 @@
 
 Implementation profiles for SASD systems.
 
-Milestone 2 provides `profile::baseline`, which:
+Milestone 3 provides `profile::baseline`, which:
 
-- rejects unsupported platforms during catalog compilation;
+- rejects unsupported agent platforms during catalog compilation;
 - installs a small administration package set supplied by Hiera;
-- manages `/etc/sasd/puppet-baseline.conf` from an EPP template;
+- manages `/etc/sasd/puppet-baseline.conf`;
+- records whether the catalog came from local `puppet apply` or Puppet Server;
 - deliberately avoids services, users, repositories, firewall state, and
   arbitrary `exec` resources.
 
-Roles may include or contain this profile. Node classification and application
-composition must not be implemented inside it.
+Control-plane bootstrap scripts install Puppet Server and enroll agents; those
+operations are intentionally not hidden inside an application profile.

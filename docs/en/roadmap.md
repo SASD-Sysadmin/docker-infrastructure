@@ -1,23 +1,20 @@
 # Roadmap
 
-## Milestone 1 — complete
+## Completed
 
-Server-ready control-repository foundation, workload-free catalog, tests, CI,
-and bilingual documentation.
+- Milestone 1: control-repository foundation and validation.
+- Milestone 2: standalone local package/file baseline.
+- Milestone 3: central Puppet Server, r10k, CA enrollment, production branch, bilingual operations.
 
-## Milestone 2 — complete
+## Candidate Stepstones after Milestone 3
 
-Standalone bootstrap, Debian/Ubuntu support, first package/file baseline,
-platform Hiera, Puppet 7/8 validation, and real container idempotence tests.
+1. Harden and self-manage the Puppet Server configuration.
+2. Add application installation profiles one small group at a time.
+3. Add explicit server/workstation/development roles.
+4. Introduce service consistency only with tests and rollback documentation.
+5. Evaluate PuppetDB/PostgreSQL for reports and queries.
+6. Add encrypted Hiera data when an actual secret use case exists.
+7. Add controlled test environments and optional policy-based deployment automation.
+8. Extend agent support to selected Red Hat-family systems.
 
-## Candidate next stepstones
-
-1. split administration, development, monitoring, and container package profiles;
-2. introduce explicit application groups and additional roles;
-3. add carefully scoped service/configuration consistency profiles;
-4. design package-removal and migration policy;
-5. deploy Puppet Server, r10k environments, and certificate operations;
-6. add central reports, backups, monitoring, and optional PuppetDB.
-
-Each stepstone requires acceptance criteria, rollback, tests, no-op evidence,
-and English/German operational documentation.
+No stepstone should turn Puppet into an incident-response runner; operational repair remains Ansible/admin-toolkit territory.

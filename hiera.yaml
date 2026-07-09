@@ -6,8 +6,8 @@ defaults:
   data_hash: yaml_data
 
 hierarchy:
-  # Exceptional, narrowly reviewed per-node overrides. The trusted certificate
-  # name also works when this repository is later compiled by Puppet Server.
+  # Exceptional, narrowly reviewed per-node settings. On Puppet Server the
+  # trusted certname is cryptographically bound to the agent certificate.
   - name: Per-node data
     path: "nodes/%{trusted.certname}.yaml"
 

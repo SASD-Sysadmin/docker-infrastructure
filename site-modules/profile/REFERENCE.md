@@ -2,7 +2,9 @@
 
 ## `profile::baseline`
 
-Installs the Milestone 2 package baseline and manages the SASD baseline marker.
-Parameters are normally supplied through Hiera Automatic Parameter Lookup.
+Installs the package baseline and manages the SASD marker on Debian 12,
+Debian 13, and Ubuntu 24.04 agents. Hiera supplies normal parameters. The marker
+contains the baseline version, platform, trusted certname, and management mode.
 
-Supported platforms: Debian 12, Debian 13, and Ubuntu 24.04 LTS.
+See the Puppet Strings comments in `manifests/baseline.pp` for the complete
+parameter contract and security boundary.

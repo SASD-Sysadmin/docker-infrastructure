@@ -1,24 +1,12 @@
-# Milestone 2 baseline
+# Baseline
 
-## Package policy
+Milestone 3 keeps the application baseline deliberately unchanged while changing its delivery model. It installs the conservative administration package list and manages `/etc/sasd/puppet-baseline.conf`.
 
-The package list is intentionally conservative and sourced only from standard
-platform repositories. `common.yaml` defines cross-platform tools; OS family,
-product, and release layers add narrow differences. `lookup_options` uses a
-`unique` array merge.
+The marker records:
 
-Removing a name from Hiera does **not** uninstall the package. Milestone 2 uses
-`ensure => installed`, not an authoritative purge policy. Package removal must
-be designed as a separate reviewed stepstone.
+- repository baseline version `0.3.0`;
+- operating system and major version;
+- trusted certificate name;
+- `local-puppet-apply` or `puppet-server` management mode.
 
-## Marker policy
-
-`/etc/sasd/puppet-baseline.conf` proves file ownership, template rendering, and
-platform-aware catalogs. It contains no secret and no executable configuration.
-Manual changes are replaced on the next apply.
-
-## Unsupported platforms
-
-`profile::baseline` fails compilation unless facts identify Debian 12, Debian
-13, or Ubuntu 24.04. Expanding support requires package review, facts fixtures,
-unit tests, integration tests, and bilingual documentation.
+Only `package` and `file` resources are allowed by the milestone scope checker. Server installation and certificate operations are explicit control-plane scripts, not hidden catalog resources.

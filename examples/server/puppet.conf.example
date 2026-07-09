@@ -1,0 +1,9 @@
+[main]
+server = puppet.example.test
+certname = puppet.example.test
+environment = production
+environmentpath = /etc/puppetlabs/code/environments
+
+[server]
+dns_alt_names = puppet,puppet.example.test
+autosign = false

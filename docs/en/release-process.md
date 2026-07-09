@@ -1,15 +1,12 @@
 # Release process
 
-The current release is `0.2.0` and is tagged `v0.2.0` after acceptance.
+1. Complete changes on a feature branch and merge them into `main` after CI.
+2. Update `VERSION`, module metadata, marker data, changelog, tests, and documentation together.
+3. Run `bundle exec rake` and relevant container tests.
+4. Create an annotated version tag on the approved `main` commit.
+5. Fast-forward or merge the same approved commit into `production` under branch protection.
+6. Push `main`, `production`, and the tag.
+7. Run the manual r10k deployment.
+8. Test one representative agent with no-op, then apply according to change control.
 
-1. update `VERSION`, both site-module metadata files, marker-version Hiera, and changelog;
-2. update English and German documentation;
-3. run Puppet 7 and Puppet 8 validation suites;
-4. run all supported container integration tests;
-5. capture reviewed VM no-op evidence;
-6. commit with a milestone-focused message;
-7. create an annotated semantic-version tag;
-8. push the commit and tag only after review.
-
-Never move an existing release tag. Correct a released defect with a new patch
-version.
+Never point `production` at an untested commit and never force-push it as a normal release action.

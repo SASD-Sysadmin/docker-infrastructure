@@ -1,11 +1,5 @@
-# Vorbereitung auf Puppet Server
+# Puppet-Server-Bereitschaft
 
-Milestone 2 installiert noch keinen Server, erhält aber den Serververtrag:
-Standard-`environment.conf`, Puppetfile für r10k, Klassifizierung in `site.pp`,
-Rollen/Profile unter `site-modules`, Hiera 5 mit `trusted.certname` sowie eine
-Git-basierte `config_version`.
+Milestone 3 setzt die vorbereitete Serverarchitektur um. Vor produktiver Nutzung müssen endgültiger DNS-/Zertifikatsname, Zeitsynchronisation, Branch-Schutz, verschlüsseltes CA-Backup mit Restore-Test, eingeschränkter Port 8140, Paketupdateverfahren, JVM-Speicher, manuelle CSR-Prüfung und ein repräsentativer Agent-No-op geklärt sein.
 
-Vor der Zentralisierung sind Paketquelle und Versionen, Branch-/Environment-
-Abbildung, CA- und Zertifikatsbetrieb, Backup, Reporting, Monitoring und der
-Nutzen von PuppetDB festzulegen. Agents klonen das Control Repository danach
-nicht mehr, sondern erhalten Kataloge vom Server.
+PuppetDB, HA, Webhooks und Policy-Autosigning sind bewusst spätere Entscheidungen.

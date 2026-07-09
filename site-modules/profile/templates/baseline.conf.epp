@@ -1,7 +1,14 @@
-<%- | String[1] $baseline_version, String[1] $os_name, String[1] $os_major | -%>
+<%- |
+  String[1] $baseline_version,
+  String[1] $os_name,
+  String[1] $os_major,
+  Enum['local-puppet-apply', 'puppet-server'] $management_mode,
+  String[1] $certname,
+| -%>
 # Managed by Puppet. Manual changes will be replaced.
 # Source: profile::baseline
 baseline_version=<%= $baseline_version %>
 platform=<%= $os_name %>
 platform_major=<%= $os_major %>
-management_mode=local-puppet-apply
+management_mode=<%= $management_mode %>
+trusted_certname=<%= $certname %>

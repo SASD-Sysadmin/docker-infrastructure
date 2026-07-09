@@ -1,18 +1,15 @@
 # Puppet Server readiness
 
-Milestone 2 does not install Puppet Server, but preserves the server contract:
+Milestone 3 implements the previously planned server-ready architecture. Before production use, verify:
 
-- standard `environment.conf` module path;
-- `Puppetfile` for r10k-managed dependencies;
-- classification isolated in `site.pp`;
-- roles and profiles in `site-modules`;
-- Hiera 5 with `trusted.certname` as the exceptional node layer;
-- Git-derived `config_version`;
-- no local-only absolute paths inside Puppet manifests;
-- Puppet 7/8-compatible code during the transition.
+- final DNS name and certificate alternative names;
+- reliable time synchronization;
+- protected `production` branch;
+- encrypted CA backup and tested restore;
+- restricted TCP/8140 access;
+- package-source entitlement and update process;
+- sufficient JVM memory;
+- manual CSR verification procedure;
+- one representative agent no-op after every deployment.
 
-Before central deployment, decide server/agent package provenance, supported
-versions, environment/branch mapping, CA lifecycle, certificate approval,
-backup, reporting, monitoring, and whether PuppetDB is justified. The local
-bootstrap must then be replaced by a server-agent enrollment workflow; agents
-must not clone the control repository.
+PuppetDB, HA, automated deployment hooks, and policy autosigning are not readiness requirements for this small first server but remain future design decisions.

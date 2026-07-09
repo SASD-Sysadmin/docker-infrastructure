@@ -1,25 +1,20 @@
 # Repository layout
 
+Important Milestone 3 paths:
+
 ```text
-puppet-software-baseline/
-├── .github/                 GitHub validation, dependency updates, templates
-├── data/                    Environment-level Hiera data
-├── docs/                    English, German, and ADR documentation
-├── manifests/site.pp        Node classification entry point
-├── modules/                 Generated third-party modules; never hand-maintained
-├── scripts/                 Validation, local apply, and config-version helpers
-├── site-modules/
-│   ├── profile/             SASD technical implementation profiles
-│   └── role/                Node-purpose compositions
-├── tests/                   Repository smoke tests and representative fixtures
-├── environment.conf         Per-environment Puppet settings
-├── hiera.yaml               Hiera 5 hierarchy
-├── Puppetfile               Pinned external module declarations
-├── Gemfile                  Development and CI dependencies
-├── Rakefile                 Unified verification tasks
-└── VERSION                  Repository and site-module version
+manifests/site.pp                  allowlisted classification
+data/                              Hiera policy and node data
+site-modules/{role,profile}/       SASD-owned Puppet code
+modules/                           r10k-generated dependencies (ignored)
+scripts/bootstrap-server.sh       fresh central server bootstrap
+scripts/deploy-environment.sh      manual locked r10k deployment
+scripts/bootstrap-central-agent.sh CSR submission and agent configuration
+scripts/activate-central-agent.sh  signed-certificate activation
+scripts/*certificate.sh            CA operator wrappers
+examples/{server,agent}/           non-secret configuration examples
+systemd/                           optional reviewed unit example
+tests/                             unit, fixture, dry-run, integration tests
+docs/{en,de}/                      bilingual operations documentation
+docs/adr/                          architecture decisions
 ```
-
-## Ownership boundaries
-
-`site-modules` is authoritative source code. `modules` is deployment output from r10k. `data` holds values, not implementation logic. `manifests/site.pp` classifies nodes but does not implement applications.

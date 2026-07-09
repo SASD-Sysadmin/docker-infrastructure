@@ -1,0 +1,5 @@
+---
+# Copy this file to <trusted-certname>.yaml and review it before deployment.
+# The value remains baseline in Milestone 3 because no application roles exist
+# yet. The example demonstrates certificate-bound node classification.
+sasd::role: baseline

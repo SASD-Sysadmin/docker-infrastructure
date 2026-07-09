@@ -14,7 +14,7 @@ Ist dieselbe Milestone-1-Historie bereits remote vorhanden:
 
 ```bash
 git push origin main
-git push origin v0.2.0
+git push origin main production --tags
 ```
 
 Einen bedeutungslosen GitHub-Platzhalter nur nach Fetch und Vergleich mit

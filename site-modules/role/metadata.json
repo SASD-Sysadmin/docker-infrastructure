@@ -1,6 +1,6 @@
 {
   "name": "sasd-role",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "SASD SysAdmin",
   "summary": "SASD node roles for the puppet-software-baseline control repository.",
   "license": "MIT",
@@ -10,7 +10,7 @@
   "dependencies": [
     {
       "name": "sasd-profile",
-      "version_requirement": ">= 0.2.0 < 1.0.0"
+      "version_requirement": ">= 0.3.0 < 1.0.0"
     }
   ],
   "requirements": [

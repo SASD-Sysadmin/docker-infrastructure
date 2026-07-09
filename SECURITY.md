@@ -1,24 +1,32 @@
 # Security policy
 
-## Reporting
+## Supported versions
 
-Do not disclose credentials, host inventories, internal addresses, logs, or
-private infrastructure data in a public issue. Use a private channel agreed with
-the repository owner.
+Milestone `0.3.x` is the currently maintained repository line.
 
-## Repository rules
+## Never commit
 
-- Never commit passwords, API keys, private keys, certificates, tokens, or Hiera secrets.
-- Pin external modules to reviewed versions or immutable Git references.
-- Review every no-op report before `--apply`.
-- Run initial enforcement in a disposable VM or after a tested snapshot.
-- Treat bootstrap and update scripts as privileged code.
-- Refuse dirty/non-fast-forward deployments rather than hiding local changes.
-- Do not bypass the supported-platform checks with synthetic os-release data.
+- private keys or certificates;
+- Puppet CA/agent SSL directories;
+- Forge/Puppet Core API keys;
+- Git deploy keys or access tokens;
+- passwords, Hiera eyaml private keys, keystores, or unredacted production reports.
 
-## Milestone 2 exposure
+Repository validation rejects common secret-bearing file extensions, but that is not a substitute for review and secret scanning.
 
-The active baseline installs standard-repository packages and owns one
-non-secret file under `/etc/sasd`. It does not open ports, start services, create
-users, add package repositories, or execute arbitrary commands. The bootstrap
-disables periodic Puppet agent services because no server exists yet.
+## Puppet trust model
+
+- Autosigning is disabled.
+- Every CSR must be independently associated with an intended inventory node.
+- Certnames are unique and stable.
+- CA backup is encrypted, offline, access-controlled, and restore-tested.
+- An existing CA must not be deleted or regenerated as casual troubleshooting.
+- Agents remain disabled until signed and explicitly activated.
+
+## Code deployment
+
+Only reviewed code promoted to `production` may be deployed to the production environment. Do not edit generated r10k environments. Protect both Git branches and tags; use least-privilege repository credentials on the server.
+
+## Reporting vulnerabilities
+
+Report security issues privately to the repository owner. Include affected version, reproduction, impact, and whether credentials or certificates may have been exposed. Do not open a public issue containing secrets.

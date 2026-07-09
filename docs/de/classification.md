@@ -1,11 +1,5 @@
-# Klassifizierung
+# Node-Klassifizierung
 
-In Milestone 2 weist `manifests/site.pp` jedem Knoten `role::baseline` zu. Das
-Profil prüft anschließend anhand strukturierter `os`-Fakten, ob die Plattform
-unterstützt wird. Dies ist eine kontrollierte Übergangslösung für ein kleines
-Labor und nicht das endgültige Flottenmodell.
+Hiera liefert `sasd::role`. `manifests/site.pp` ordnet den Wert über eine feste `case`-Allowlist einer Rollenklasse zu. Milestone 3 erlaubt ausschließlich `baseline`.
 
-Später kann Puppet Server über vertrauenswürdige Zertifikatsnamen, ein geprüftes
-Rollen-Fact oder einen External Node Classifier klassifizieren. Ein Knoten
-bekommt eine primäre Rolle, Rollen kombinieren Profile und knotenspezifische
-Hiera-Daten bleiben die Ausnahme.
+Knotenspezifische Dateien tragen den vertrauenswürdigen Certname, zum Beispiel `data/nodes/node01.example.test.yaml`. Klassen dürfen nicht dynamisch aus beliebigen Hiera-Strings inkludiert werden. Eine neue Rolle benötigt Manifest, Profile, Tests, Dokumentation und Release-Prüfung.

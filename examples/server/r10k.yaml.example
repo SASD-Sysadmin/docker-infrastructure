@@ -1,0 +1,8 @@
+---
+cachedir: /var/cache/r10k
+deploy:
+  purge_levels: [deployment, environment, puppetfile]
+sources:
+  sasd:
+    remote: 'https://github.com/SASD-Sysadmin/puppet-software-baseline.git'
+    basedir: '/etc/puppetlabs/code/environments'

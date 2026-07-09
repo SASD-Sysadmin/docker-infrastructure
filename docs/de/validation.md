@@ -1,19 +1,3 @@
-# Validierung und Tests
+# Validierung
 
-```bash
-bundle exec rake
-```
-
-Die Gesamtsuite prüft Shell, YAML, JSON, Struktur, Links, Secret-Dateitypen, die
-Paket-/Datei-Sicherheitsgrenze, Bootstrap-Fixtures, Puppet-/EPP-Syntax,
-puppet-lint, Metadaten, RSpec-Puppet und No-op-Kataloge.
-
-RSpec-Puppet kompiliert Debian 12, Debian 13 und Ubuntu 24.04, prüft Pakete,
-Dateirechte, Template-Inhalt und Rollenverkettung und muss Rocky Linux 9
-ablehnen.
-
-Für Fixture-Kataloge werden YAML-Fakten nur temporär als hoch gewichtete Custom
-Facts geladen. Sie sind bei `--apply` verboten.
-
-Der Container-Test installiert Puppet in einem Wegwerf-Container, wendet die
-Baseline zweimal an und prüft Pakete, Markierungsdatei und Idempotenz.
+`bundle exec rake` führt Format-, Struktur-, Link-, Secret-, Puppet-, RSpec- und Katalogprüfungen sowie alle Bootstrap-Dry-Runs aus. CI testet Puppet 7.23 und 8.10. Eine echte Serverinstallation wird nicht in öffentlicher CI erzeugt, weil Paketquellen Zugangsdaten verlangen können und eine dort erzeugte CA den produktiven Vertrauensprozess nicht sinnvoll prüft.

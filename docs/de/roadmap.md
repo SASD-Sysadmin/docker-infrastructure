@@ -1,19 +1,16 @@
 # Roadmap
 
-## Milestone 1 — abgeschlossen
+Abgeschlossen sind Grundgerüst, lokaler Baseline-Betrieb und zentraler Puppet Server mit r10k und manueller CA-Anbindung.
 
-Control-Repository-Grundlage ohne Workload.
+Mögliche nächste Stepstones:
 
-## Milestone 2 — abgeschlossen
+1. Serverhärtung und Selbstverwaltung;
+2. kleine Anwendungs-Installationsprofile;
+3. explizite Rollen für Server, Workstation und Entwicklung;
+4. Dienstekonsistenz mit Tests und Rollback;
+5. PuppetDB/PostgreSQL prüfen;
+6. verschlüsselte Hiera-Daten nur bei echtem Secret-Bedarf;
+7. Test-Environments und kontrollierte Deployment-Automatisierung;
+8. ausgewählte Red-Hat-Familie als Agenten.
 
-Standalone-Bootstrap, Debian-/Ubuntu-Unterstützung, erste Paket-/Datei-Baseline,
-Puppet-7/8-Tests und echte Container-Idempotenztests.
-
-## Mögliche nächste Stepstones
-
-1. getrennte Profile für Administration, Entwicklung, Monitoring und Container;
-2. Anwendungsgruppen und weitere Rollen;
-3. gezielte Dienst- und Konfigurationsprofile;
-4. sichere Paketentfernungs- und Migrationsregeln;
-5. Puppet Server, r10k-Environments und Zertifikatsbetrieb;
-6. Reports, Backups, Monitoring und optional PuppetDB.
+Puppet bleibt für Sollzustand zuständig, nicht für Incident-Reparaturen.

@@ -1,4 +1,8 @@
 ---
+# Node classification is allowlisted in manifests/site.pp. A node-specific file
+# may override this value only with another role explicitly accepted there.
+sasd::role: baseline
+
 # Automatic Parameter Lookup (APL) supplies these values to
 # profile::baseline. The unique merge permits a node or platform layer to add
 # packages without duplicating names already present here.
@@ -8,12 +12,12 @@ lookup_options:
 
 profile::baseline::manage_packages: true
 profile::baseline::manage_marker: true
-profile::baseline::baseline_version: '0.2.0'
+profile::baseline::baseline_version: '0.3.0'
 profile::baseline::marker_directory: '/etc/sasd'
 profile::baseline::marker_file: '/etc/sasd/puppet-baseline.conf'
 
 # Small, deliberately conservative administration baseline. Every package is
-# available from the standard repositories of all Milestone 2 platforms.
+# available from the standard repositories of all supported agent platforms.
 profile::baseline::packages:
   - ca-certificates
   - curl

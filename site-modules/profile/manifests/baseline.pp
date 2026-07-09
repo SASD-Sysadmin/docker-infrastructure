@@ -1,30 +1,38 @@
-# @summary Install the minimal SASD local-test package baseline and marker file.
+# @summary Install the minimal SASD package baseline and managed marker file.
 #
-# This profile is intentionally small. It proves that Hiera Automatic Parameter
-# Lookup, package management, file management, idempotence, and local
-# `puppet apply` all work on the supported Debian-family platforms. It does not
-# manage services, users, repositories, firewall rules, or arbitrary commands.
+# The same profile supports standalone `puppet apply` and central Puppet Server
+# catalogs. It derives a descriptive management mode from Puppet's trusted
+# authentication data but does not grant permissions or classify nodes from
+# that string. Classification remains in `manifests/site.pp`.
+#
+# Milestone 3 intentionally keeps the workload boundary unchanged: this profile
+# manages only packages and files. Puppet Server installation, CA lifecycle,
+# r10k deployment, and initial agent enrollment are bootstrap/control-plane
+# operations implemented by reviewed shell scripts outside the catalog.
 #
 # @param packages
 #   Package names merged from common and platform-specific Hiera data.
 # @param manage_packages
-#   Whether the package resources are declared. Disable only for controlled
-#   catalog experiments; the default baseline keeps this enabled.
+#   Whether package resources are declared.
 # @param manage_marker
-#   Whether `/etc/sasd` and the managed baseline marker are declared.
+#   Whether the SASD marker directory and file are declared.
 # @param marker_directory
-#   Absolute directory containing SASD-owned local configuration state.
+#   Absolute directory containing SASD-owned local state.
 # @param marker_file
 #   Absolute marker file rendered from the EPP template.
 # @param baseline_version
-#   Human-readable baseline revision written into the marker file.
+#   Repository baseline revision written into the marker file.
+# @param management_mode
+#   Optional explicit marker value. When undef, trusted authentication selects
+#   `puppet-server` for remote catalogs and `local-puppet-apply` otherwise.
 class profile::baseline (
-  Array[String[1]] $packages         = [],
-  Boolean          $manage_packages = true,
-  Boolean          $manage_marker   = true,
-  String[1]        $marker_directory = '/etc/sasd',
-  String[1]        $marker_file      = '/etc/sasd/puppet-baseline.conf',
-  String[1]        $baseline_version = '0.2.0',
+  Array[String[1]]                              $packages          = [],
+  Boolean                                       $manage_packages  = true,
+  Boolean                                       $manage_marker    = true,
+  String[1]                                     $marker_directory = '/etc/sasd',
+  String[1]                                     $marker_file      = '/etc/sasd/puppet-baseline.conf',
+  String[1]                                     $baseline_version = '0.3.0',
+  Optional[Enum['local-puppet-apply', 'puppet-server']] $management_mode = undef,
 ) {
   $os_name  = $facts['os']['name']
   $os_major = $facts['os']['release']['major']
@@ -35,7 +43,15 @@ class profile::baseline (
   )
 
   unless $supported_platform {
-    fail("profile::baseline does not support ${os_name} ${os_major}; supported platforms are Debian 12/13 and Ubuntu 24.04")
+    fail("profile::baseline does not support ${os_name} ${os_major}; supported agents are Debian 12/13 and Ubuntu 24.04")
+  }
+
+  $effective_management_mode = $management_mode ? {
+    undef   => $trusted['authenticated'] ? {
+      'remote' => 'puppet-server',
+      default  => 'local-puppet-apply',
+    },
+    default => $management_mode,
   }
 
   if $manage_packages and $packages != [] {
@@ -61,6 +77,8 @@ class profile::baseline (
         'baseline_version' => $baseline_version,
         'os_name'          => $os_name,
         'os_major'         => $os_major,
+        'management_mode'  => $effective_management_mode,
+        'certname'         => $trusted['certname'],
       }),
       require => File[$marker_directory],
     }

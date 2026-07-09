@@ -1,9 +1,5 @@
 # Release-Prozess
 
-Die aktuelle Version ist `0.2.0` und wird nach Abnahme als `v0.2.0` annotiert.
+Änderungen werden zunächst über Feature-Branch und Pull Request nach `main` integriert. Version, Modulmetadaten, Marker, Changelog, Tests und Dokumentation werden gemeinsam angepasst. Nach vollständiger Prüfung erhält der freigegebene Commit einen annotierten Tag und wird kontrolliert nach `production` übernommen. Danach erfolgt das manuelle r10k-Deployment und zunächst ein No-op auf einem repräsentativen Agent.
 
-Version, beide Modul-Metadaten, Marker-Version, Changelog sowie englische und
-deutsche Dokumentation müssen übereinstimmen. Danach folgen Puppet-7/8-Tests,
-Container-Integration, geprüfter VM-No-op, Commit und annotiertes Tag. Ein
-veröffentlichtes Tag wird niemals verschoben; Korrekturen erhalten eine neue
-Patch-Version.
+`production` darf im normalen Release-Prozess nicht auf einen ungeprüften Commit zeigen oder per Force-Push verändert werden.

@@ -1,33 +1,19 @@
 # Contributing
 
-English is the leading source language. Update German operational documentation when a change affects installation, validation, deployment, security, or administration.
+English is the leading repository language. User-facing operational changes should update the corresponding German document in the same pull request.
 
 ## Workflow
 
-1. Create a focused feature branch.
-2. Implement one reviewable desired-state change.
-3. Document Puppet classes with Puppet Strings-style comments.
-4. Add or update tests.
+1. Branch from `main`.
+2. Keep roles declarative and profiles focused.
+3. Put data in Hiera and classification in the allowlisted `site.pp` mapping.
+4. Add tests and Puppet Strings comments with every manifest change.
 5. Run `bundle exec rake`.
-6. Review local no-op output on a disposable representative system for productive changes.
-7. Open a pull request with scope, verification, and rollback notes.
+6. Open a pull request to `main`.
+7. Promote tested releases separately from `main` to `production`.
 
-## Puppet rules
+Never commit generated `modules/`, deployed environments, package credentials, certificates, private keys, or production reports.
 
-- roles compose profiles and do not declare operating-system resources;
-- profiles implement coherent capabilities;
-- third-party modules are pinned in `Puppetfile`;
-- Hiera contains values rather than implementation logic;
-- `exec` is a last resort and requires idempotence guards;
-- host-specific exceptions require explicit justification;
-- no secret or sensitive production value belongs in Git.
+## Milestone 3 boundaries
 
-## Commit messages
-
-Use imperative, focused messages, for example:
-
-```text
-Add baseline role compilation test
-Document Hiera precedence
-Prepare Debian agent bootstrap
-```
+Application catalogs may declare only package and file resources. Server installation and CA operations are explicit bootstrap scripts. Adding service/user/exec/firewall/application behavior is a new reviewed stepstone, not a drive-by change.

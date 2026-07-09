@@ -1,0 +1,8 @@
+[main]
+server = puppet.example.test
+certname = node01.example.test
+environment = production
+runinterval = 30m
+
+[agent]
+report = true

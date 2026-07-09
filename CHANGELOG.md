@@ -1,45 +1,34 @@
 # Changelog
 
-All notable changes are documented here. The format follows Keep a Changelog,
-and versions use semantic versioning.
+All notable changes are documented here. The project follows semantic versioning for repository milestones.
 
-## [Unreleased]
+## [0.3.0] - 2026-07-09
 
-### Planned
+### Added
 
-- Additional application groups and service/configuration stepstones.
+- Puppet Server bootstrap for Debian 12 and Ubuntu 24.04.
+- Distribution and authenticated Puppet Core package-source modes.
+- r10k configuration and explicit production deployment wrapper.
+- `production` branch/environment release model.
+- Central agent bootstrap and activation workflows.
+- Manual list, sign, and clean certificate wrappers.
+- Server status command, server/agent examples, and systemd deployment example.
+- Allowlisted Hiera role classification.
+- Central management mode and trusted certname in the baseline marker.
+- English and German server, CA, deployment, backup, migration, network, and troubleshooting guides.
+- Milestone 3 ADRs and dry-run tests.
+
+### Security
+
+- Autosigning explicitly disabled.
+- Existing CA is preserved and never silently regenerated.
+- Puppet Core credentials are accepted only through a restricted file.
+- Agent service remains disabled until certificate review and activation.
 
 ## [0.2.0] - 2026-07-09
 
-### Added
-
-- Complete Milestone 2 standalone local-test operation.
-- Safe Debian 12/13 and Ubuntu 24.04 bootstrap with distribution packages.
-- r10k Puppetfile deployment, Git fast-forward update, status, and locking.
-- First Hiera-driven administration package baseline.
-- Managed `/etc/sasd/puppet-baseline.conf` EPP marker.
-- Exact platform Hiera hierarchy and supported-platform rejection.
-- Puppet 7.23 and Puppet 8.10 CI validation.
-- RSpec-Puppet platform/resource tests and bootstrap fixtures.
-- Disposable-container apply/idempotence integration workflow.
-- English and German bootstrap, operation, baseline, platform, and rollback docs.
-- ADRs for package source, resource boundary, and disabled agent service.
-
-### Changed
-
-- Module compatibility widened from Puppet 8-only to Puppet 7.23 through 8.x.
-- Milestone 1 workload-free validation replaced by the Milestone 2 package/file scope gate.
+- Standalone local Puppet baseline for Debian 12/13 and Ubuntu 24.04.
 
 ## [0.1.0] - 2026-07-09
 
-### Added
-
-- Complete Milestone 1 Puppet control-repository foundation.
-- Workload-free `role::baseline` and `profile::baseline` class chain.
-- Hiera 5 data hierarchy, validation, tests, CI, and bilingual documentation.
-
-## [0.0.0] - 2026-07-09
-
-### Added
-
-- Initial repository scaffold.
+- Initial control-repository foundation.

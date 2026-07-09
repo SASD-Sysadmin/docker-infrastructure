@@ -20,7 +20,7 @@ docker run --rm --volume "${ROOT}:/source:ro" "${image}" bash -ceu '
   cd /work
   ./scripts/apply-local.sh --apply
   test -f /etc/sasd/puppet-baseline.conf
-  grep -q "baseline_version=0.2.0" /etc/sasd/puppet-baseline.conf
+  grep -q "baseline_version=0.3.0" /etc/sasd/puppet-baseline.conf
   first="$(sha256sum /etc/sasd/puppet-baseline.conf)"
   second_run="$(./scripts/apply-local.sh --apply 2>&1)"
   grep -q "completed successfully with no changes" <<<"${second_run}"

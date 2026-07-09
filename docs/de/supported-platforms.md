@@ -1,11 +1,7 @@
 # Unterstützte Plattformen
 
-| Betriebssystem | Release | Paketquelle | Puppet-Reihe |
-|---|---|---|---|
-| Debian | 12 Bookworm | Debian | 7.23 |
-| Debian | 13 Trixie | Debian | 8.10 |
-| Ubuntu | 24.04 LTS Noble | Ubuntu Universe | 8.4 |
+Als Puppet Server werden Debian 12 amd64 und Ubuntu 24.04 LTS amd64 unterstützt. Debian 13 wird für den Server bewusst nicht akzeptiert.
 
-Der Bootstrap prüft `/etc/os-release`; das Profil prüft Puppet-Fakten. Beide
-Grenzen sind notwendig. Architekturen sind nicht fest codiert; die tatsächliche
-Verfügbarkeit hängt von den Paketquellen der Distribution ab.
+Als verwaltete Agenten sind Debian 12, Debian 13 und Ubuntu 24.04 LTS vorgesehen. Die Modulmetadaten erlauben Puppet ab 7.23 bis vor 9.0; CI testet Puppet 7.23 und 8.10.
+
+Die Bootstrap-Skripte setzen Apt und systemd voraus. Andere Plattformen benötigen eine eigene getestete Umsetzung und dürfen nicht durch Umgehen der Prüfung eingeführt werden.

@@ -1,19 +1,16 @@
-# Classification
+# Node classification
 
-## Milestone 2
+Hiera supplies `sasd::role`. `manifests/site.pp` maps the value through an explicit case allowlist. Milestone 3 accepts only `baseline`.
 
-`manifests/site.pp` assigns every node to `role::baseline`. Platform support is
-then enforced inside `profile::baseline` using structured `os` facts. This is a
-controlled temporary classification for a small homogeneous lab, not the final
-fleet model.
+A per-node file is named after the trusted certificate name:
 
-## Future model
+```text
+data/nodes/node01.example.test.yaml
+```
 
-A Puppet Server deployment may classify by trusted certificate name, a reviewed
-custom role fact, or an external node classifier. Regardless of mechanism:
+```yaml
+---
+sasd::role: baseline
+```
 
-- one node receives one primary role;
-- roles compose profiles;
-- node-specific Hiera is exceptional;
-- classification data must not contain secrets;
-- role changes require a no-op review because they can alter many resources.
+Do not dynamically `include` arbitrary class names read from Hiera. A new role requires a manifest case branch, role class, profile composition, tests, documentation, and release review.

@@ -2,5 +2,5 @@
 
 ## `role::baseline`
 
-Composes the first SASD package and marker profile for supported local-test
-nodes.
+Composes the SASD package and marker profile for supported standalone and
+centrally managed agents. This is the only allowed role in Milestone 3.

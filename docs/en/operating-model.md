@@ -1,22 +1,5 @@
 # Operating model
 
-## Standalone phase — Milestone 2
+`main` receives reviewed development. `production` represents deployable policy. An operator promotes a tested commit, runs r10k manually, then validates with an agent no-op. Puppet agents enforce only after certificate admission and activation.
 
-Each lab node has a local clone, Puppet Agent command-line tools, and r10k. An
-operator updates and validates the clone, reviews a no-op report, and explicitly
-chooses whether to enforce. Periodic `puppet agent` services are disabled because
-no Puppet Server exists.
-
-```text
-operator -> git/r10k -> validate -> puppet apply --noop -> review -> --apply
-```
-
-The clone is expected under `/opt/sasd/puppet-software-baseline`, but scripts
-also work from a reviewed development clone.
-
-## Future central phase
-
-The Puppet Server will become the only component deploying the Git control
-repository. Agents will submit facts and receive authenticated compiled catalogs.
-The standalone scripts remain useful for development and controlled recovery,
-but no longer form the normal fleet distribution path.
+Local mode remains a lab/fallback path, but a node must not run local and central enforcement concurrently. Puppet Server bootstrap remains script-managed in Milestone 3 to avoid a circular dependency; later self-management is a separate stepstone.
