@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Apply each Milestone 7 application profile twice in a disposable container.
+# Apply each Milestone 9 application profile twice in a disposable container.
 set -euo pipefail
 ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd -P)"
 image="${1:?Usage: container-application-profiles.sh IMAGE PROFILE}"
 profile="${2:?Usage: container-application-profiles.sh IMAGE PROFILE}"
-case "${profile}" in administration_tools|development_tools|container_tools) ;; *) echo 'unsupported profile' >&2; exit 64;; esac
+case "${profile}" in administration_tools|development_tools|container_tools|java_sdk|php_sdk) ;; *) echo 'unsupported profile' >&2; exit 64;; esac
 command -v docker >/dev/null 2>&1 || { echo 'ERROR: docker not found' >&2; exit 127; }
 docker run --rm --volume "${ROOT}:/source:ro" "${image}" bash -ceu "
   export DEBIAN_FRONTEND=noninteractive

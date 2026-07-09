@@ -1,0 +1,6 @@
+# Managed by Puppet. Local changes are overwritten.
+sdk=java
+expected_java_major=<%= $java_major %>
+build_tool=maven
+packages=<%= $packages.sort.join(',') %>
+trusted_certname=<%= $certname %>

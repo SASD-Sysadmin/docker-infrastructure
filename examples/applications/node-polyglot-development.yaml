@@ -1,0 +1,5 @@
+---
+sasd::role: polyglot_development
+sasd::lifecycle_state: active
+sasd::owner: development
+sasd::description: Combined Java and PHP development workstation

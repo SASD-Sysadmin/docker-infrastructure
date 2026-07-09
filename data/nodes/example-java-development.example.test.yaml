@@ -1,0 +1,5 @@
+---
+sasd::role: java_development
+sasd::lifecycle_state: active
+sasd::owner: development
+sasd::description: Java development workstation with OpenJDK 17 and Maven

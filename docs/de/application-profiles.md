@@ -23,3 +23,24 @@ Die Pakete stammen aus den konfigurierten Debian-/Ubuntu-Repositories und werden
 ## Paketabbildungen nach OS-Familie
 
 Seit Milestone 7 stammen Paketnamen aus `data/os/family/Debian.yaml` oder `data/os/family/RedHat.yaml`. Die EL9-Abbildung enthält bewusst keine Pakete, die EPEL erfordern.
+
+## Java-SDK
+
+`profile::java_sdk` installiert das geprüfte OpenJDK-17-Entwicklungspaket und
+Maven für die jeweilige Betriebssystemfamilie. Es ändert keine Java-Alternativen,
+installiert kein SDKMAN, fügt kein Upstream-Repository hinzu und lädt keine
+Binärarchive herunter.
+
+## PHP-SDK
+
+`profile::php_sdk` installiert PHP-CLI, Entwicklungsheader und geprüfte
+Erweiterungen aus der Distribution. Composer gehört nur zur Debian-Abbildung.
+Das Profil installiert weder Webserver noch PHP-FPM oder PECL-Erweiterungen und
+ändert keinen EL9-AppStream-Modulstream.
+
+## SDK-Nachweis
+
+`profile::sdk_status` installiert `/usr/local/sbin/sasd-sdk-status` und verwaltet
+`/etc/sasd/toolchains.d`. Sprachprofile schreiben dort nicht sensitive
+Erwartungsdateien. Das Werkzeug meldet zugewiesene Toolchains und gefundene
+Programmversionen, verändert aber weder Pakete noch Alternativen.

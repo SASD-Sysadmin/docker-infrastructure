@@ -1,12 +1,15 @@
 {
   "schema_version": 1,
-  "version": "0.8.0",
+  "version": "0.9.0",
   "allowed_roles": [
     "managed_agent",
     "server",
     "development",
     "container_host",
-    "puppet_server"
+    "puppet_server",
+    "java_development",
+    "php_development",
+    "polyglot_development"
   ],
   "allowed_lifecycle_states": [
     "active",

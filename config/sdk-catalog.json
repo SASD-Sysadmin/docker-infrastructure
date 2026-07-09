@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "version": "0.9.0",
+  "profiles": {
+    "java_sdk": {
+      "purpose": "OpenJDK 17 command-line software development with Maven from distribution repositories.",
+      "supported_os_families": [
+        "Debian",
+        "RedHat"
+      ],
+      "java_major": 17,
+      "build_tool": "maven",
+      "external_repositories": false,
+      "manages_alternatives": false,
+      "starts_services": false
+    },
+    "php_sdk": {
+      "purpose": "Command-line PHP SDK and common development extensions from distribution repositories.",
+      "supported_os_families": [
+        "Debian",
+        "RedHat"
+      ],
+      "distribution_version_policy": {
+        "Debian 12": "8.2",
+        "Debian 13": "8.4",
+        "Ubuntu 24.04": "8.3",
+        "AlmaLinux 9": "distribution default",
+        "Rocky 9": "distribution default"
+      },
+      "composer_os_families": [
+        "Debian"
+      ],
+      "changes_module_streams": false,
+      "installs_web_server": false,
+      "starts_services": false,
+      "external_repositories": false
+    }
+  },
+  "deferred": {
+    "dotnet": "Requires a separate repository-trust and lifecycle ADR.",
+    "php_el9_stream_selection": "Changing AppStream module streams requires a separate reviewed migration step.",
+    "upstream_sdk_installers": "Curl-to-shell and vendor bootstrap installers are not allowed."
+  }
+}

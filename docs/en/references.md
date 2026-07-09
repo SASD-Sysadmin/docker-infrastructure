@@ -1,6 +1,6 @@
 # References
 
-Checked through Milestone 8 on 2026-07-09:
+Checked through Milestone 9 on 2026-07-09:
 
 - Puppet Core documentation: Hiera 5 hierarchies and the `eyaml_lookup_key` backend;
 - Puppet Core security guidance for sensitive data and Hiera eyaml;
@@ -23,3 +23,12 @@ pinned, reviewed, and tested independently before production use.
 - PuppetDB maintenance, node deactivation, and report retention: <https://help.puppet.com/pdb/current/topics/maintain_and_tune.htm>
 - PuppetDB TTL configuration: <https://help.puppet.com/pdb/current/topics/configure.htm>
 - Puppet SSL directory and identity material: <https://help.puppet.com/core/current/Content/PuppetCore/dirs_ssldir.htm>
+
+## Milestone 9
+
+- Ubuntu OpenJDK 17 package: <https://packages.ubuntu.com/noble/openjdk-17-jdk-headless>
+- Red Hat OpenJDK 17 installation: <https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/17/html/installing_and_using_red_hat_build_of_openjdk_17_on_rhel/installing-openjdk-on-rhel>
+- Red Hat Maven/OpenJDK development guidance: <https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/17/html/using_jdk_flight_recorder_with_red_hat_build_of_openjdk/maven-plugin>
+- RHEL 9 PHP installation and AppStream lifecycle: <https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/installing_and_using_dynamic_programming_languages/assembly_the-php-scripting-language_installing-and-using-dynamic-programming-languages>
+- Debian PHP development package: <https://packages.debian.org/trixie/php-dev>
+- Debian Composer package: <https://packages.debian.org/trixie/composer>

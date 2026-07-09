@@ -8,6 +8,8 @@ keys = %w[
   profile::administration_tools::packages
   profile::development_tools::packages
   profile::container_tools::packages
+  profile::java_sdk::packages
+  profile::php_sdk::packages
 ]
 pattern = /\A[a-zA-Z0-9][a-zA-Z0-9+._-]*\z/
 failures=[]; totals={}

@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.9.0] - 2026-07-09
+
+### Added
+
+- OpenJDK 17/Maven and distribution PHP SDK profiles;
+- Java, PHP, and polyglot development roles;
+- machine-readable SDK catalog and local SDK status command;
+- cross-platform package availability workflow, RSpec, smoke tests, ADRs, and bilingual runbooks.
+
+### Changed
+
+- repository and module versions are 0.9.0;
+- package policy now validates Java and PHP SDK groups for both OS families;
+- role catalog and classification allowlist include three explicit SDK roles.
+
+### Security
+
+- SDK profiles use configured distribution repositories only;
+- Composer remains Debian-family-only;
+- .NET, EPEL, SDKMAN, upstream installers, PHP web services, alternatives, and EL9 module-stream changes remain out of scope.
+
 ## [0.8.0] - 2026-07-09
 
 ### Added

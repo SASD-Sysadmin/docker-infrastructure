@@ -2,11 +2,20 @@
 
 ## Abgeschlossen
 
-Milestones 1 bis 8: Repository-Grundlage, lokaler Testbetrieb, Puppet Server, zentraler Regelbetrieb, Anwendungsprofile, Knoten-Lifecycle AlmaLinux-/Rocky-9-Agents, Monitoring-Export, Audit-Nachweise, Recovery-Proben und Betriebsrichtlinien.
+- Milestone 1: Control-Repository-Grundlage und Validierung.
+- Milestone 2: lokaler Paket-/Datei-Testbetrieb.
+- Milestone 3: zentraler Puppet Server, r10k und CA-Enrollment.
+- Milestone 4: Regelbetrieb, Reporting, Health, Backup und Rollback.
+- Milestone 5: Anwendungsprofile, explizite Rollen und Release-Absicherung.
+- Milestone 6: Knoten-Lifecycle, Inventar, Compliance und eyaml-Grundlage.
+- Milestone 7: AlmaLinux-/Rocky-9-Agents und plattformabhängige Paketdaten.
+- Milestone 8: Produktionsabsicherung, Monitoring-Export, Audit und Recovery-Probe.
+- Milestone 9: geprüfte OpenJDK-17-/Maven- und PHP-CLI-SDK-Profile mit expliziten Entwicklungsrollen.
 
-## Mögliche nächste Stepstones
+## Mögliche Stepstones nach 0.9.0
 
-1. Java- und PHP-SDK-Profile aus Distributionsquellen; .NET wegen abweichendem Repository-Vertrauen separat planen.
-2. eyaml erst für ein konkretes Secret-verbrauchendes Profil aktivieren.
-3. Einen vollständigen CA- und eyaml-Service-Restore auf einem isolierten Ersatzserver testen.
-4. EL10 erst nach eigener Puppet- und Paketvalidierung prüfen.
+1. Hiera eyaml erst für ein konkretes Secret-verbrauchendes Profil aktivieren.
+2. Einen vollständigen CA- und eyaml-Service-Restore auf einem isolierten Ersatzserver testen.
+3. EL10 erst nach eigener Puppet- und Paketvalidierung prüfen.
+4. Einen zweiten Compiler erst bei messbarem Last- oder Verfügbarkeitsbedarf bewerten.
+5. .NET in einem separaten ADR mit Repository-, Schlüssel- und Servicing-Modell planen.

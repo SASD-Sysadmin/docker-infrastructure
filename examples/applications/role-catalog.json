@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "0.8.0",
+  "version": "0.9.0",
   "roles": {
     "baseline": {
       "central_only": false,
@@ -72,6 +72,52 @@
         "monitoring_bridge"
       ],
       "purpose": "Central Puppet Server, CA, operational health, and monitoring export."
+    },
+    "java_development": {
+      "central_only": true,
+      "profiles": [
+        "baseline",
+        "platform_state",
+        "administration_tools",
+        "development_tools",
+        "sdk_status",
+        "java_sdk",
+        "lifecycle_state",
+        "application_state",
+        "agent_service"
+      ],
+      "purpose": "Java development host with OpenJDK 17 and Maven."
+    },
+    "php_development": {
+      "central_only": true,
+      "profiles": [
+        "baseline",
+        "platform_state",
+        "administration_tools",
+        "development_tools",
+        "sdk_status",
+        "php_sdk",
+        "lifecycle_state",
+        "application_state",
+        "agent_service"
+      ],
+      "purpose": "PHP command-line development host."
+    },
+    "polyglot_development": {
+      "central_only": true,
+      "profiles": [
+        "baseline",
+        "platform_state",
+        "administration_tools",
+        "development_tools",
+        "sdk_status",
+        "java_sdk",
+        "php_sdk",
+        "lifecycle_state",
+        "application_state",
+        "agent_service"
+      ],
+      "purpose": "Combined Java and PHP command-line development host."
     }
   }
 }

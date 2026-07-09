@@ -44,7 +44,16 @@ case $assigned_role {
   'puppet_server': {
     include role::puppet_server
   }
+  'java_development': {
+    include role::java_development
+  }
+  'php_development': {
+    include role::php_development
+  }
+  'polyglot_development': {
+    include role::polyglot_development
+  }
   default: {
-    fail("Unsupported sasd::role '${assigned_role}'. Allowed roles: baseline, managed_agent, server, development, container_host, puppet_server")
+    fail("Unsupported sasd::role '${assigned_role}'. Allowed roles: baseline, managed_agent, server, development, container_host, puppet_server, java_development, php_development, polyglot_development")
   }
 }

@@ -34,3 +34,23 @@ Packages use the target system's configured Debian/Ubuntu repositories with `ens
 ## OS-family package mappings
 
 Since Milestone 7, profile package names are supplied by `data/os/family/Debian.yaml` or `data/os/family/RedHat.yaml`. The EL9 mapping intentionally excludes packages that would require EPEL.
+
+## Java SDK
+
+`profile::java_sdk` installs the reviewed OpenJDK 17 development package and
+Maven package for the target OS family. It does not select Java alternatives,
+install SDKMAN, add an upstream repository, or download binary archives.
+
+## PHP SDK
+
+`profile::php_sdk` installs the distribution PHP CLI, development headers, and
+reviewed extensions. Composer is included only in the Debian-family mapping.
+The profile does not install a web server, PHP-FPM, PECL extensions, upstream
+installers, or change the EL9 AppStream module.
+
+## SDK evidence
+
+`profile::sdk_status` installs `/usr/local/sbin/sasd-sdk-status` and owns
+`/etc/sasd/toolchains.d`. Language profiles write non-secret expectation files
+there. The helper reports assigned toolchains and observed command versions but
+does not alter packages or alternatives.

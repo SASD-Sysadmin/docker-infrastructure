@@ -1,0 +1,58 @@
+---
+name: SDK profiles
+on:
+  push:
+    branches: [main, test, production]
+    paths:
+      - 'config/sdk-catalog.json'
+      - 'data/os/family/**'
+      - 'site-modules/profile/**'
+      - 'site-modules/role/**development*'
+      - 'scripts/check_sdk_catalog.py'
+      - 'scripts/check_milestone9_scope.py'
+      - 'tests/smoke/sdk-*'
+      - 'tests/integration/sdk-package-availability.sh'
+      - '.github/workflows/sdk-profiles.yml'
+  pull_request:
+    paths:
+      - 'config/sdk-catalog.json'
+      - 'data/os/family/**'
+      - 'site-modules/**'
+      - 'scripts/check_sdk_catalog.py'
+      - 'scripts/check_milestone9_scope.py'
+      - 'tests/smoke/sdk-*'
+      - 'tests/integration/sdk-package-availability.sh'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  contract:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: Validate SDK contract
+        run: |
+          tests/smoke/sdk-profiles.sh
+          tests/smoke/sdk-status.sh
+  packages:
+    name: ${{ matrix.profile }} on ${{ matrix.image }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {image: 'debian:12', family: Debian, profile: java_sdk}
+          - {image: 'debian:13', family: Debian, profile: java_sdk}
+          - {image: 'ubuntu:24.04', family: Debian, profile: java_sdk}
+          - {image: 'rockylinux:9', family: RedHat, profile: java_sdk}
+          - {image: 'almalinux:9', family: RedHat, profile: java_sdk}
+          - {image: 'debian:12', family: Debian, profile: php_sdk}
+          - {image: 'debian:13', family: Debian, profile: php_sdk}
+          - {image: 'ubuntu:24.04', family: Debian, profile: php_sdk}
+          - {image: 'rockylinux:9', family: RedHat, profile: php_sdk}
+          - {image: 'almalinux:9', family: RedHat, profile: php_sdk}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Verify reviewed packages
+        run: tests/integration/sdk-package-availability.sh '${{ matrix.image }}' '${{ matrix.family }}' '${{ matrix.profile }}'

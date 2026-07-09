@@ -10,7 +10,7 @@ describe 'profile::baseline' do
       it { is_expected.to contain_file('/etc/sasd').with(ensure:'directory',owner:'root',group:'root',mode:'0755') }
       it 'renders identity and version' do
         content=catalogue.resource('File','/etc/sasd/puppet-baseline.conf')[:content]
-        expect(content).to include('baseline_version=0.8.0')
+        expect(content).to include('baseline_version=0.9.0')
         expect(content).to include("trusted_certname=#{platform_facts[:networking]['fqdn']}")
       end
     end

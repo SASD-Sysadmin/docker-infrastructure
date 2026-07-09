@@ -44,3 +44,19 @@ profile::container_tools::packages:
   - skopeo
   - slirp4netns
   - uidmap
+
+profile::java_sdk::packages:
+  - maven
+  - openjdk-17-jdk-headless
+
+profile::php_sdk::packages:
+  - composer
+  - php-cli
+  - php-common
+  - php-curl
+  - php-dev
+  - php-mbstring
+  - php-mysql
+  - php-sqlite3
+  - php-xml
+  - php-zip

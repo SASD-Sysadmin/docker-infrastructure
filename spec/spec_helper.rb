@@ -19,12 +19,16 @@ PACKAGE_EXPECTATIONS = {
     baseline:%w[ca-certificates curl git jq lsof procps python3 rsync tree unzip],
     administration_tools:%w[acl attr bash-completion dnsutils file htop less nano netcat-openbsd psmisc sudo tcpdump vim zip],
     development_tools:%w[build-essential gdb pkg-config python3-dev python3-pip python3-venv shellcheck],
-    container_tools:%w[buildah fuse-overlayfs podman skopeo slirp4netns uidmap]
+    container_tools:%w[buildah fuse-overlayfs podman skopeo slirp4netns uidmap],
+    java_sdk:%w[maven openjdk-17-jdk-headless],
+    php_sdk:%w[composer php-cli php-common php-curl php-dev php-mbstring php-mysql php-sqlite3 php-xml php-zip]
   },
   RedHat:{
     baseline:%w[ca-certificates curl git jq lsof procps-ng python3 rsync tar tree unzip],
     administration_tools:%w[acl attr bash-completion bind-utils file less nano nmap-ncat psmisc sudo tcpdump vim-enhanced zip],
     development_tools:%w[gcc gcc-c++ gdb make pkgconf-pkg-config python3-devel python3-pip],
-    container_tools:%w[buildah fuse-overlayfs podman shadow-utils skopeo slirp4netns]
+    container_tools:%w[buildah fuse-overlayfs podman shadow-utils skopeo slirp4netns],
+    java_sdk:%w[java-17-openjdk-devel maven],
+    php_sdk:%w[php-cli php-common php-devel php-mbstring php-mysqlnd php-opcache php-pdo php-process php-xml]
   }
 }.freeze

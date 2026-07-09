@@ -1,6 +1,6 @@
 # Referenzen
 
-Bis Milestone 8 am 09.07.2026 geprüft:
+Bis Milestone 9 am 09.07.2026 geprüft:
 
 - Puppet-Core-Dokumentation zu Hiera 5 und `eyaml_lookup_key`;
 - Puppet-Sicherheitshinweise zu sensitiven Daten und Hiera eyaml;
@@ -19,3 +19,12 @@ Bis Milestone 8 am 09.07.2026 geprüft:
 - PuppetDB-Wartung, Node-Deaktivierung und Report-Aufbewahrung: <https://help.puppet.com/pdb/current/topics/maintain_and_tune.htm>
 - PuppetDB-TTL-Konfiguration: <https://help.puppet.com/pdb/current/topics/configure.htm>
 - Puppet-SSL-Verzeichnis und Identitätsmaterial: <https://help.puppet.com/core/current/Content/PuppetCore/dirs_ssldir.htm>
+
+## Milestone 9
+
+- Ubuntu-Paket OpenJDK 17: <https://packages.ubuntu.com/noble/openjdk-17-jdk-headless>
+- Red-Hat-Dokumentation zur OpenJDK-17-Installation: <https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/17/html/installing_and_using_red_hat_build_of_openjdk_17_on_rhel/installing-openjdk-on-rhel>
+- Red-Hat-Dokumentation zu Maven und OpenJDK: <https://docs.redhat.com/en/documentation/red_hat_build_of_openjdk/17/html/using_jdk_flight_recorder_with_red_hat_build_of_openjdk/maven-plugin>
+- RHEL-9-Dokumentation zu PHP und AppStream: <https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/installing_and_using_dynamic_programming_languages/assembly_the-php-scripting-language_installing-and-using-dynamic-programming-languages>
+- Debian-PHP-Entwicklungspaket: <https://packages.debian.org/trixie/php-dev>
+- Debian-Composer-Paket: <https://packages.debian.org/trixie/composer>

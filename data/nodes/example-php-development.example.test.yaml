@@ -1,0 +1,5 @@
+---
+sasd::role: php_development
+sasd::lifecycle_state: active
+sasd::owner: development
+sasd::description: PHP command-line development workstation

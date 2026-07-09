@@ -46,3 +46,20 @@ profile::container_tools::packages:
   - shadow-utils
   - skopeo
   - slirp4netns
+
+profile::java_sdk::packages:
+  - java-17-openjdk-devel
+  - maven
+
+# Composer is intentionally absent: EPEL and upstream installers are outside
+# the reviewed trust boundary.
+profile::php_sdk::packages:
+  - php-cli
+  - php-common
+  - php-devel
+  - php-mbstring
+  - php-mysqlnd
+  - php-opcache
+  - php-pdo
+  - php-process
+  - php-xml

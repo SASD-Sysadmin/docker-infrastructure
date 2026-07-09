@@ -39,3 +39,9 @@ Puppet uses manifests and classes; operational procedures are documented as runb
 - `recovery-readiness.py` / `rehearse-recovery.sh`;
 - `upgrade-preflight.sh`;
 - `generate-puppetdb-retention.py` / `deactivate-puppetdb-node.sh`.
+
+## Milestone 9 SDK checks
+
+- `check_sdk_catalog.py` validates SDK policy and role/package parity.
+- `check_milestone9_scope.py` blocks upstream installers, services, alternatives, EL module-stream changes, and .NET.
+- Managed SDK nodes use `/usr/local/sbin/sasd-sdk-status` for read-only local evidence.

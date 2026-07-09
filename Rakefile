@@ -5,7 +5,7 @@ def run_script(path,*args) sh(File.join(ROOT,path),*args) end
 desc 'Run all static validation checks in strict mode'; task(:validate){run_script('scripts/validate.sh','--strict')}
 desc 'Compile supported agent fixture catalogs'; task(:catalog){run_script('scripts/test-catalog.sh')}
 desc 'Run RSpec-Puppet unit tests'; task(:spec){sh('bundle','exec','rspec','site-modules')}
-desc 'Run Milestone 8 smoke tests'
+desc 'Run Milestone 9 smoke tests'
 task(:smoke) do
   %w[
     tests/smoke/bootstrap-dry-run.sh
@@ -32,6 +32,8 @@ task(:smoke) do
     tests/smoke/recovery-rehearsal.sh
     tests/smoke/upgrade-preflight.sh
     tests/smoke/puppetdb-retention.sh
+    tests/smoke/sdk-profiles.sh
+    tests/smoke/sdk-status.sh
   ].each { |path| run_script(path) }
 end
-desc 'Run complete Milestone 8 verification suite'; task default: %i[validate spec catalog smoke]
+desc 'Run complete Milestone 9 verification suite'; task default: %i[validate spec catalog smoke]

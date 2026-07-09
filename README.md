@@ -2,9 +2,9 @@
 
 [Deutsche Dokumentation](README.de.md)
 
-> **Status:** Milestone 8 complete (`0.8.0`). The first repository line now includes production assurance, aggregate monitoring export, audit evidence, isolated recovery rehearsal, and upgrade/PuppetDB policy checks.
+> **Status:** Milestone 9 complete (`0.9.0`). Reviewed Java and PHP command-line SDK profiles now extend the existing cross-platform application baseline.
 
-A conservative Puppet control repository for installing reviewed applications and maintaining consistent package, file, service, lifecycle, and operational state across SASD systems. Puppet manifests describe durable state; operational scripts and runbooks cover enrollment, promotion, backup, recovery rehearsal, and lifecycle actions.
+A conservative Puppet control repository for installing reviewed applications and maintaining consistent package, file, service, lifecycle, and operational state across SASD systems.
 
 ## Supported platforms
 
@@ -18,39 +18,30 @@ A conservative Puppet control repository for installing reviewed applications an
 
 Puppet Server remains supported on Debian 12 and Ubuntu 24.04 only.
 
-## Milestone 8 highlights
+## Milestone 9 highlights
 
-- aggregate Prometheus, JSON, and Nagios-compatible monitoring export without per-node metric labels;
-- checksum-verifiable audit bundles that exclude private keys and secret values;
-- backup metadata, readiness inspection, and an isolated recovery rehearsal;
-- read-only upgrade preflight and reviewed PuppetDB retention/deactivation policy;
-- complete Debian-family and RedHat-family package maps with fixed allowlisted roles;
-- no EPEL, firewall, SELinux, arbitrary repair commands, live restore, or automatic production deployment.
+- OpenJDK 17 and Maven profile on every supported agent platform;
+- command-line PHP SDK from distribution/AppStream repositories;
+- Composer from Debian-family repositories only;
+- explicit `java_development`, `php_development`, and `polyglot_development` roles;
+- read-only `sasd-sdk-status` evidence command;
+- no vendor bootstrap installers, EPEL, SDKMAN, .NET, web server, PHP-FPM, or automatic module-stream changes.
 
 ## First commands
 
 ```bash
 ./scripts/validate.sh
+python3 scripts/check_sdk_catalog.py
 ruby scripts/node-inventory.rb
-python3 scripts/check_operations_policy.py
-```
-
-Generate operational evidence:
-
-```bash
-sudo ./scripts/generate-audit-bundle.sh --output-directory /srv/audit/puppet
-python3 ./scripts/recovery-readiness.py /secure/puppet-control-plane-backup.tar.gz
 ```
 
 ## Documentation
 
-- [Milestone 8](docs/en/milestone-8.md)
-- [Milestone 8 runbook](docs/en/milestone-8-runbook.md)
-- [Monitoring integration](docs/en/monitoring-integration.md)
-- [Audit evidence](docs/en/audit-evidence.md)
-- [Disaster recovery rehearsal](docs/en/disaster-recovery-rehearsal.md)
-- [Upgrade and maintenance](docs/en/upgrade-maintenance.md)
-- [PuppetDB retention](docs/en/puppetdb-retention.md)
+- [Milestone 9](docs/en/milestone-9.md)
+- [Milestone 9 runbook](docs/en/milestone-9-runbook.md)
+- [Java SDK](docs/en/java-sdk.md)
+- [PHP SDK](docs/en/php-sdk.md)
+- [SDK status and validation](docs/en/sdk-status-and-validation.md)
 - [Architecture](docs/en/architecture.md)
 - [Security](docs/en/security.md)
 - [Roadmap](docs/en/roadmap.md)

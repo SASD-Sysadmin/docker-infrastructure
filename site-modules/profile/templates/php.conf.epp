@@ -1,0 +1,7 @@
+# Managed by Puppet. Local changes are overwritten.
+sdk=php
+version_policy=distribution
+composer_expected=<%= $composer_expected %>
+web_server_managed=false
+packages=<%= $packages.sort.join(',') %>
+trusted_certname=<%= $certname %>
