@@ -15,10 +15,11 @@ class role::puppet_server {
   contain profile::lifecycle_state
   class { 'profile::application_state':
     role_name        => 'puppet_server',
-    enabled_profiles => ['baseline', 'platform_state', 'administration_tools', 'lifecycle_state', 'server_operations'],
+    enabled_profiles => ['baseline', 'platform_state', 'administration_tools', 'lifecycle_state', 'server_operations', 'monitoring_bridge'],
   }
   contain profile::agent_service
   contain profile::server_operations
+  contain profile::monitoring_bridge
 
   Class['profile::baseline']
   -> Class['profile::platform_state']
@@ -27,4 +28,5 @@ class role::puppet_server {
   -> Class['profile::application_state']
   -> Class['profile::agent_service']
   -> Class['profile::server_operations']
+  -> Class['profile::monitoring_bridge']
 }

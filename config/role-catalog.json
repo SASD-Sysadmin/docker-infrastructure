@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "0.7.0",
+  "version": "0.8.0",
   "roles": {
     "baseline": {
       "central_only": false,
@@ -68,9 +68,10 @@
         "lifecycle_state",
         "application_state",
         "agent_service",
-        "server_operations"
+        "server_operations",
+        "monitoring_bridge"
       ],
-      "purpose": "Central Puppet Server and CA control plane."
+      "purpose": "Central Puppet Server, CA, operational health, and monitoring export."
     }
   }
 }

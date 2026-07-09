@@ -9,13 +9,12 @@
 - Milestone 5: application profiles, explicit roles, policy, release assurance.
 - Milestone 6: node lifecycle, inventory/compliance, guarded decommissioning, opt-in encrypted-data foundation.
 - Milestone 7: AlmaLinux/Rocky 9 agents and reviewed cross-family package mappings.
+- Milestone 8: production assurance, monitoring export, audit evidence, isolated recovery rehearsal, upgrade preflight, and PuppetDB retention policy.
 
-## Candidate stepstones after 0.7.0
+## Candidate stepstones after 0.8.0
 
-1. Integrate compliance JSON into the independent monitoring platform.
-2. Add Java and PHP SDK profiles from distribution repositories; design .NET separately because repository trust differs.
-3. Enable Hiera eyaml only for a concrete secret-consuming profile after key custody and recovery tests.
-4. Define PuppetDB retention and node-deactivation policy if PuppetDB becomes production-critical.
-5. Test full CA and encrypted-data disaster recovery on an isolated replacement server.
-6. Evaluate EL10 agents only after Puppet and application-package validation.
-7. Evaluate a second compiler only when measured load or availability requirements justify it.
+1. Add Java and PHP SDK profiles from distribution repositories; design .NET separately because repository trust differs.
+2. Enable Hiera eyaml only for a concrete secret-consuming profile after key custody and recovery tests.
+3. Test a full service-level CA and encrypted-data restore on an isolated replacement server.
+4. Evaluate EL10 agents only after Puppet and application-package validation.
+5. Evaluate a second compiler only when measured load or availability requirements justify it.

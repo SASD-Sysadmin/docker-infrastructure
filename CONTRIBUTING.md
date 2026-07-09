@@ -31,3 +31,7 @@ not in `data/common.yaml`. A change affecting Debian-family or RedHat-family
 packages must pass `ruby scripts/check_package_policy.rb`, platform catalog
 validation, catalog tests, and the appropriate container availability workflow.
 Do not add EPEL or another vendor repository as an incidental package fix.
+
+## Milestone 8 operational changes
+
+Changes to monitoring labels, audit-bundle contents, backup/recovery handling, PuppetDB TTL values, or upgrade compatibility must update `config/operations-policy.json`, the relevant ADR/runbook, and smoke tests. Live restore automation and immediate PuppetDB deletion are not accepted in this repository line.

@@ -1,0 +1,16 @@
+[Unit]
+Description=SASD Puppet monitoring snapshot
+After=puppetserver.service
+Wants=puppetserver.service
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+ExecStart=/usr/local/sbin/sasd-puppet-monitoring-snapshot --output-directory <%= $output_directory %>
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=<%= $output_directory %>
+UMask=0027

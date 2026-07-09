@@ -31,3 +31,11 @@ Puppet uses manifests and classes; operational procedures are documented as runb
   firewall mutations.
 - `bootstrap-central-agent.sh` supports authenticated Puppet Core packages on
   AlmaLinux 9 and Rocky Linux 9.
+
+## Milestone 8 assurance tools
+
+- `export-monitoring.py` and `generate-monitoring-snapshot.sh`;
+- `generate-audit-bundle.sh` / `verify-audit-bundle.sh`;
+- `recovery-readiness.py` / `rehearse-recovery.sh`;
+- `upgrade-preflight.sh`;
+- `generate-puppetdb-retention.py` / `deactivate-puppetdb-node.sh`.

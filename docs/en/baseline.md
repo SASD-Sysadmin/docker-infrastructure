@@ -1,7 +1,7 @@
 # Baseline
 
 Milestone 7 retains the conservative package/file baseline and reviewed
-application profiles. `/etc/sasd/puppet-baseline.conf` records version `0.7.0`,
+application profiles. `/etc/sasd/puppet-baseline.conf` records version `0.8.0`,
 platform, management mode, and trusted certname.
 
 Central roles additionally write:

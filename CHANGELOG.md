@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.8.0] - 2026-07-09
+
+### Added
+
+- low-cardinality monitoring bridge with Prometheus, JSON, and Nagios-compatible output;
+- no-secret audit evidence bundles with internal and external SHA-256 verification;
+- backup metadata, recovery readiness inspection, and isolated recovery rehearsal;
+- read-only upgrade preflight and machine-readable operations policy;
+- reviewed PuppetDB retention candidate and guarded node deactivation;
+- Milestone 8 Puppet profile, RSpec, smoke tests, CI, ADRs, and bilingual runbooks.
+
+### Changed
+
+- repository and module versions are 0.8.0;
+- Puppet Server role now includes the monitoring bridge;
+- control-plane backups include `/etc/sasd-puppet` when present and structured backup metadata.
+
+### Security
+
+- monitoring metrics exclude certname labels;
+- audit bundles exclude private keys and secret values;
+- recovery tooling cannot restore live paths;
+- PuppetDB immediate deletion and automatic upgrades remain disabled.
+
 ## [0.7.0] - 2026-07-09
 
 ### Added

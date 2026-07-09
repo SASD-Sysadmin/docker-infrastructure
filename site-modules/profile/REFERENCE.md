@@ -26,3 +26,11 @@ Puppet Server health/reporting directories, command, timer, and service.
 Writes non-secret lifecycle evidence for centrally managed nodes. Maintenance
 requires reason, ticket, and UTC expiry. Retired nodes are rejected by
 `manifests/site.pp` before this class is compiled.
+
+## `profile::monitoring_bridge`
+
+Installs protected aggregate compliance/health exports and a hardened systemd timer. It does not install Prometheus, Grafana, node_exporter, listeners, or firewall rules.
+
+## `profile::systemd_reload`
+
+Defines the single refresh-only `systemctl daemon-reload` resource shared by operational systemd profiles.

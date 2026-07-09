@@ -12,7 +12,9 @@ describe 'role::puppet_server' do
   it { is_expected.to contain_class('profile::application_state') }
   it { is_expected.to contain_class('profile::agent_service') }
   it { is_expected.to contain_class('profile::server_operations') }
+  it { is_expected.to contain_class('profile::monitoring_bridge') }
   it { is_expected.to contain_service('sasd-puppet-health.timer') }
+  it { is_expected.to contain_service('sasd-puppet-monitoring.timer') }
 end
 
 

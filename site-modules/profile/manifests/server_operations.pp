@@ -15,6 +15,8 @@ class profile::server_operations (
   Pattern[/^\//] $health_directory = '/var/lib/sasd-puppet/health',
   String[1]             $health_interval = '15min',
 ) {
+  contain profile::systemd_reload
+
   unless $trusted['authenticated'] == 'remote' {
     fail('profile::server_operations requires a remotely authenticated Puppet Server catalog')
   }
@@ -62,11 +64,6 @@ class profile::server_operations (
       'health_interval' => $health_interval,
     }),
     notify  => Exec['reload systemd for SASD Puppet operations'],
-  }
-
-  exec { 'reload systemd for SASD Puppet operations':
-    command     => '/bin/systemctl daemon-reload',
-    refreshonly => true,
   }
 
   service { 'sasd-puppet-health.timer':

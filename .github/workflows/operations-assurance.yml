@@ -1,0 +1,20 @@
+name: Operations assurance
+
+on:
+  push:
+    branches: [main, test, production]
+  pull_request:
+
+jobs:
+  assurance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Validate policy and scripts
+        run: |
+          python3 scripts/check_operations_policy.py
+          bash tests/smoke/monitoring-export.sh
+          bash tests/smoke/audit-bundle.sh
+          bash tests/smoke/recovery-rehearsal.sh
+          bash tests/smoke/upgrade-preflight.sh
+          bash tests/smoke/puppetdb-retention.sh

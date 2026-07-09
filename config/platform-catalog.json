@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "0.7.0",
+  "version": "0.8.0",
   "platforms": {
     "debian-12": {
       "os_name": "Debian",

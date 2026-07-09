@@ -20,3 +20,7 @@ temporary clones, and disposable containers.
 `tests/integration/redhat-package-availability.sh` installs the reviewed EL9
 package groups in disposable Rocky Linux 9 and AlmaLinux 9 containers. Catalog
 fixtures cover both operating systems without requiring repository credentials.
+
+## Milestone 8
+
+Smoke tests cover monitoring export, no-secret audit bundles, isolated recovery rehearsal, upgrade preflight, and PuppetDB retention/deactivation guards.

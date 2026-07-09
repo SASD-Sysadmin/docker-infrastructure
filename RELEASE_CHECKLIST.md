@@ -34,3 +34,13 @@
 - [ ] `tests/smoke/redhat-family.sh` passes.
 - [ ] Rocky/Alma package-availability workflow passes.
 - [ ] No EL9 API key or generated repository credential is tracked.
+
+## Milestone 8 assurance checks
+
+- [ ] operations policy validation passes;
+- [ ] monitoring export contains no certname labels;
+- [ ] audit bundle verifies and contains no private key files;
+- [ ] a recent control-plane backup passes recovery readiness;
+- [ ] isolated recovery rehearsal is recorded;
+- [ ] upgrade preflight passes or warnings are approved;
+- [ ] PuppetDB retention candidate is reviewed before installation.

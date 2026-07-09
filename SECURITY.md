@@ -45,3 +45,7 @@ access. Supply the API key only through a root-owned file without group or world
 permissions. The generated Yum repository file contains reusable credentials
 and is forced to mode `0600`. Never commit either file, paste it into an issue,
 or include it unredacted in a support bundle.
+
+## Milestone 8 operational evidence
+
+Monitoring output is aggregate and must not expose certnames as metric labels. Audit bundles must not contain private keys, credentials, eyaml plaintext, full reports, or control-plane backups. Recovery rehearsal directories contain sensitive backup material and must remain mode-restricted, isolated, and securely destroyed after review.

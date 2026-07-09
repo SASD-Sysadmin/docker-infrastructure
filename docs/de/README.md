@@ -2,6 +2,8 @@
 
 ## Einstieg
 
+- [Milestone 8](milestone-8.md)
+- [Milestone 8 runbook](milestone-8-runbook.md)
 - [Milestone 7](milestone-7.md)
 - [Milestone-7-Runbook](milestone-7-runbook.md)
 - [Architektur](architecture.md)

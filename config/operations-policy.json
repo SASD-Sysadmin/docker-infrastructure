@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "version": "0.8.0",
+  "monitoring": {
+    "max_report_age_seconds": 7200,
+    "output_directory": "/var/lib/sasd-puppet/monitoring",
+    "prometheus_filename": "sasd_puppet.prom",
+    "include_certname_labels": false
+  },
+  "backup": {
+    "maximum_age_seconds": 86400,
+    "require_ca_material": true,
+    "include_eyaml_directory_if_present": true,
+    "minimum_archive_mode": "0600"
+  },
+  "puppetdb": {
+    "node_ttl": "7d",
+    "node_purge_ttl": "30d",
+    "report_ttl": "14d",
+    "resource_events_ttl": "14d",
+    "decommission_action": "deactivate",
+    "immediate_delete": false
+  },
+  "upgrade": {
+    "supported_server_majors": [
+      8
+    ],
+    "supported_agent_majors": [
+      7,
+      8
+    ],
+    "preferred_java_major": 17,
+    "minimum_free_mib": 2048,
+    "maximum_backup_age_seconds": 86400
+  },
+  "audit": {
+    "include_private_keys": false,
+    "include_secret_values": false,
+    "include_node_certnames": true,
+    "archive_mode": "0600"
+  }
+}
