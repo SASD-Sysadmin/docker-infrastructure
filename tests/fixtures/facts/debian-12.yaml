@@ -1,0 +1,8 @@
+---
+os:
+  family: Debian
+  name: Debian
+  release:
+    major: '12'
+networking:
+  fqdn: test-debian12.example.invalid

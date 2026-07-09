@@ -1,3 +1,7 @@
 ---
-# Common Hiera data will be added with the first productive baseline stepstone.
-# This file is intentionally empty apart from its YAML document marker.
+# Global Hiera data for the environment.
+#
+# Milestone 1 deliberately defines no lookup keys. Productive values are added
+# together with the profile parameter that consumes them and with tests that
+# document the expected merge behaviour.
+lookup_options: {}

@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-# External Puppet modules will be declared here and installed by r10k.
-#
-# The initial repository deliberately declares no dependencies. Add modules only
-# when a concrete profile requires them, and pin every dependency to an explicit
-# version or immutable Git reference.
-
+# r10k and Puppet Enterprise Code Manager install every dependency declared in
+# this file into ./modules. Never add generated module content to Git.
 forge 'https://forge.puppet.com'
+
+# Milestone 1 intentionally has no external module dependency. Add a module only
+# when a concrete profile requires it, and pin it to an explicit Forge version
+# or immutable Git reference. Floating branches and unbounded latest versions
+# are not accepted for production baselines.

@@ -1,34 +1,41 @@
-# Puppet modules downloaded by r10k or librarian-puppet
+# r10k / Code Manager generated modules
 /modules/*
 !/modules/.gitkeep
 
-# Local test and tool output
+# Ruby, Python, and test artefacts
+__pycache__/
+*.py[cod]
 /.bundle/
-/.cache/
-/.pdk/
-/.rerun.json
+/vendor/bundle/
 /coverage/
-/log/
 /spec/fixtures/modules/
-/tmp/
-/vendor/
+/.rspec_status
 
-# Local environment files and secrets
+# Puppet runtime state
+/.puppetlabs/
+/.tmp/
+
+# Local configuration and secrets
 .env
 .env.*
-*.key
+!.env.example
 *.pem
+*.key
 *.p12
 *.pfx
-*.crt
-*.csr
+*.jks
+*.eyaml
 
 # Editor and operating-system files
 .vscode/
 .idea/
 *.swp
 *.swo
-*~
 .DS_Store
 Thumbs.db
-Desktop.ini
+
+# Archives and generated reports
+*.zip
+*.tar
+*.tar.gz
+reports/

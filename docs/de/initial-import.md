@@ -1,37 +1,52 @@
 # Erstimport in GitHub
 
-## Bestehender Zustand
+## Im ZIP enthaltene Repository-Historie
 
-Das GitHub-Repository wurde mit einer Platzhalter-README erstellt und besitzt daher bereits einen Commit. Das erzeugte ZIP enthält dagegen ein eigenständiges Git-Repository mit genau einem Commit namens `Initial Commit` und folgendem Remote:
+Das Milestone-1-ZIP enthält ein vollständiges Git-Repository mit zwei klar getrennten Commits:
+
+```text
+Initial Commit
+Complete Milestone 1 foundation
+```
+
+Zusätzlich sind das annotierte Tag `v0.1.0` und folgender `origin`-Remote enthalten:
 
 ```text
 https://github.com/SASD-Sysadmin/puppet-software-baseline.git
 ```
 
-Zum Ersetzen des Platzhalter-Verlaufs ist ein bewusstes Umschreiben des Remote-Branches notwendig. Dies darf nur erfolgen, solange der vorhandene Commit keine erhaltenswerte Arbeit enthält.
+## Den passenden Push-Weg auswählen
 
-## Prüfung
-
-Im entpackten Repository:
+Zuerst müssen das entpackte Repository und der aktuelle Remote-Zustand geprüft werden:
 
 ```bash
 git status
-git log --oneline --decorate --all
+git log --oneline --decorate --graph --all
 git remote -v
 git fetch origin main
 git log --oneline --decorate --graph --all
 ```
 
-## Platzhalterhistorie ersetzen
+### Der frühere Initial Commit wurde bereits gepusht
 
-Wenn eindeutig feststeht, dass der Remote nur den entbehrlichen Platzhalter enthält:
+Endet `origin/main` bereits auf demselben `Initial Commit`, kann Milestone 1 normal veröffentlicht werden:
+
+```bash
+git push origin main
+git push origin v0.1.0
+```
+
+### GitHub enthält weiterhin nur seinen entbehrlichen Platzhalter-Commit
+
+Das Ersetzen dieser unabhängigen Platzhalterhistorie erfordert ein bewusstes Umschreiben. Dies darf nur erfolgen, wenn der Remote keine erhaltenswerte Arbeit enthält:
 
 ```bash
 git push --force-with-lease origin main
+git push origin v0.1.0
 ```
 
-`--force-with-lease` ist einem uneingeschränkten `--force` vorzuziehen. Lehnt Git den Push wegen veralteter Informationen ab, sollte erneut gefetcht und geprüft werden.
+Lehnt Git den Push wegen veralteter Lease-Informationen ab, muss erneut gefetcht und geprüft werden. Ein uneingeschränktes `--force` ist kein angemessener Ersatz.
 
-## Alternative ohne Umschreiben
+### Der Remote enthält erhaltenswerte Arbeit
 
-Die Dateien können auch in einen normalen Klon des GitHub-Repositorys kopiert und als zweiter Commit gespeichert werden. Dadurch bleibt der vorhandene Verlauf erhalten, es entsteht aber nicht die gewünschte Historie mit genau einem `Initial Commit`.
+Dann darf die Historie nicht überschrieben werden. Stattdessen wird der Remote normal geklont, der Milestone-1-Inhalt in diesen Klon übernommen, geprüft und als neuer Commit gespeichert. Die Commit-Hashes unterscheiden sich anschließend vom ZIP; der Erhalt vorhandener Arbeit ist wichtiger als identische Hashes.

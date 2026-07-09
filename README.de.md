@@ -1,144 +1,99 @@
 # puppet-software-baseline
 
-[English primary documentation](README.md)
+[English README](README.md) · [Deutscher Dokumentationsindex](docs/de/README.md)
 
 Puppet-Control-Repository zur Installation von Anwendungen und zur Sicherstellung konsistenter Paket-, Dienst- und Konfigurationsstände auf SASD-Systemen.
 
-Das Repository ist für zwei Betriebsarten vorbereitet:
-
-1. **Anfängliche Entwicklung und Labortests mit `puppet apply`**.
-2. **Späterer zentraler Betrieb mit Puppet Server, r10k, Hiera sowie dem Roles-and-Profiles-Pattern**.
-
-> **Projektstatus:** Reines Repository-Grundgerüst. Der erste Commit enthält absichtlich keinen produktiven Workload, keine Paketinstallationsrichtlinie und keine aktive Klassifizierung von Maschinen. Die funktionalen Stepstones folgen in späteren Meilensteinen.
+> **Status:** Milestone 1 vollständig (`0.1.0`). Das Repository ist strukturiert, dokumentiert, validierbar und katalogfähig, enthält aber bewusst noch keinen produktiven Anwendungs-Workload.
 
 ## Zweck
 
-Das Projekt soll den gewünschten dauerhaften Zustand der von SASD verwalteten Systeme beschreiben. Geplant sind:
+Das Projekt beschreibt den dauerhaften Sollzustand. Spätere Stepstones installieren freigegebene Anwendungen, halten Konfigurationsdateien und Dienste konsistent und liefern reproduzierbare Kataloge über Puppet Server und r10k.
 
-- Installation freigegebener Anwendungen und Betriebssystempakete;
-- konsistente Konfigurationsdateien und Diensteinstellungen;
-- deklarative Verwaltung von Diensten;
-- Trennung wiederverwendbarer technischer Profile von Maschinenrollen;
-- Trennung von Puppet-Code und umgebungsspezifischen Hiera-Daten;
-- reproduzierbare Bereitstellung über Puppet Server und r10k;
-- Validierung von Änderungen vor der Anwendung auf verwalteten Systemen.
+Diagnose, temporäre Reparaturen, einmalige Betriebsabläufe und Ad-hoc-Remediation gehören nicht hierher, sondern in die SASD-Ansible- und Administrations-Repositories.
 
-Das Repository ist ausdrücklich **nicht** für Incident Response oder Troubleshooting gedacht. Temporäre Reparaturen, Diagnosen, Loganalysen, Ad-hoc-Kommandos und prozedurale Fehlerbehebungen gehören in die SASD-Ansible- und Administration-Repositories.
-
-## Grundprinzipien
-
-### Deklarative Konfiguration
-
-Das Repository beschreibt den Sollzustand. Puppet ermittelt, welche Änderungen zur Annäherung an diesen Zustand notwendig sind.
-
-### Sicheres Grundverhalten
-
-Der erste Stand verwaltet keine Ressource. Spätere Bootstrap- und Deployment-Werkzeuge sollen zunächst validieren und nach Möglichkeit einen No-op-Lauf anbieten, bevor Änderungen tatsächlich angewendet werden.
-
-### Von Beginn an Puppet-Server-fähig
-
-Lokale Tests mit `puppet apply` bleiben möglich. Die Struktur ist jedoch von Anfang an als Control Repository für eine spätere Bereitstellung mit r10k oder Puppet Enterprise Code Manager ausgelegt.
-
-### Roles and Profiles
-
-Technische Implementierungen werden in Profilen gekapselt. Rollen kombinieren Profile entsprechend dem Zweck einer Maschine. Ein Node soll normalerweise genau eine Rolle erhalten.
-
-### Trennung von Code und Daten
-
-Konkrete Werte gehören nach `data/`. Host- oder umgebungsspezifische Werte sollen nicht ohne Not direkt in Manifeste eingebaut werden.
-
-### Möglichst wenige Node-Sonderfälle
-
-Gemeinsame, betriebssystemspezifische und rollenbezogene Daten haben Vorrang. Node-spezifische Dateien bleiben eine Ausnahme, damit die Konsistenz nicht durch zahlreiche Sonderwege verloren geht.
-
-### Keine Secrets in Git
-
-Kennwörter, private Schlüssel, API-Tokens, Zertifikate und unverschlüsselte sensible Konfiguration dürfen nicht eingecheckt werden. Ein späterer Meilenstein kann ein freigegebenes verschlüsseltes Hiera-Backend und ein dokumentiertes Schlüsselmanagement einführen.
-
-## Verzeichnisübersicht
+## Sicherheitsgarantie von Milestone 1
 
 ```text
-puppet-software-baseline/
-├── .github/                   Vorlagen für Zusammenarbeit auf GitHub
-├── data/                      Hiera-Daten auf Environment-Ebene
-├── docs/                      Englische und deutsche Dokumentation
-├── manifests/site.pp          Einstiegspunkt; absichtlich ohne Workload
-├── modules/                   Durch r10k geladene Fremdmodule
-├── scripts/                   Platz für Bootstrap-, Prüf- und Deployment-Skripte
-├── site-modules/profile/      SASD-eigene technische Profile
-├── site-modules/role/         Rollen aus mehreren Profilen
-├── tests/                     Platz für spätere Tests
-├── Puppetfile                 Deklaration externer Module
-├── environment.conf           Konfiguration des Puppet-Environments
-└── hiera.yaml                 Hiera-5-Hierarchie
+node default -> role::baseline -> profile::baseline -> keine Workload-Ressourcen
 ```
 
-Eine ausführliche Beschreibung steht unter [Verzeichnisstruktur](docs/de/repository-layout.md).
+Der aktuelle Katalog deklariert keine Pakete, Dateien, Dienste, Benutzer, Gruppen, Paketquellen, Mounts, Zeitpläne oder `exec`-Ressourcen. Der lokale Runner verwendet außerdem standardmäßig `--noop`. Damit lässt sich die technische Grundlage prüfen, ohne Anwendungen zu installieren oder umzukonfigurieren.
 
-## Enthalten im ersten Commit
+## Inhalt von Milestone 1
 
-- ausführliche englische Hauptdokumentation;
-- zusätzliche deutsche Dokumentation;
-- MIT-Lizenz;
-- Hinweise zu Beiträgen und Sicherheit;
-- serverfähige Control-Repository-Struktur;
-- absichtlich leere `site.pp`;
-- leeres, für feste Abhängigkeiten vorbereitetes `Puppetfile`;
-- Hiera-5-Hierarchie für Nodes, Betriebssysteme und gemeinsame Daten;
-- Architekturentscheidung und Roadmap;
-- Platzhalter für Skripte, Module, Tests und GitHub-Automatisierung;
-- kein produktiver Puppet-Workload.
+- Control-Repository-Struktur für Puppet 8;
+- Hiera-5-Hierarchie;
+- klare Rollen-/Profilgrenze;
+- workload-freier Default-Katalog;
+- für Puppet Server und r10k vorbereitete Konfiguration;
+- `config_version` mit Git- und VERSION-Fallback;
+- Prüfungen für Puppet, YAML, JSON, Metadaten, Shell und Struktur;
+- RSpec-Puppet-Unit-Tests;
+- isolierter lokaler No-op-Katalogtest;
+- GitHub-Actions-Validierung;
+- ausführliche englische und deutsche Dokumentation;
+- Architecture Decision Records.
 
-## Geplantes Betriebsmodell
+Die vollständige Abgrenzung steht unter [Milestone 1](docs/de/milestone-1.md).
 
-### Entwicklungs- und Laborphase
+## Schnellstart für Entwickler
 
-Zu Beginn können Manifeste lokal kompiliert und im No-op-Modus geprüft werden. Ein späteres Skript wird hierfür einen stabilen und dokumentierten Aufruf bereitstellen.
+```bash
+git clone https://github.com/SASD-Sysadmin/puppet-software-baseline.git
+cd puppet-software-baseline
+gem install bundler
+./scripts/setup-development.sh
+bundle exec rake
+```
 
-### Zentraler Puppet-Server-Betrieb
+Einzelne Prüfungen:
+
+```bash
+bundle exec rake validate
+bundle exec rake spec
+bundle exec rake catalog
+```
+
+## Lokale Puppet-Ausführung
+
+```bash
+./scripts/apply-local.sh          # standardmäßig No-op
+./scripts/apply-local.sh --noop
+./scripts/apply-local.sh --apply  # nur ausdrücklich anwenden
+```
+
+In Milestone 1 ist selbst `--apply` workload-frei. Spätere Stepstones machen diese Unterscheidung betrieblich wichtig.
+
+## Späteres Servermodell
 
 ```text
 GitHub Control Repository
           |
-          | r10k-Deployment
+          | r10k / Code Manager
           v
      Puppet Server
           |
-          | signierte Kataloge über TLS
+          | authentifizierte kompilierte Kataloge
           v
-     Puppet Agents
+      Puppet Agents
 ```
 
-Dabei gilt:
+Agents klonen das Repository später nicht. Der Server deployt Code, kompiliert Kataloge und liefert sie per authentifiziertem TLS aus.
 
-- r10k stellt Git-Branches als Puppet-Environments bereit;
-- der Puppet Server kompiliert die Kataloge;
-- Agents klonen dieses Repository nicht;
-- Agents übertragen Fakten und laden ihren Katalog vom Server;
-- die Puppet-CA authentifiziert die Systeme;
-- PuppetDB kann später für Reports, Fakten, Inventar und Abfragen ergänzt werden.
+## Grundregeln
 
-## Hiera-Hierarchie
-
-Die Datei [`hiera.yaml`](hiera.yaml) durchsucht Daten in dieser Reihenfolge:
-
-1. Node anhand des vertrauenswürdigen Zertifikatsnamens;
-2. Betriebssystemfamilie;
-3. gemeinsame Standardwerte.
-
-Das Verzeichnis `data/roles/` ist vorbereitet, aber noch nicht Teil der aktiven Hierarchie. Der endgültige Mechanismus der Node-Klassifizierung wird festgelegt, bevor produktive Rollendaten eingeführt werden.
+Rollen kombinieren Profile. Profile implementieren zusammenhängende technische Fähigkeiten. `site.pp` klassifiziert nur. Externe Module werden im `Puppetfile` festgelegt. `modules/` ist generiert. Werte gehören nach Hiera. Knotenspezifische Ausnahmen bleiben Ausnahmen. Secrets gehören niemals nach Git. Produktive Änderungen benötigen Tests, Dokumentation und geprüfte No-op-Ausgabe.
 
 ## Dokumentation
 
-- [Architektur](docs/de/architecture.md)
-- [Verzeichnisstruktur](docs/de/repository-layout.md)
-- [Betriebsmodell](docs/de/operating-model.md)
-- [Sicherheitsarchitektur](docs/de/security.md)
-- [Roadmap](docs/de/roadmap.md)
-- [Erstimport in GitHub](docs/de/initial-import.md)
-
-Die führende Projektsprache ist Englisch. Deutsche Dokumentation wird zusätzlich gepflegt, soweit sie für Planung, Betrieb und Einarbeitung sinnvoll ist.
+- [Deutscher Dokumentationsindex](docs/de/README.md)
+- [Englischer Dokumentationsindex](docs/en/README.md)
+- [Architekturentscheidungen](docs/adr/)
+- [Mitwirkung](CONTRIBUTING.md)
+- [Sicherheitsrichtlinie](SECURITY.md)
+- [Änderungsprotokoll](CHANGELOG.md)
 
 ## Lizenz
 
-Das Projekt steht unter der [MIT-Lizenz](LICENSE).
+Veröffentlicht unter der [MIT-Lizenz](LICENSE).

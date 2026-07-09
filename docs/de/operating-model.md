@@ -1,25 +1,22 @@
 # Betriebsmodell
 
-## Phase 1: lokale Entwicklung
+## Milestone 1
 
-Ein Maintainer entwickelt und validiert den Code in einem Klon des Repositorys. Puppet kann auf einem isolierten Laborsystem lokal ausgeführt werden, möglichst zunächst im No-op-Modus.
+Entwickler prüfen lokal und über GitHub Actions. Der einzige Katalog ist eine workload-freie Baseline; es gibt noch keine unbeaufsichtigte Durchsetzung.
 
-Die späteren lokalen Werkzeuge sollen Syntax und Hiera-Daten prüfen, parallele Läufe verhindern, Commit und Rückgabecode protokollieren und ohne ausdrückliche Apply-Option keine Änderungen vornehmen.
+## Entwicklungsfluss
 
-## Phase 2: zentraler Puppet Server
+```text
+Feature-Branch -> bundle exec rake -> Pull Request -> Review -> main
+```
 
-Der Puppet Server wird zum maßgeblichen Katalog-Compiler. r10k stellt freigegebene Revisionen bereit. Agents authentifizieren sich, übertragen Fakten, laden Kataloge, wenden sie an und senden Reports.
+## Späterer Produktivfluss
 
-## Trennung der Bootstrap-Aufgaben
+```text
+GitHub main -> r10k / Code Manager -> production Environment
+             -> Puppet Server -> authentifizierte Agent-Kataloge
+```
 
-Drei Aufgaben bleiben getrennt:
+Agents klonen das Control Repository nicht. Der Server deployt Code, kompiliert Kataloge aus vertrauenswürdigen Facts und Hiera und liefert sie per authentifiziertem TLS aus.
 
-1. **Entwickler-Bootstrap** für lokale Prüf- und Testwerkzeuge.
-2. **Puppet-Server-Bootstrap** für Git, Puppet Server, r10k und später optional PuppetDB.
-3. **Agent-Bootstrap** für Puppet Agent, Serveradresse, Zertifikatsvertrauen und Agent-Dienst.
-
-Im endgültigen Betriebsmodell benötigt ein Agent Git nicht allein für die Puppet-Konfigurationsverteilung.
-
-## Freigabe einer Änderung
-
-Vor der produktiven Übernahme werden Code und Daten geprüft, repräsentative Kataloge kompiliert, No-op und Test-Apply ausgeführt, Idempotenz und Dienstzustand kontrolliert und anschließend eine unveränderliche geprüfte Revision bereitgestellt.
+Puppet besitzt den dauerhaften Sollzustand. Diagnose, temporäre Reparaturen, einmalige Migrationen und prozedurales Troubleshooting bleiben außerhalb dieses Repositorys.

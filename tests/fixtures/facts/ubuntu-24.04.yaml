@@ -1,0 +1,8 @@
+---
+os:
+  family: Debian
+  name: Ubuntu
+  release:
+    major: '24.04'
+networking:
+  fqdn: test-ubuntu2404.example.invalid

@@ -1,49 +1,52 @@
 # Initial import into GitHub
 
-## Important existing repository state
+## Repository history contained in the ZIP
 
-The GitHub repository was created with a placeholder README and therefore already has a commit. The ZIP generated for this project contains an independent Git repository with a single commit named `Initial Commit` and an `origin` remote pointing to:
+The Milestone 1 ZIP contains a complete Git repository with two focused commits:
+
+```text
+Initial Commit
+Complete Milestone 1 foundation
+```
+
+It also contains the annotated tag `v0.1.0` and an `origin` remote pointing to:
 
 ```text
 https://github.com/SASD-Sysadmin/puppet-software-baseline.git
 ```
 
-Replacing the placeholder history requires a deliberate force update. Do this only while the remote contains no work that must be preserved.
+## Choose the correct push path
 
-## Review before pushing
-
-From the extracted repository directory:
+First inspect the extracted repository and the current remote state:
 
 ```bash
 git status
-git log --oneline --decorate --all
+git log --oneline --decorate --graph --all
 git remote -v
-```
-
-Review the files and confirm that the remote repository still contains only the disposable placeholder commit.
-
-## Safe replacement procedure
-
-First retrieve the current remote state:
-
-```bash
 git fetch origin main
-```
-
-Inspect both histories:
-
-```bash
 git log --oneline --decorate --graph --all
 ```
 
-When the remote placeholder is confirmed disposable, replace it using force-with-lease rather than an unrestricted force push:
+### The earlier Initial Commit was already pushed
+
+When the remote `main` already ends at the same `Initial Commit`, publish Milestone 1 normally:
+
+```bash
+git push origin main
+git push origin v0.1.0
+```
+
+### GitHub still contains only its disposable placeholder commit
+
+Replacing that unrelated placeholder history requires a deliberate force update. Do this only when the remote contains no work that must be preserved:
 
 ```bash
 git push --force-with-lease origin main
+git push origin v0.1.0
 ```
 
-If Git refuses because the lease information is stale, fetch again and investigate instead of switching immediately to `--force`.
+If Git refuses because the lease is stale, fetch and inspect again. Do not replace `--force-with-lease` with an unrestricted `--force` without understanding the remote changes.
 
-## Alternative without replacing history
+### The remote contains work that must be preserved
 
-To preserve the existing GitHub commit, copy the project files into a normal clone of the remote repository and create a new commit. That produces two commits and does not meet the requested single-commit history, but it avoids rewriting the remote branch.
+Do not rewrite it. Clone the remote normally, copy the Milestone 1 files into that clone, review the result, and create a new commit. The resulting commit hashes will differ from the ZIP, but preserved history is more important than matching the supplied hashes.

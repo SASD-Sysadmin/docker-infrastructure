@@ -1,55 +1,20 @@
 # Roadmap
 
-Die Entwicklung erfolgt bewusst in kleinen, einzeln prüfbaren Stepstones.
+## Milestone 1 – Grundlage des Control Repositorys – abgeschlossen
 
-## Stepstone 0: Repository-Grundlage — durch dieses ZIP abgeschlossen
+Serverfähige Struktur, workload-freier Rollen-/Profilkatalog, Hiera-Grundlage, Validierung, Unit-Tests, lokaler No-op-Runner, CI und zweisprachige Dokumentation.
 
-- Control-Repository-Struktur;
-- englische und deutsche Dokumentation;
-- Lizenz sowie Beitrags- und Sicherheitsregeln;
-- leerer Puppet-Einstiegspunkt und Hiera-Hierarchie;
-- Architekturentscheidung für einen späteren Puppet Server.
+## Nächste Stepstones
 
-## Stepstone 1: Validierungsgrundlage
+Der echte Workload wird in kleinen prüfbaren Schritten eingeführt:
 
-- unterstützten Puppet-Versionsbereich festlegen;
-- Lint- und Testwerkzeuge auswählen;
-- lokales Validierungsskript ergänzen;
-- GitHub-Actions-Prüfung ergänzen;
-- Voraussetzungen und Rückgabecodes dokumentieren.
+1. Entscheidung zu Plattformen und Paketrichtlinie;
+2. Puppet-Agent-Bootstrap für Debian/Ubuntu;
+3. erstes ungefährliches Markerprofil;
+4. Profil für grundlegende Administrationspakete;
+5. Profil zur Dienst-/Konfigurationskonsistenz;
+6. Anwendungsgruppen und Rollenkombinationen;
+7. Puppet Server und r10k;
+8. Zertifikatsbetrieb, Reporting, Backups und optional PuppetDB.
 
-## Stepstone 2: unterstützte Plattformen und lokaler Bootstrap
-
-- erste Debian- und Ubuntu-Versionen festlegen;
-- sichere Werkzeuginstallation implementieren;
-- lokalen No-op-Wrapper erstellen;
-- Entfernung und Wiederherstellung dokumentieren.
-
-## Stepstone 3: erstes Baseline-Profil
-
-- minimale freigegebene Paketgruppe definieren;
-- erstes Profil implementieren;
-- Hiera-Parameter und Tests ergänzen;
-- Idempotenz auf isolierten Testsystemen nachweisen.
-
-## Stepstone 4: Rollen und Klassifizierung
-
-- Quelle der Rollenzuordnung festlegen;
-- erste Server- und Entwicklungsrollen implementieren;
-- Node-Onboarding und Ausnahmen dokumentieren.
-
-## Stepstone 5: Puppet-Server-Labor
-
-- Serverdimensionierung und Betriebssystem festlegen;
-- Puppet Server absichern;
-- r10k konfigurieren;
-- CA-Prozesse festlegen;
-- ersten Labor-Agent einbinden.
-
-## Stepstone 6: zentraler Produktivbetrieb
-
-- Monitoring, Reporting, Backup und Restore-Tests;
-- Environment-Promotion;
-- Wartungs- und Upgradeprozesse;
-- PuppetDB bewerten;
-- ausgewählte Nodes zentral übernehmen.
+Jeder Stepstone benötigt Abnahmekriterien, Rückrollverhalten, Tests, No-op-Nachweis sowie englische und deutsche Betriebsdokumentation.

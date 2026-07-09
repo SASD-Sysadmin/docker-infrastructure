@@ -5,6 +5,10 @@ defaults:
   datadir: data
   data_hash: yaml_data
 
+# The hierarchy is deliberately conservative in Milestone 1. Node exceptions
+# override operating-system-family data, which in turn overrides common data.
+# Role-specific data will be activated only after the classification mechanism
+# has been selected and documented in a later stepstone.
 hierarchy:
   - name: "Per-node data"
     path: "nodes/%{trusted.certname}.yaml"

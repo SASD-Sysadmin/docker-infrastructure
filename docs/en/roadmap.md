@@ -1,57 +1,20 @@
 # Roadmap
 
-The roadmap is intentionally incremental. Each stepstone should be independently reviewable and usable.
+## Milestone 1 — Control repository foundation — complete
 
-## Stepstone 0: repository foundation — completed by this ZIP
+Server-ready layout, workload-free role/profile catalog, Hiera foundation, validation, unit tests, local no-op runner, CI, and bilingual documentation.
 
-- control repository structure;
-- English and German documentation;
-- license and collaboration policies;
-- empty Puppet entry point and data hierarchy;
-- decision to support a future Puppet Server.
+## Next stepstones
 
-## Stepstone 1: validation foundation
+The productive workload will be introduced in small, reviewable increments rather than as one oversized milestone. Candidate sequence:
 
-- select supported Puppet version range;
-- select linting and test tools;
-- add local validation script;
-- add GitHub Actions validation;
-- document exit codes and developer prerequisites.
+1. supported-platform and package-policy decision;
+2. Puppet Agent bootstrap for Debian/Ubuntu;
+3. first harmless marker profile;
+4. core administration package profile;
+5. service/configuration consistency profile;
+6. application groups and role composition;
+7. Puppet Server and r10k deployment;
+8. certificate operations, reporting, backups, and optional PuppetDB.
 
-## Stepstone 2: supported platforms and local bootstrap
-
-- select initial Debian and Ubuntu releases;
-- implement safe tool installation;
-- implement local no-op wrapper;
-- document uninstall and recovery behavior.
-
-## Stepstone 3: first baseline profile
-
-- define a minimal approved package set;
-- implement the first profile;
-- add Hiera parameters and tests;
-- prove idempotence in isolated test systems.
-
-## Stepstone 4: roles and classification
-
-- choose the source of the role assignment;
-- implement initial server and development roles;
-- document node onboarding and exceptions.
-
-## Stepstone 5: Puppet Server laboratory
-
-- design server sizing and operating system;
-- install and secure Puppet Server;
-- configure r10k deployment;
-- establish CA procedures;
-- enroll the first laboratory agent.
-
-## Stepstone 6: central production readiness
-
-- add monitoring, reporting, backups, and recovery tests;
-- define environment promotion;
-- define maintenance and upgrade processes;
-- evaluate PuppetDB;
-- migrate selected nodes from local testing to central management.
-
-The detailed content and order may change as requirements become concrete.
+Every stepstone must define acceptance criteria, rollback behaviour, tests, no-op evidence, and English/German operational documentation.

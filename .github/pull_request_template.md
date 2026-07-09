@@ -1,26 +1,22 @@
-## Summary
+## Purpose
 
-Describe the desired-state change and why it is needed.
+Describe the desired-state change and why it belongs in this repository.
 
-## Scope
+## Safety and scope
 
-- Affected roles:
-- Affected operating systems:
-- Affected applications or services:
+- [ ] The change is declarative and idempotent.
+- [ ] No secret, private key, token, certificate, or sensitive production value is committed.
+- [ ] The change belongs in Puppet rather than an incident-response or ad-hoc automation repository.
+- [ ] External module versions are pinned.
 
-## Validation
+## Verification
 
-- [ ] Puppet syntax or catalog compilation checked
-- [ ] YAML and Hiera data checked
-- [ ] No-op output reviewed
-- [ ] Idempotence reviewed
-- [ ] Documentation updated
-- [ ] No secrets or private infrastructure data included
-
-## Operational impact
-
-Describe restarts, outages, migrations, certificate changes, or manual follow-up.
+- [ ] `bundle exec rake` passes.
+- [ ] Productive changes include unit tests.
+- [ ] A no-op result has been reviewed on a representative disposable system.
+- [ ] English documentation is updated.
+- [ ] German documentation is updated where the operational procedure changed.
 
 ## Rollback
 
-Describe how to revert or recover from the change.
+Describe how the change can be reverted safely.

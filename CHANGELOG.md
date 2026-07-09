@@ -1,28 +1,28 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
-
-The format is based on Keep a Changelog, and the project intends to use Semantic Versioning once functional releases begin.
+All notable changes to this project are documented in this file. The format follows Keep a Changelog, and versions use semantic versioning.
 
 ## [Unreleased]
 
 ### Planned
 
-- Select the first supported operating systems.
-- Define the initial application and package baseline.
-- Implement validation tooling.
-- Implement local bootstrap and no-op execution.
-- Design the Puppet Server and r10k deployment.
+- Productive installation and configuration stepstones.
+
+## [0.1.0] - 2026-07-09
+
+### Added
+
+- Complete Milestone 1 Puppet control-repository foundation.
+- Workload-free `role::baseline` and `profile::baseline` class chain.
+- Hiera 5 data hierarchy and placeholder data maps.
+- Puppet Server-ready module path and Git/VERSION `config_version` helper.
+- Safe local no-op apply wrapper.
+- Static validation, RSpec-Puppet tests, and catalog smoke test.
+- GitHub Actions and Dependabot configuration.
+- Detailed English and German documentation and architecture decisions.
 
 ## [0.0.0] - 2026-07-09
 
 ### Added
 
-- Initial Puppet control repository scaffolding.
-- English primary documentation and German companion documentation.
-- MIT license, contribution guidance, and security policy.
-- Empty Puppet entry point, Hiera hierarchy, and module placeholders.
-- Architecture decision for a future Puppet Server deployment.
-
-[Unreleased]: https://github.com/SASD-Sysadmin/puppet-software-baseline/compare/v0.0.0...HEAD
-[0.0.0]: https://github.com/SASD-Sysadmin/puppet-software-baseline/releases/tag/v0.0.0
+- Initial repository scaffold.

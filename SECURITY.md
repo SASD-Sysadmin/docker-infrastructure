@@ -1,42 +1,21 @@
-# Security Policy
+# Security policy
 
 ## Supported versions
 
-The project is currently scaffolding and has no supported production release. Security fixes will be applied to the default branch until a formal release policy is introduced.
+Until the first production release, only the current `main` branch receives security fixes.
 
-## Reporting a vulnerability
+## Reporting
 
-Do not open a public issue for vulnerabilities, leaked credentials, private infrastructure details, or weaknesses that could expose managed systems. Use a private communication channel agreed with the SASD maintainers.
+Do not open a public issue for a vulnerability that exposes credentials, private infrastructure details, certificate material, or a practical exploitation path. Contact the repository owner through a private channel available in the GitHub organization profile.
 
-## Repository rules
+Include the affected revision, impact, safe reproduction details, and suggested mitigation. Never send real secrets.
 
-Never commit:
+## Repository security rules
 
-- passwords or password hashes;
-- private SSH, TLS, or Puppet CA keys;
-- API keys or access tokens;
-- production certificates or certificate signing requests containing sensitive identities;
-- unencrypted Hiera secrets;
-- database dumps or configuration backups containing credentials;
-- real customer, employee, host, network, or inventory data that is not approved for publication.
-
-The `.gitignore` file is only a convenience. It is not a security boundary. Every staged change must be reviewed before committing.
-
-## Future Puppet Server safeguards
-
-Before production use, the project should document and test:
-
-- Puppet CA ownership and offline backup;
-- certificate signing and revocation procedures;
-- access control for r10k deployment;
-- branch protection and mandatory review;
-- dependency pinning and provenance;
-- secure handling of Hiera secrets;
-- server and PuppetDB backup and recovery;
-- log retention and protection;
-- monitoring for failed or stale agent runs;
-- emergency suspension of deployments.
-
-## Dependency security
-
-External modules must be declared in `Puppetfile` with an explicit version or immutable commit reference. New dependencies should be reviewed for maintenance status, licensing, supported Puppet versions, and transitive risk.
+- no passwords, tokens, private keys, or private certificate material;
+- no unencrypted sensitive Hiera data;
+- pin third-party modules and development dependencies;
+- review no-op output before productive enforcement;
+- protect and back up the future Puppet CA independently;
+- grant r10k read-only repository access;
+- validate every change before deployment.

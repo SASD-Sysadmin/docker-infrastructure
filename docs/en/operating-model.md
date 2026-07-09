@@ -1,45 +1,24 @@
 # Operating model
 
-## Phase 1: local development
+## Milestone 1
 
-A maintainer develops and validates code in a clone of the repository. Puppet may be executed locally in an isolated laboratory system, preferably with no-op mode before an actual apply.
+Developers validate locally and through GitHub Actions. The only catalog is a workload-free baseline catalog. There is no unattended enforcement.
 
-The future local tooling should:
+## Development flow
 
-- verify root requirements only when an apply needs them;
-- detect the operating system and supported version;
-- validate syntax and Hiera data before compilation;
-- use a lock to prevent concurrent runs;
-- log the repository commit and Puppet exit code;
-- default to no-op unless an explicit apply option is supplied.
+```text
+feature branch -> bundle exec rake -> pull request -> review -> main
+```
 
-## Phase 2: central Puppet Server
+## Future production flow
 
-The Puppet Server becomes the authoritative catalog compiler. r10k deploys approved control repository revisions. Agents authenticate to the server, submit facts, retrieve catalogs, apply them, and submit reports.
+```text
+GitHub main -> r10k / Code Manager -> production environment
+             -> Puppet Server -> authenticated agent catalogs
+```
 
-## Bootstrap separation
+Agents will not clone the control repository. The server deploys code, compiles catalogs from trusted facts and Hiera, and serves them over authenticated TLS.
 
-Three concerns should remain separate:
+## Change boundary
 
-1. **Local developer bootstrap** installs tools used to validate and test the repository.
-2. **Puppet Server bootstrap** installs Git, Puppet Server, r10k, and later optional PuppetDB components.
-3. **Agent bootstrap** installs Puppet Agent, configures the server name, establishes certificate trust, and enables the agent service.
-
-An agent in the final architecture does not need Git solely for Puppet configuration delivery.
-
-## Change promotion
-
-Before a productive change is promoted:
-
-1. Review code and data.
-2. Validate syntax and dependency declarations.
-3. Compile representative catalogs.
-4. Run no-op against an isolated test node.
-5. Apply in a non-production environment.
-6. Confirm idempotence and service health.
-7. Promote an immutable reviewed revision.
-8. Monitor agent reports and be prepared to suspend deployment.
-
-## Scheduling
-
-Puppet Agent intervals, splay, maintenance windows, and restart policy will be defined after the managed-system inventory is known. The repository does not currently impose a schedule.
+Puppet owns persistent desired state. Incident diagnosis, temporary repairs, one-time migrations, and procedural troubleshooting remain outside this repository unless a durable baseline requirement emerges from them.
