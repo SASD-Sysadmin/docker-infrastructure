@@ -1,11 +1,8 @@
-# Reference: `profile`
+# Reference
 
-## Classes
+## `profile::baseline`
 
-### `profile`
+Installs the Milestone 2 package baseline and manages the SASD baseline marker.
+Parameters are normally supplied through Hiera Automatic Parameter Lookup.
 
-Namespace class. It manages no resources.
-
-### `profile::baseline`
-
-Workload-free foundation profile used by Milestone 1 to verify the control-repository plumbing. It has no parameters and manages no resources.
+Supported platforms: Debian 12, Debian 13, and Ubuntu 24.04 LTS.

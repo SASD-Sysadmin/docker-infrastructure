@@ -5,21 +5,28 @@ require 'rspec-puppet'
 CONTROL_REPOSITORY_ROOT = File.expand_path('..', __dir__)
 
 RSpec.configure do |config|
-  # Test both first-party site modules and r10k-installed dependencies exactly as
-  # the control repository exposes them through environment.conf.
   config.module_path = [
     File.join(CONTROL_REPOSITORY_ROOT, 'site-modules'),
     File.join(CONTROL_REPOSITORY_ROOT, 'modules')
   ].join(File::PATH_SEPARATOR)
   config.manifest_dir = File.join(CONTROL_REPOSITORY_ROOT, 'manifests')
+  config.hiera_config = File.join(CONTROL_REPOSITORY_ROOT, 'hiera.yaml')
   config.strict_variables = true
 end
 
-# Milestone 1 permits only the structural resources emitted by the compiler.
-# Future workload stepstones deliberately revise this test boundary.
-STRUCTURAL_RESOURCE_TYPES = %w[Class Stage].freeze
+SUPPORTED_FACTS = {
+  debian12: {
+    os: { 'family' => 'Debian', 'name' => 'Debian', 'release' => { 'major' => '12' } },
+    networking: { 'fqdn' => 'debian12.example.test' }
+  },
+  debian13: {
+    os: { 'family' => 'Debian', 'name' => 'Debian', 'release' => { 'major' => '13' } },
+    networking: { 'fqdn' => 'debian13.example.test' }
+  },
+  ubuntu2404: {
+    os: { 'family' => 'Debian', 'name' => 'Ubuntu', 'release' => { 'major' => '24.04' } },
+    networking: { 'fqdn' => 'ubuntu2404.example.test' }
+  }
+}.freeze
 
-def non_structural_resources(catalog)
-  catalog.resources.reject { |resource| STRUCTURAL_RESOURCE_TYPES.include?(resource.type) }
-end
-
+EXPECTED_COMMON_PACKAGES = %w[ca-certificates curl git jq rsync tree unzip lsof procps].freeze

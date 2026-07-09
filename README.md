@@ -4,137 +4,96 @@
 
 Puppet control repository for installing applications and maintaining consistent package, service, and configuration baselines across SASD systems.
 
-> **Status:** Milestone 1 complete (`0.1.0`). The repository is fully structured, documented, validated, and catalog-compilable, but intentionally contains no productive application workload.
+> **Status:** Milestone 2 complete (`0.2.0`). The repository now provides a safe standalone local test operation and a first deliberately small package/file baseline for Debian 12, Debian 13, and Ubuntu 24.04 LTS.
 
-## Purpose
+## Purpose and boundary
 
-This project describes persistent desired state. It will install approved applications, keep configuration files and services consistent, and provide reproducible catalogs through a future Puppet Server and r10k deployment.
+This repository describes persistent desired state. It is not an incident-response, troubleshooting, or ad-hoc repair repository. Roles compose profiles; profiles own technical resources; data belongs in Hiera.
 
-It is not an incident-response or troubleshooting repository. Diagnostics, temporary repairs, one-time operational procedures, and ad-hoc remediation belong in the SASD Ansible and administration tool repositories.
+Milestone 2 deliberately allows only two workload resource types:
 
-## Milestone 1 safety guarantee
+- `package` for a conservative administration tool set;
+- `file` for `/etc/sasd` and a managed baseline marker.
 
-The current catalog follows a real classification chain:
+Services, users, repositories, firewalls, mounts, schedules, and arbitrary commands remain out of scope.
 
-```text
-node default -> role::baseline -> profile::baseline -> no workload resources
-```
+## Delivered baseline
 
-It declares no package, file, service, user, group, repository, mount, schedule, or `exec` resource. The local runner also defaults to `--noop`. Milestone 1 can therefore verify the engineering foundation without installing or reconfiguring applications.
-
-## What Milestone 1 delivers
-
-- Puppet 8 control-repository layout;
-- Hiera 5 hierarchy;
-- roles-and-profiles boundary;
-- default workload-free catalog;
-- Puppet Server/r10k-ready `environment.conf` and `Puppetfile`;
-- catalog `config_version` with Git and VERSION fallback;
-- validation of Puppet, YAML, JSON, metadata, shell, and structure;
-- RSpec-Puppet unit tests;
-- isolated local no-op catalog test;
-- GitHub Actions validation;
-- detailed English and German documentation;
-- architecture decision records.
-
-Read the complete [Milestone 1 specification](docs/en/milestone-1.md).
-
-## Repository layout
+The default classification is:
 
 ```text
-puppet-software-baseline/
-├── .github/                 CI, Dependabot, issue and PR templates
-├── data/                    Hiera environment data
-├── docs/                    English, German, and ADR documentation
-├── manifests/site.pp        Classification entry point
-├── modules/                 r10k-generated dependencies; not committed
-├── scripts/                 Validation, no-op apply, config version
-├── site-modules/
-│   ├── profile/             Technical implementation profiles
-│   └── role/                Node-purpose compositions
-├── tests/                   Smoke tests and fact fixtures
-├── environment.conf
-├── hiera.yaml
-├── Puppetfile
-├── Gemfile
-├── Rakefile
-└── VERSION
+node default -> role::baseline -> profile::baseline
+                                      |-> package baseline
+                                      `-> /etc/sasd/puppet-baseline.conf
 ```
 
-## Development quick start
+Packages are merged from Hiera and currently include `ca-certificates`, `curl`, `git`, `jq`, `rsync`, `tree`, `unzip`, `lsof`, and `procps`, plus narrow OS-specific additions.
 
-Requirements: Ruby 3.2/3.3, Bundler, Git, Python 3, ShellCheck, yamllint, and build tools required by the Puppet gem. The development suite pins the publicly available Puppet 8.10.0 Ruby gem.
+## Supported local-test platforms
+
+| Platform | Distribution Puppet package |
+|---|---:|
+| Debian 12 | Puppet 7.23 series |
+| Debian 13 | Puppet 8.10 series |
+| Ubuntu 24.04 LTS | Puppet 8.4 series |
+
+The module metadata and CI cover Puppet `>= 7.23.0 < 9.0.0`.
+
+## Safe bootstrap
+
+On a fresh supported VM:
 
 ```bash
-git clone https://github.com/SASD-Sysadmin/puppet-software-baseline.git
-cd puppet-software-baseline
+sudo ./scripts/bootstrap-agent.sh --noop
+```
+
+The script installs `ca-certificates`, `curl`, Git, the distribution `puppet-agent`, and r10k; clones or fast-forwards the repository under `/opt/sasd`; disables periodic server-oriented agent services; validates the clone; and performs a no-op run.
+
+Only an explicit option enforces the baseline:
+
+```bash
+sudo ./scripts/bootstrap-agent.sh --apply
+```
+
+Review [bootstrap documentation](docs/en/bootstrap.md) before using `--apply`.
+
+## Existing clone
+
+```bash
+./scripts/apply-local.sh --noop
+sudo ./scripts/apply-local.sh --apply
+./scripts/status-local.sh
+sudo ./scripts/update-local.sh          # update and no-op
+sudo ./scripts/update-local.sh --apply  # update and enforce
+```
+
+`apply-local.sh` defaults to no-op, rejects concurrent execution where `flock` is available, and requires root for real enforcement.
+
+## Development and tests
+
+```bash
 gem install bundler
 ./scripts/setup-development.sh
 bundle exec rake
 ```
 
-The complete verification command is the same locally and in CI:
+CI validates both Puppet 7.23 and Puppet 8.10. A separate integration workflow applies the baseline twice inside disposable Debian 12, Debian 13, and Ubuntu 24.04 containers to verify enforcement and idempotence.
 
-```bash
-bundle exec rake
-```
+## Puppet Server future
 
-Individual checks:
-
-```bash
-bundle exec rake validate
-bundle exec rake spec
-bundle exec rake catalog
-```
-
-## Local Puppet execution
-
-```bash
-./scripts/apply-local.sh          # no-op by default
-./scripts/apply-local.sh --noop
-./scripts/apply-local.sh --apply  # explicit enforcement only
-```
-
-`--apply` is harmless in Milestone 1 because the catalog has no workload, but later stepstones will make it operationally significant.
-
-## Future Puppet Server model
-
-```text
-GitHub control repository
-          |
-          | r10k / Code Manager
-          v
-     Puppet Server
-          |
-          | authenticated compiled catalogs
-          v
-      Puppet Agents
-```
-
-Agents will not clone this repository. The server will deploy code, compile catalogs, and serve them over authenticated TLS. See [Puppet Server readiness](docs/en/server-readiness.md).
-
-## Engineering rules
-
-- roles compose profiles;
-- profiles implement coherent technical capabilities;
-- `site.pp` classifies but does not implement applications;
-- external modules are pinned in `Puppetfile`;
-- `modules/` is generated and never maintained manually;
-- data belongs in Hiera;
-- node-specific exceptions remain exceptional;
-- no secrets in Git;
-- productive changes require tests, documentation, and reviewed no-op output.
+Milestone 2 remains standalone. The control-repository layout, trusted-certname Hiera path, roles/profiles, `Puppetfile`, and `environment.conf` remain ready for a later Puppet Server and r10k deployment. Agents will then receive compiled catalogs instead of cloning this repository.
 
 ## Documentation
 
-English is the leading language. German documentation is maintained as an additional operational reference.
-
-- [English documentation](docs/en/README.md)
-- [Deutsche Dokumentation](docs/de/README.md)
+- [Milestone 2 specification](docs/en/milestone-2.md)
+- [Bootstrap](docs/en/bootstrap.md)
+- [Local operation](docs/en/local-operation.md)
+- [Baseline definition](docs/en/baseline.md)
+- [Supported platforms](docs/en/supported-platforms.md)
+- [Rollback](docs/en/rollback.md)
+- [Validation](docs/en/validation.md)
+- [German documentation](docs/de/README.md)
 - [Architecture decisions](docs/adr/)
-- [Contributing](CONTRIBUTING.md)
-- [Security policy](SECURITY.md)
-- [Changelog](CHANGELOG.md)
 
 ## License
 

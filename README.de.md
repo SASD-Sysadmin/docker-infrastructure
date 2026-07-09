@@ -4,95 +4,71 @@
 
 Puppet-Control-Repository zur Installation von Anwendungen und zur Sicherstellung konsistenter Paket-, Dienst- und Konfigurationsstände auf SASD-Systemen.
 
-> **Status:** Milestone 1 vollständig (`0.1.0`). Das Repository ist strukturiert, dokumentiert, validierbar und katalogfähig, enthält aber bewusst noch keinen produktiven Anwendungs-Workload.
+> **Status:** Milestone 2 vollständig (`0.2.0`). Das Repository bietet jetzt einen sicheren lokalen Standalone-Testbetrieb und eine erste bewusst kleine Paket-/Datei-Baseline für Debian 12, Debian 13 und Ubuntu 24.04 LTS.
 
-## Zweck
+## Zweck und Grenze
 
-Das Projekt beschreibt den dauerhaften Sollzustand. Spätere Stepstones installieren freigegebene Anwendungen, halten Konfigurationsdateien und Dienste konsistent und liefern reproduzierbare Kataloge über Puppet Server und r10k.
+Das Repository beschreibt dauerhaften Sollzustand. Diagnose, Incident-Behebung und Ad-hoc-Reparaturen gehören nicht hierher. Milestone 2 erlaubt absichtlich nur:
 
-Diagnose, temporäre Reparaturen, einmalige Betriebsabläufe und Ad-hoc-Remediation gehören nicht hierher, sondern in die SASD-Ansible- und Administrations-Repositories.
+- `package` für eine kleine Gruppe von Administrationswerkzeugen;
+- `file` für `/etc/sasd` und eine verwaltete Baseline-Markierung.
 
-## Sicherheitsgarantie von Milestone 1
+Dienste, Benutzer, Paketquellen, Firewalls, Mounts, Zeitpläne und beliebige Befehle bleiben ausgeschlossen.
+
+## Aktive Baseline
 
 ```text
-node default -> role::baseline -> profile::baseline -> keine Workload-Ressourcen
+node default -> role::baseline -> profile::baseline
+                                      |-> Paket-Baseline
+                                      `-> /etc/sasd/puppet-baseline.conf
 ```
 
-Der aktuelle Katalog deklariert keine Pakete, Dateien, Dienste, Benutzer, Gruppen, Paketquellen, Mounts, Zeitpläne oder `exec`-Ressourcen. Der lokale Runner verwendet außerdem standardmäßig `--noop`. Damit lässt sich die technische Grundlage prüfen, ohne Anwendungen zu installieren oder umzukonfigurieren.
+Die Pakete werden über Hiera zusammengeführt. Enthalten sind unter anderem `ca-certificates`, `curl`, `git`, `jq`, `rsync`, `tree`, `unzip`, `lsof` und `procps`.
 
-## Inhalt von Milestone 1
+## Unterstützte Plattformen
 
-- Control-Repository-Struktur für Puppet 8;
-- Hiera-5-Hierarchie;
-- klare Rollen-/Profilgrenze;
-- workload-freier Default-Katalog;
-- für Puppet Server und r10k vorbereitete Konfiguration;
-- `config_version` mit Git- und VERSION-Fallback;
-- Prüfungen für Puppet, YAML, JSON, Metadaten, Shell und Struktur;
-- RSpec-Puppet-Unit-Tests;
-- isolierter lokaler No-op-Katalogtest;
-- GitHub-Actions-Validierung;
-- ausführliche englische und deutsche Dokumentation;
-- Architecture Decision Records.
+| Plattform | Puppet aus der Distribution |
+|---|---:|
+| Debian 12 | Puppet-7.23-Reihe |
+| Debian 13 | Puppet-8.10-Reihe |
+| Ubuntu 24.04 LTS | Puppet-8.4-Reihe |
 
-Die vollständige Abgrenzung steht unter [Milestone 1](docs/de/milestone-1.md).
+## Sicherer Bootstrap
 
-## Schnellstart für Entwickler
+Auf einer frischen unterstützten VM:
 
 ```bash
-git clone https://github.com/SASD-Sysadmin/puppet-software-baseline.git
-cd puppet-software-baseline
-gem install bundler
-./scripts/setup-development.sh
-bundle exec rake
+sudo ./scripts/bootstrap-agent.sh --noop
 ```
 
-Einzelne Prüfungen:
+Das Skript installiert Grundpakete, Git, `puppet-agent` und r10k, klont oder aktualisiert das Repository unter `/opt/sasd`, deaktiviert den periodischen Server-Agentbetrieb, validiert den Stand und führt einen No-op-Lauf aus.
+
+Nur ausdrücklich wird angewendet:
 
 ```bash
-bundle exec rake validate
-bundle exec rake spec
-bundle exec rake catalog
+sudo ./scripts/bootstrap-agent.sh --apply
 ```
 
-## Lokale Puppet-Ausführung
+## Lokale Bedienung
 
 ```bash
-./scripts/apply-local.sh          # standardmäßig No-op
 ./scripts/apply-local.sh --noop
-./scripts/apply-local.sh --apply  # nur ausdrücklich anwenden
+sudo ./scripts/apply-local.sh --apply
+./scripts/status-local.sh
+sudo ./scripts/update-local.sh
+sudo ./scripts/update-local.sh --apply
 ```
-
-In Milestone 1 ist selbst `--apply` workload-frei. Spätere Stepstones machen diese Unterscheidung betrieblich wichtig.
-
-## Späteres Servermodell
-
-```text
-GitHub Control Repository
-          |
-          | r10k / Code Manager
-          v
-     Puppet Server
-          |
-          | authentifizierte kompilierte Kataloge
-          v
-      Puppet Agents
-```
-
-Agents klonen das Repository später nicht. Der Server deployt Code, kompiliert Kataloge und liefert sie per authentifiziertem TLS aus.
-
-## Grundregeln
-
-Rollen kombinieren Profile. Profile implementieren zusammenhängende technische Fähigkeiten. `site.pp` klassifiziert nur. Externe Module werden im `Puppetfile` festgelegt. `modules/` ist generiert. Werte gehören nach Hiera. Knotenspezifische Ausnahmen bleiben Ausnahmen. Secrets gehören niemals nach Git. Produktive Änderungen benötigen Tests, Dokumentation und geprüfte No-op-Ausgabe.
 
 ## Dokumentation
 
-- [Deutscher Dokumentationsindex](docs/de/README.md)
-- [Englischer Dokumentationsindex](docs/en/README.md)
+- [Milestone 2](docs/de/milestone-2.md)
+- [Bootstrap](docs/de/bootstrap.md)
+- [Lokaler Betrieb](docs/de/local-operation.md)
+- [Baseline](docs/de/baseline.md)
+- [Unterstützte Plattformen](docs/de/supported-platforms.md)
+- [Rollback](docs/de/rollback.md)
+- [Validierung](docs/de/validation.md)
 - [Architekturentscheidungen](docs/adr/)
-- [Mitwirkung](CONTRIBUTING.md)
-- [Sicherheitsrichtlinie](SECURITY.md)
-- [Änderungsprotokoll](CHANGELOG.md)
 
 ## Lizenz
 

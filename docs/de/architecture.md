@@ -2,16 +2,18 @@
 
 ## Kontext
 
-Das Repository verwaltet dauerhafte Baselines für Anwendungsinstallation und Konfiguration. Es ist kein Werkzeug für Incident Response, Diagnose oder prozedurale Reparaturen.
+Das Repository verwaltet dauerhafte Baselines für Softwareinstallation und
+Konfiguration. Es ist kein Werkzeug für Incident Response, Diagnose oder
+prozedurale Reparaturen.
 
-## Aktuelle Architektur
+## Architektur von Milestone 2
 
 ```text
-Git-Arbeitskopie / GitHub
+GitHub / lokaler Git-Clone
           |
-          | Validierung
+          | Bootstrap, Validierung, r10k
           v
-Puppet-Umgebung
+Standalone-Puppet-Umgebung
   manifests/site.pp
           |
           v
@@ -19,21 +21,18 @@ Puppet-Umgebung
           |
           v
  profile::baseline
-          |
-          v
-   keine Ressourcen
+     |          |
+  Pakete    /etc/sasd-Markierung
 ```
 
-Die lokale Entwicklung nutzt `puppet apply --noop`. Später ergänzen r10k und Puppet Server diese Struktur, ohne das grundlegende Environment-Layout zu ändern.
+Lokal wird ausdrücklich `puppet apply` verwendet, nicht `puppet agent`. No-op
+ist Standard. Später werden Puppet Server und r10k-Deployment ergänzt, ohne die
+Rollen-/Profilgrenze zu verändern.
 
-## Schichten
+## Regeln
 
-- `role`: Kombination nach Knotenzweck;
-- `profile`: SASD-spezifische Implementierungsrichtlinie;
-- `modules`: externe, über das `Puppetfile` installierte Abhängigkeiten;
-- `data`: Hiera-Daten der Umgebung;
-- `manifests`: ausschließlich Klassifizierung.
-
-## Architekturregeln
-
-Keine produktiven Ressourcen in `site.pp` oder Rollen, keine Rollen in Profilen, keine manuell gepflegten Inhalte unter `modules`, keine Klartext-Secrets, Tests und Dokumentation für jedes produktive Profil, No-op als lokaler Standard und nur begründete knotenspezifische Daten.
+`site.pp` und Rollen enthalten keine direkten Workload-Ressourcen. Milestone 2
+erlaubt in Profilen nur Pakete und Dateien. Nicht unterstützte Plattformen
+brechen bei der Katalogkompilierung ab. Externe Module sind fest versioniert,
+Secrets bleiben außerhalb von Git, `--apply` benötigt root und Git-Updates
+müssen sauber sowie Fast-Forward sein.

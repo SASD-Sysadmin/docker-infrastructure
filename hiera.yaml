@@ -5,16 +5,21 @@ defaults:
   datadir: data
   data_hash: yaml_data
 
-# The hierarchy is deliberately conservative in Milestone 1. Node exceptions
-# override operating-system-family data, which in turn overrides common data.
-# Role-specific data will be activated only after the classification mechanism
-# has been selected and documented in a later stepstone.
 hierarchy:
-  - name: "Per-node data"
+  # Exceptional, narrowly reviewed per-node overrides. The trusted certificate
+  # name also works when this repository is later compiled by Puppet Server.
+  - name: Per-node data
     path: "nodes/%{trusted.certname}.yaml"
 
-  - name: "Per-operating-system-family data"
-    path: "os/%{facts.os.family}.yaml"
+  # Exact platform data takes precedence over generic operating-system data.
+  - name: Operating system and major release
+    path: "os/%{facts.os.name}/%{facts.os.release.major}.yaml"
 
-  - name: "Common data"
-    path: "common.yaml"
+  - name: Operating system
+    path: "os/%{facts.os.name}.yaml"
+
+  - name: Operating-system family
+    path: "os/family/%{facts.os.family}.yaml"
+
+  - name: Common data
+    path: common.yaml

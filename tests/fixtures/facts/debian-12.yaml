@@ -5,4 +5,4 @@ os:
   release:
     major: '12'
 networking:
-  fqdn: test-debian12.example.invalid
+  fqdn: debian12.example.test

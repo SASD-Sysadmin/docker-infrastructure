@@ -1,3 +1,2 @@
 ---
-# Debian-family overrides are intentionally empty in Milestone 1.
-{}
+# Debian-specific package overrides are intentionally empty in Milestone 2.

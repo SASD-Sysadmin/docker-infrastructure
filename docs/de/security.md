@@ -1,18 +1,13 @@
-# Sicherheitsarchitektur
+# Sicherheit
 
-## Aktuelle Kontrollen
+Milestone 2 nutzt bei Bootstrap, Update und lokalem Lauf standardmäßig No-op.
+`--apply` benötigt root und darf nicht mit künstlichen Fakten kombiniert werden.
+Nicht unterstützte Plattformen brechen vor dem Anwenden ab. Das aktive Profil
+ist auf Paket- und Dateiressourcen begrenzt und verwaltet keine Ports, Dienste,
+Benutzer, Paketquellen, Firewall-Regeln oder beliebigen Befehle.
 
-- kein produktiver Workload in Milestone 1;
-- No-op als Standard der lokalen Ausführung;
-- isolierte temporäre Puppet-Laufzeitverzeichnisse;
-- Katalogkompilierung mit strikten Variablen;
-- festgelegte Entwicklungsabhängigkeiten;
-- noch keine externen Puppet-Module;
-- strukturelle Prüfung gegen typische Secret-Dateiendungen;
-- nur lesende GitHub-Actions-Berechtigungen;
-- Validierung vor Merge;
-- Lokale Git-Revision oder sichtbarer VERSION-Fallback über `config_version`.
-
-Kennwörter, Tokens, private Schlüssel, privates Zertifikatsmaterial, Wiederherstellungscodes und unverschlüsselte sensible Hiera-Werte dürfen niemals committed werden.
-
-Vor Produktivbetrieb folgen Branch Protection, Deployment-Zugang, CA-Prozess, verschlüsseltes Hiera mit getrenntem Schlüsselmanagement, Backups, Audit-Aufbewahrung, Monitoring und getestete Wiederherstellung.
+Schmutzige Git-Clones und nicht lineare Updates werden verweigert. Der
+periodische Puppet-Agentdienst bleibt im Standalone-Betrieb deaktiviert.
+Secrets, Zertifikate und private Schlüssel gehören niemals in Git oder Hiera.
+Änderungen an Skripten, Manifesten, Daten und Puppetfile sind wie privilegierter
+Code zu prüfen und zuerst in einer VM mit Snapshot zu testen.

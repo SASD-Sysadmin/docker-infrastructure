@@ -1,20 +1,19 @@
 # Roadmap
 
-## Milestone 1 – Grundlage des Control Repositorys – abgeschlossen
+## Milestone 1 — abgeschlossen
 
-Serverfähige Struktur, workload-freier Rollen-/Profilkatalog, Hiera-Grundlage, Validierung, Unit-Tests, lokaler No-op-Runner, CI und zweisprachige Dokumentation.
+Control-Repository-Grundlage ohne Workload.
 
-## Nächste Stepstones
+## Milestone 2 — abgeschlossen
 
-Der echte Workload wird in kleinen prüfbaren Schritten eingeführt:
+Standalone-Bootstrap, Debian-/Ubuntu-Unterstützung, erste Paket-/Datei-Baseline,
+Puppet-7/8-Tests und echte Container-Idempotenztests.
 
-1. Entscheidung zu Plattformen und Paketrichtlinie;
-2. Puppet-Agent-Bootstrap für Debian/Ubuntu;
-3. erstes ungefährliches Markerprofil;
-4. Profil für grundlegende Administrationspakete;
-5. Profil zur Dienst-/Konfigurationskonsistenz;
-6. Anwendungsgruppen und Rollenkombinationen;
-7. Puppet Server und r10k;
-8. Zertifikatsbetrieb, Reporting, Backups und optional PuppetDB.
+## Mögliche nächste Stepstones
 
-Jeder Stepstone benötigt Abnahmekriterien, Rückrollverhalten, Tests, No-op-Nachweis sowie englische und deutsche Betriebsdokumentation.
+1. getrennte Profile für Administration, Entwicklung, Monitoring und Container;
+2. Anwendungsgruppen und weitere Rollen;
+3. gezielte Dienst- und Konfigurationsprofile;
+4. sichere Paketentfernungs- und Migrationsregeln;
+5. Puppet Server, r10k-Environments und Zertifikatsbetrieb;
+6. Reports, Backups, Monitoring und optional PuppetDB.

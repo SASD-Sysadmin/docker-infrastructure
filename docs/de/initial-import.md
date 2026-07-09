@@ -1,52 +1,23 @@
-# Erstimport in GitHub
+# Bereitgestelltes Git-Repository veröffentlichen
 
-## Im ZIP enthaltene Repository-Historie
-
-Das Milestone-1-ZIP enthält ein vollständiges Git-Repository mit zwei klar getrennten Commits:
-
-```text
-Initial Commit
-Complete Milestone 1 foundation
-```
-
-Zusätzlich sind das annotierte Tag `v0.1.0` und folgender `origin`-Remote enthalten:
-
-```text
-https://github.com/SASD-Sysadmin/puppet-software-baseline.git
-```
-
-## Den passenden Push-Weg auswählen
-
-Zuerst müssen das entpackte Repository und der aktuelle Remote-Zustand geprüft werden:
+Das ZIP enthält die vollständige Historie bis Milestone 2 und einen passenden
+`origin`-Remote. Vor dem Push prüfen:
 
 ```bash
 git status
 git log --oneline --decorate --graph --all
 git remote -v
-git fetch origin main
-git log --oneline --decorate --graph --all
+git tag --list --format='%(refname:short) %(subject)'
 ```
 
-### Der frühere Initial Commit wurde bereits gepusht
-
-Endet `origin/main` bereits auf demselben `Initial Commit`, kann Milestone 1 normal veröffentlicht werden:
+Ist dieselbe Milestone-1-Historie bereits remote vorhanden:
 
 ```bash
 git push origin main
-git push origin v0.1.0
+git push origin v0.2.0
 ```
 
-### GitHub enthält weiterhin nur seinen entbehrlichen Platzhalter-Commit
-
-Das Ersetzen dieser unabhängigen Platzhalterhistorie erfordert ein bewusstes Umschreiben. Dies darf nur erfolgen, wenn der Remote keine erhaltenswerte Arbeit enthält:
-
-```bash
-git push --force-with-lease origin main
-git push origin v0.1.0
-```
-
-Lehnt Git den Push wegen veralteter Lease-Informationen ab, muss erneut gefetcht und geprüft werden. Ein uneingeschränktes `--force` ist kein angemessener Ersatz.
-
-### Der Remote enthält erhaltenswerte Arbeit
-
-Dann darf die Historie nicht überschrieben werden. Stattdessen wird der Remote normal geklont, der Milestone-1-Inhalt in diesen Klon übernommen, geprüft und als neuer Commit gespeichert. Die Commit-Hashes unterscheiden sich anschließend vom ZIP; der Erhalt vorhandener Arbeit ist wichtiger als identische Hashes.
+Einen bedeutungslosen GitHub-Platzhalter nur nach Fetch und Vergleich mit
+`--force-with-lease` ersetzen. Enthält das Remote wertvolle unabhängige Arbeit,
+wird die Historie nicht überschrieben; die Änderungen werden in einen frischen
+Remote-Clone übernommen und dort neu committed.

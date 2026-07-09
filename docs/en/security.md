@@ -1,26 +1,27 @@
-# Security architecture
+# Security
 
-## Current controls
+## Milestone 2 controls
 
-- no productive workload in Milestone 1;
-- no-op default for local execution;
-- isolated temporary Puppet runtime directories;
-- strict-variable catalog compilation;
-- pinned development dependencies;
-- no external Puppet modules yet;
-- secret-like file extensions rejected by structural validation;
-- read-only GitHub Actions permissions;
-- validation before merge;
-- Local Git revision, or a visible VERSION fallback, recorded through `config_version`.
+- no-op is the default for bootstrap, update, and direct local execution;
+- `--apply` requires root;
+- synthetic fact fixtures cannot be combined with `--apply`;
+- unsupported platforms fail before enforcement;
+- the active profile is limited to package and file resources;
+- no ports, services, users, repositories, firewall state, or arbitrary commands are managed;
+- dirty Git clones and non-fast-forward updates are rejected;
+- periodic Puppet agent services are disabled in standalone mode;
+- potential key and certificate file extensions are rejected by validation;
+- no secrets belong in Hiera or Git.
 
-## Secret policy
+## Privileged-code review
 
-Never commit passwords, API tokens, private keys, certificate private material, recovery codes, or unencrypted sensitive Hiera values. Examples in documentation must use invalid domains and unmistakable placeholders.
+Treat every change under `scripts/`, `manifests/`, `site-modules/`, `data/`, and
+`Puppetfile` as privileged. Review exact diffs, run the full suite, test in a
+snapshot-backed VM, and retain no-op output with the change record.
 
-## Future controls
+## Package trust
 
-Before production, define branch protection, signed or reviewed releases, r10k deploy credentials, Puppet CA procedures, encrypted Hiera with independent key management, server backups, audit retention, monitoring, and tested recovery.
-
-## Reporting vulnerabilities
-
-Follow [`../../SECURITY.md`](../../SECURITY.md). Do not place sensitive vulnerability details in a public issue.
+Milestone 2 installs packages only from already configured distribution
+repositories. It does not add third-party APT sources. The future production
+server design must separately decide package provenance, support, and update
+policy.

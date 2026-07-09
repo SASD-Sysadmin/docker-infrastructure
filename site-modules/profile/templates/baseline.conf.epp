@@ -1,0 +1,7 @@
+<%- | String[1] $baseline_version, String[1] $os_name, String[1] $os_major | -%>
+# Managed by Puppet. Manual changes will be replaced.
+# Source: profile::baseline
+baseline_version=<%= $baseline_version %>
+platform=<%= $os_name %>
+platform_major=<%= $os_major %>
+management_mode=local-puppet-apply

@@ -1,0 +1,3 @@
+---
+# Ubuntu 24.04 LTS (Noble) is supported with the distribution Puppet 8.4 agent.
+# The bootstrap script enables the Universe component when required.

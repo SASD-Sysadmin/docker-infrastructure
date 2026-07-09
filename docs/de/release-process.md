@@ -1,16 +1,9 @@
 # Release-Prozess
 
-Milestone 1 trägt die Repository-Version `0.1.0`.
+Die aktuelle Version ist `0.2.0` und wird nach Abnahme als `v0.2.0` annotiert.
 
-Für spätere Releases:
-
-1. einen abgegrenzten Stepstone abschließen und prüfen;
-2. `bundle exec rake` ausführen;
-3. englische und deutsche Betriebsdokumentation aktualisieren;
-4. `CHANGELOG.md` und `VERSION` aktualisieren;
-5. die Versionen beider `metadata.json` synchron halten, solange beide Site-Module gemeinsam veröffentlicht werden;
-6. über einen geprüften Pull Request zusammenführen;
-7. einen annotierten Git-Tag wie `v0.2.0` erzeugen;
-8. zuerst in einer Testumgebung deployen und No-op-Ausgabe prüfen.
-
-Ein Git-Tag allein ist keine Freigabe für ein Produktiv-Deployment.
+Version, beide Modul-Metadaten, Marker-Version, Changelog sowie englische und
+deutsche Dokumentation müssen übereinstimmen. Danach folgen Puppet-7/8-Tests,
+Container-Integration, geprüfter VM-No-op, Commit und annotiertes Tag. Ein
+veröffentlichtes Tag wird niemals verschoben; Korrekturen erhalten eine neue
+Patch-Version.

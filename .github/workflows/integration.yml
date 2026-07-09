@@ -1,0 +1,36 @@
+---
+name: Integration baseline
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'manifests/**'
+      - 'site-modules/**'
+      - 'data/**'
+      - 'scripts/**'
+      - 'tests/integration/**'
+      - '.github/workflows/integration.yml'
+  pull_request:
+    paths:
+      - 'manifests/**'
+      - 'site-modules/**'
+      - 'data/**'
+      - 'scripts/**'
+      - 'tests/integration/**'
+      - '.github/workflows/integration.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  apply:
+    name: Apply and idempotence on ${{ matrix.image }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        image: ['debian:12', 'debian:13', 'ubuntu:24.04']
+    steps:
+      - uses: actions/checkout@v7
+      - name: Apply baseline twice in a disposable container
+        run: tests/integration/container-baseline.sh '${{ matrix.image }}'

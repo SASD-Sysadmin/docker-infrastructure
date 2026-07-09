@@ -1,16 +1,15 @@
 # Release process
 
-Milestone 1 identifies the repository as version `0.1.0`.
+The current release is `0.2.0` and is tagged `v0.2.0` after acceptance.
 
-For future releases:
+1. update `VERSION`, both site-module metadata files, marker-version Hiera, and changelog;
+2. update English and German documentation;
+3. run Puppet 7 and Puppet 8 validation suites;
+4. run all supported container integration tests;
+5. capture reviewed VM no-op evidence;
+6. commit with a milestone-focused message;
+7. create an annotated semantic-version tag;
+8. push the commit and tag only after review.
 
-1. complete and review a focused stepstone;
-2. run `bundle exec rake`;
-3. update English and German operational documentation;
-4. update `CHANGELOG.md` and `VERSION`;
-5. keep both site-module `metadata.json` versions aligned with `VERSION` while they are released together;
-6. merge through a reviewed pull request;
-7. create an annotated Git tag such as `v0.2.0`;
-8. deploy first to a test environment and review no-op output before production.
-
-A Git tag is not by itself authorization to deploy production code.
+Never move an existing release tag. Correct a released defect with a new patch
+version.

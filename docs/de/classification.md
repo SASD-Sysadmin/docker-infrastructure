@@ -1,24 +1,11 @@
-# Klassifizierung und Rollen/Profile
+# Klassifizierung
 
-## Klassifizierung in Milestone 1
+In Milestone 2 weist `manifests/site.pp` jedem Knoten `role::baseline` zu. Das
+Profil prüft anschließend anhand strukturierter `os`-Fakten, ob die Plattform
+unterstützt wird. Dies ist eine kontrollierte Übergangslösung für ein kleines
+Labor und nicht das endgültige Flottenmodell.
 
-`manifests/site.pp` weist jedem Knoten `role::baseline` zu. Diese bewusste Übergangsklassifizierung kompiliert eine echte Klassenkette, verwaltet aber keinen Workload.
-
-```text
-node default
-  -> role::baseline
-     -> profile::baseline
-        -> keine Ressourcen
-```
-
-## Rollenvertrag
-
-Eine Rolle beschreibt den vollständigen Zweck eines Knotens und kombiniert Profile. Rollen verwalten Pakete, Dateien, Dienste, Benutzer oder Kommandos nicht direkt.
-
-## Profilvertrag
-
-Ein Profil implementiert genau eine zusammenhängende technische Fähigkeit. Es darf externe Module kapseln und Umgebungsdaten über typisierte Parameter und Hiera beziehen.
-
-## Spätere Klassifizierung
-
-Vor der Einführung mehrerer produktiver Rollen wird die verbindliche Quelle der Knotenrolle ausgewählt und dokumentiert, etwa vertrauenswürdige Zertifikatserweiterungen oder ein ENC. Das reservierte Verzeichnis `data/roles/` ist noch keine Entscheidung für einen ungeprüften Custom Fact.
+Später kann Puppet Server über vertrauenswürdige Zertifikatsnamen, ein geprüftes
+Rollen-Fact oder einen External Node Classifier klassifizieren. Ein Knoten
+bekommt eine primäre Rolle, Rollen kombinieren Profile und knotenspezifische
+Hiera-Daten bleiben die Ausnahme.

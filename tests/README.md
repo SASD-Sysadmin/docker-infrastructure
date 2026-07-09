@@ -1,9 +1,11 @@
 # Tests
 
-Milestone 1 uses three complementary levels:
+Milestone 2 has four layers:
 
-1. static validation through `scripts/validate.sh`;
-2. RSpec-Puppet unit compilation for `profile::baseline` and `role::baseline`;
-3. a local no-op catalog test through `scripts/test-catalog.sh`.
+1. static source and repository validation;
+2. RSpec-Puppet catalog tests for Debian 12, Debian 13, and Ubuntu 24.04;
+3. bootstrap dry-run tests using os-release fixtures;
+4. optional disposable-container enforcement and idempotence tests.
 
-The default catalog contains no workload resources. A successful test proves the repository wiring, not application installation. Integration tests in disposable machines will be introduced with productive profiles.
+Run the normal suite with `bundle exec rake`. Run a container integration test
+with, for example, `tests/integration/container-baseline.sh debian:12`.

@@ -1,52 +1,35 @@
-# Development environment
+# Development
 
-## Supported development baseline
+## Toolchain
 
-Milestone 1 targets Puppet 8 and Ruby 3.2 or 3.3. The repository pins its Ruby development tools in `Gemfile`.
-
-## Preparation
+The code supports Puppet 7.23 through Puppet 8.x. CI uses Puppet 7.23 with Ruby
+3.1 and Puppet 8.10 with Ruby 3.3. The default local Gemfile selection is Puppet
+8.10; override it for compatibility checks:
 
 ```bash
-ruby --version
+PUPPET_GEM_VERSION=7.23.0 bundle install
+PUPPET_GEM_VERSION=7.23.0 bundle exec rake
+```
+
+Install dependencies:
+
+```bash
 gem install bundler
 ./scripts/setup-development.sh
 ```
 
-The setup script configures Bundler to install into `vendor/bundle`, which is excluded from Git.
+## Change flow
 
-## Daily commands
+1. create a focused branch;
+2. update code, Hiera, tests, and both documentation languages;
+3. run `bundle exec rake`;
+4. run an appropriate disposable-container integration test;
+5. review real no-op output on a matching VM;
+6. open a pull request with rollback notes.
 
-```bash
-make help
-make validate
-make spec
-make catalog
-make test
-```
+## Design rules
 
-Equivalent Bundler commands:
-
-```bash
-bundle exec rake validate
-bundle exec rake spec
-bundle exec rake catalog
-bundle exec rake
-```
-
-## Safe local Puppet run
-
-```bash
-./scripts/apply-local.sh          # no-op default
-./scripts/apply-local.sh --noop   # explicit no-op
-./scripts/apply-local.sh --apply  # explicit enforcement
-```
-
-Milestone 1 manages no workload resources, but later milestones will make the distinction operationally important.
-
-## Working rules
-
-Use a feature branch, keep commits focused, update class comments and tests with code, and run the complete suite before opening a pull request. Never test an unreviewed productive profile first on an important machine.
-## Reproducible open-source test toolchain
-
-The `Gemfile` pins Puppet 8.10.0, puppet-lint 5.1.1, RSpec-Puppet 5.0.0, and related test tools. The pin describes the repository's public Ruby-gem test environment; production Puppet Server and Agent versions are selected and validated separately during the server stepstone.
-
+Roles compose profiles. Profiles own resources. Platform variation belongs in
+Hiera or narrowly justified code. New resource types require an ADR and an
+update to the scope validator. Do not add `exec` as a shortcut for missing
+declarative design.

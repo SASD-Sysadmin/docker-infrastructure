@@ -1,20 +1,23 @@
 # Roadmap
 
-## Milestone 1 — Control repository foundation — complete
+## Milestone 1 — complete
 
-Server-ready layout, workload-free role/profile catalog, Hiera foundation, validation, unit tests, local no-op runner, CI, and bilingual documentation.
+Server-ready control-repository foundation, workload-free catalog, tests, CI,
+and bilingual documentation.
 
-## Next stepstones
+## Milestone 2 — complete
 
-The productive workload will be introduced in small, reviewable increments rather than as one oversized milestone. Candidate sequence:
+Standalone bootstrap, Debian/Ubuntu support, first package/file baseline,
+platform Hiera, Puppet 7/8 validation, and real container idempotence tests.
 
-1. supported-platform and package-policy decision;
-2. Puppet Agent bootstrap for Debian/Ubuntu;
-3. first harmless marker profile;
-4. core administration package profile;
-5. service/configuration consistency profile;
-6. application groups and role composition;
-7. Puppet Server and r10k deployment;
-8. certificate operations, reporting, backups, and optional PuppetDB.
+## Candidate next stepstones
 
-Every stepstone must define acceptance criteria, rollback behaviour, tests, no-op evidence, and English/German operational documentation.
+1. split administration, development, monitoring, and container package profiles;
+2. introduce explicit application groups and additional roles;
+3. add carefully scoped service/configuration consistency profiles;
+4. design package-removal and migration policy;
+5. deploy Puppet Server, r10k environments, and certificate operations;
+6. add central reports, backups, monitoring, and optional PuppetDB.
+
+Each stepstone requires acceptance criteria, rollback, tests, no-op evidence,
+and English/German operational documentation.

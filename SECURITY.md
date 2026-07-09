@@ -1,21 +1,24 @@
 # Security policy
 
-## Supported versions
-
-Until the first production release, only the current `main` branch receives security fixes.
-
 ## Reporting
 
-Do not open a public issue for a vulnerability that exposes credentials, private infrastructure details, certificate material, or a practical exploitation path. Contact the repository owner through a private channel available in the GitHub organization profile.
+Do not disclose credentials, host inventories, internal addresses, logs, or
+private infrastructure data in a public issue. Use a private channel agreed with
+the repository owner.
 
-Include the affected revision, impact, safe reproduction details, and suggested mitigation. Never send real secrets.
+## Repository rules
 
-## Repository security rules
+- Never commit passwords, API keys, private keys, certificates, tokens, or Hiera secrets.
+- Pin external modules to reviewed versions or immutable Git references.
+- Review every no-op report before `--apply`.
+- Run initial enforcement in a disposable VM or after a tested snapshot.
+- Treat bootstrap and update scripts as privileged code.
+- Refuse dirty/non-fast-forward deployments rather than hiding local changes.
+- Do not bypass the supported-platform checks with synthetic os-release data.
 
-- no passwords, tokens, private keys, or private certificate material;
-- no unencrypted sensitive Hiera data;
-- pin third-party modules and development dependencies;
-- review no-op output before productive enforcement;
-- protect and back up the future Puppet CA independently;
-- grant r10k read-only repository access;
-- validate every change before deployment.
+## Milestone 2 exposure
+
+The active baseline installs standard-repository packages and owns one
+non-secret file under `/etc/sasd`. It does not open ports, start services, create
+users, add package repositories, or execute arbitrary commands. The bootstrap
+disables periodic Puppet agent services because no server exists yet.

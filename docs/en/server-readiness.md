@@ -1,21 +1,18 @@
 # Puppet Server readiness
 
-Milestone 1 does not install Puppet Server, but its control-repository contract is server-ready:
+Milestone 2 does not install Puppet Server, but preserves the server contract:
 
-- `environment.conf` includes `$basemodulepath` for server or PE system modules;
-- own code is stored in `site-modules`;
-- generated dependencies belong in `modules` and are declared only in `Puppetfile`;
-- `config_version` reports a local Git revision or explicit VERSION fallback in catalogs and reports;
-- Hiera is environment-local;
-- the main manifest provides deterministic default classification;
-- CI can reject invalid code before r10k deployment.
+- standard `environment.conf` module path;
+- `Puppetfile` for r10k-managed dependencies;
+- classification isolated in `site.pp`;
+- roles and profiles in `site-modules`;
+- Hiera 5 with `trusted.certname` as the exceptional node layer;
+- Git-derived `config_version`;
+- no local-only absolute paths inside Puppet manifests;
+- Puppet 7/8-compatible code during the transition.
 
-A later Puppet Server stepstone must still define:
-
-- installation source and supported server platform;
-- memory sizing and Java configuration;
-- CA and certificate lifecycle;
-- r10k source, authentication, deployment hooks, and branch mapping;
-- environment timeout;
-- backups of configuration, CA material, code, and optional PuppetDB;
-- monitoring and recovery tests.
+Before central deployment, decide server/agent package provenance, supported
+versions, environment/branch mapping, CA lifecycle, certificate approval,
+backup, reporting, monitoring, and whether PuppetDB is justified. The local
+bootstrap must then be replaced by a server-agent enrollment workflow; agents
+must not clone the control repository.

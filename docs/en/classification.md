@@ -1,24 +1,19 @@
-# Classification and roles/profiles
+# Classification
 
-## Milestone 1 classification
+## Milestone 2
 
-`manifests/site.pp` assigns every node to `role::baseline`. This is a deliberate temporary classification that compiles a real class chain while managing no workload.
+`manifests/site.pp` assigns every node to `role::baseline`. Platform support is
+then enforced inside `profile::baseline` using structured `os` facts. This is a
+controlled temporary classification for a small homogeneous lab, not the final
+fleet model.
 
-```text
-node default
-  -> role::baseline
-     -> profile::baseline
-        -> no resources
-```
+## Future model
 
-## Role contract
+A Puppet Server deployment may classify by trusted certificate name, a reviewed
+custom role fact, or an external node classifier. Regardless of mechanism:
 
-A role represents the complete intended purpose of a node and composes profiles. Roles must not directly manage packages, files, services, users, or commands.
-
-## Profile contract
-
-A profile implements one coherent technical capability. It may wrap third-party modules and obtain environment data through typed parameters and Hiera.
-
-## Future classification
-
-Before adding multiple production roles, the project will select and document the authoritative source for a node role. Options include trusted certificate extensions, an ENC, or another controlled classifier. The unused `data/roles/` directory does not imply that an unverified custom fact has already been accepted.
+- one node receives one primary role;
+- roles compose profiles;
+- node-specific Hiera is exceptional;
+- classification data must not contain secrets;
+- role changes require a no-op review because they can alter many resources.

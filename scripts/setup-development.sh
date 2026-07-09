@@ -11,7 +11,7 @@ readonly REPOSITORY_ROOT
 cd "${REPOSITORY_ROOT}"
 
 if ! command -v ruby >/dev/null 2>&1; then
-  printf 'ERROR: Ruby 3.2 or 3.3 is required.\n' >&2
+  printf 'ERROR: Ruby 3.1 through 3.4 is required.\n' >&2
   exit 1
 fi
 

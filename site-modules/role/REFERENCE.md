@@ -1,11 +1,6 @@
-# Reference: `role`
+# Reference
 
-## Classes
+## `role::baseline`
 
-### `role`
-
-Namespace class. It manages no resources.
-
-### `role::baseline`
-
-Default Milestone 1 node role. It includes `profile::baseline` and manages no workload resources.
+Composes the first SASD package and marker profile for supported local-test
+nodes.

@@ -1,14 +1,14 @@
-# `profile` module
+# profile module
 
-The `profile` module contains SASD-owned implementation classes. A profile manages one coherent technical capability and may wrap one or more third-party modules.
+Implementation profiles for SASD systems.
 
-Milestone 1 provides only `profile::baseline`, an intentionally empty class used to prove compilation and test wiring. It changes no system state.
+Milestone 2 provides `profile::baseline`, which:
 
-Rules:
+- rejects unsupported platforms during catalog compilation;
+- installs a small administration package set supplied by Hiera;
+- manages `/etc/sasd/puppet-baseline.conf` from an EPP template;
+- deliberately avoids services, users, repositories, firewall state, and
+  arbitrary `exec` resources.
 
-- profiles may include or declare other profiles only when the dependency is technically unavoidable;
-- profiles must never include roles;
-- profile parameters should use typed Puppet signatures;
-- environment-specific values should be obtained through Automatic Parameter Lookup/Hiera;
-- every productive profile requires class documentation and unit tests;
-- secrets must never be committed in clear text.
+Roles may include or contain this profile. Node classification and application
+composition must not be implemented inside it.

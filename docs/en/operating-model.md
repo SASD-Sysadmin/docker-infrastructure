@@ -1,24 +1,22 @@
 # Operating model
 
-## Milestone 1
+## Standalone phase — Milestone 2
 
-Developers validate locally and through GitHub Actions. The only catalog is a workload-free baseline catalog. There is no unattended enforcement.
-
-## Development flow
-
-```text
-feature branch -> bundle exec rake -> pull request -> review -> main
-```
-
-## Future production flow
+Each lab node has a local clone, Puppet Agent command-line tools, and r10k. An
+operator updates and validates the clone, reviews a no-op report, and explicitly
+chooses whether to enforce. Periodic `puppet agent` services are disabled because
+no Puppet Server exists.
 
 ```text
-GitHub main -> r10k / Code Manager -> production environment
-             -> Puppet Server -> authenticated agent catalogs
+operator -> git/r10k -> validate -> puppet apply --noop -> review -> --apply
 ```
 
-Agents will not clone the control repository. The server deploys code, compiles catalogs from trusted facts and Hiera, and serves them over authenticated TLS.
+The clone is expected under `/opt/sasd/puppet-software-baseline`, but scripts
+also work from a reviewed development clone.
 
-## Change boundary
+## Future central phase
 
-Puppet owns persistent desired state. Incident diagnosis, temporary repairs, one-time migrations, and procedural troubleshooting remain outside this repository unless a durable baseline requirement emerges from them.
+The Puppet Server will become the only component deploying the Git control
+repository. Agents will submit facts and receive authenticated compiled catalogs.
+The standalone scripts remain useful for development and controlled recovery,
+but no longer form the normal fleet distribution path.

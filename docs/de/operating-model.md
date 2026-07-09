@@ -1,22 +1,18 @@
 # Betriebsmodell
 
-## Milestone 1
+## Standalone-Phase — Milestone 2
 
-Entwickler prüfen lokal und über GitHub Actions. Der einzige Katalog ist eine workload-freie Baseline; es gibt noch keine unbeaufsichtigte Durchsetzung.
-
-## Entwicklungsfluss
-
-```text
-Feature-Branch -> bundle exec rake -> Pull Request -> Review -> main
-```
-
-## Späterer Produktivfluss
+Jeder Labor-Knoten besitzt einen lokalen Clone, Puppet-Kommandozeilenwerkzeuge
+und r10k. Ein Administrator aktualisiert und validiert, prüft den No-op-Bericht
+und entscheidet ausdrücklich über `--apply`. Periodische `puppet agent`-Dienste
+sind deaktiviert, weil noch kein Puppet Server vorhanden ist.
 
 ```text
-GitHub main -> r10k / Code Manager -> production Environment
-             -> Puppet Server -> authentifizierte Agent-Kataloge
+Administrator -> Git/r10k -> Validierung -> No-op -> Prüfung -> Apply
 ```
 
-Agents klonen das Control Repository nicht. Der Server deployt Code, kompiliert Kataloge aus vertrauenswürdigen Facts und Hiera und liefert sie per authentifiziertem TLS aus.
+## Spätere zentrale Phase
 
-Puppet besitzt den dauerhaften Sollzustand. Diagnose, temporäre Reparaturen, einmalige Migrationen und prozedurales Troubleshooting bleiben außerhalb dieses Repositorys.
+Der Puppet Server deployt dann allein das Control Repository. Agents liefern
+Fakten und erhalten authentifizierte, kompilierte Kataloge. Die lokalen Skripte
+bleiben für Entwicklung und kontrollierte Wiederherstellung erhalten.

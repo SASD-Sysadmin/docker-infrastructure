@@ -1,52 +1,26 @@
-# Initial import into GitHub
+# Publishing the supplied Git repository
 
-## Repository history contained in the ZIP
-
-The Milestone 1 ZIP contains a complete Git repository with two focused commits:
-
-```text
-Initial Commit
-Complete Milestone 1 foundation
-```
-
-It also contains the annotated tag `v0.1.0` and an `origin` remote pointing to:
-
-```text
-https://github.com/SASD-Sysadmin/puppet-software-baseline.git
-```
-
-## Choose the correct push path
-
-First inspect the extracted repository and the current remote state:
+The ZIP contains the complete history through Milestone 2 and an `origin` remote
+for the SASD-Sysadmin repository. Inspect before pushing:
 
 ```bash
 git status
 git log --oneline --decorate --graph --all
 git remote -v
-git fetch origin main
-git log --oneline --decorate --graph --all
+git tag --list --format='%(refname:short) %(subject)'
 ```
 
-### The earlier Initial Commit was already pushed
-
-When the remote `main` already ends at the same `Initial Commit`, publish Milestone 1 normally:
+If the remote already contains the same Milestone 1 history, publish normally:
 
 ```bash
 git push origin main
-git push origin v0.1.0
+git push origin v0.2.0
 ```
 
-### GitHub still contains only its disposable placeholder commit
+If the remote still contains only an unrelated GitHub placeholder commit,
+fetch and compare it first. Replace history only when that placeholder is known
+to be disposable, using `--force-with-lease`, never an unconditional force.
 
-Replacing that unrelated placeholder history requires a deliberate force update. Do this only when the remote contains no work that must be preserved:
-
-```bash
-git push --force-with-lease origin main
-git push origin v0.1.0
-```
-
-If Git refuses because the lease is stale, fetch and inspect again. Do not replace `--force-with-lease` with an unrestricted `--force` without understanding the remote changes.
-
-### The remote contains work that must be preserved
-
-Do not rewrite it. Clone the remote normally, copy the Milestone 1 files into that clone, review the result, and create a new commit. The resulting commit hashes will differ from the ZIP, but preserved history is more important than matching the supplied hashes.
+If the remote contains valuable independent work, do not rewrite it. Clone the
+remote, copy/replay the Milestone 2 changes, test, and create a new commit there.
+Commit hashes may differ; preserved history matters more than matching the ZIP.

@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# Compile the default catalog through the safe local apply wrapper.
+# Compile supported fixture catalogs in no-op mode without touching the host.
 set -euo pipefail
-
-SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
-readonly SCRIPT_DIR
-"${SCRIPT_DIR}/apply-local.sh" --noop
+ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)"
+for facts in debian-12.yaml debian-13.yaml ubuntu-24.04.yaml; do
+  printf '==> Catalog fixture: %s\n' "${facts}"
+  "${ROOT}/scripts/apply-local.sh" --noop --facts "${ROOT}/tests/fixtures/facts/${facts}"
+done

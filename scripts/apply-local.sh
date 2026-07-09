@@ -1,33 +1,67 @@
 #!/usr/bin/env bash
-# Compile and locally apply the control repository.
+# Compile and apply the control repository on the local host.
 #
 # Safety contract:
 #   * no-op is the default;
-#   * real enforcement requires the explicit --apply switch;
-#   * Milestone 1 contains no workload resources in either mode.
+#   * real enforcement requires --apply and root privileges;
+#   * concurrent executions are rejected through flock when available;
+#   * Puppet detailed exit codes 0 and 2 are normalized to success.
 set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
-readonly SCRIPT_DIR
-REPOSITORY_ROOT="$(cd -- "${SCRIPT_DIR}/.." && pwd -P)"
+# shellcheck source=scripts/lib/common.sh
+source "${SCRIPT_DIR}/lib/common.sh"
+REPOSITORY_ROOT="$(repository_root)"
 readonly REPOSITORY_ROOT
+
 mode='noop'
+facts_file=''
+extra_args=()
 
-case "${1:-}" in
-  '') ;;
-  --noop) mode='noop' ;;
-  --apply) mode='apply' ;;
-  *) printf 'Usage: %s [--noop|--apply]\n' "$0" >&2; exit 64 ;;
-esac
+usage() {
+  cat <<'EOF'
+Usage: apply-local.sh [--noop|--apply] [--facts FILE] [--debug|--verbose]
 
-if ! command -v puppet >/dev/null 2>&1; then
-  printf 'ERROR: puppet executable not found. Run scripts/setup-development.sh or install Puppet Agent.\n' >&2
-  exit 127
+  --noop        Preview drift without changing the system (default).
+  --apply       Enforce the catalog; requires root.
+  --facts FILE  Override facts for compilation tests. Never use with --apply.
+  --debug       Enable Puppet debug output.
+  --verbose     Enable Puppet verbose output.
+EOF
+}
+
+while (($#)); do
+  case "$1" in
+    --noop) mode='noop' ;;
+    --apply) mode='apply' ;;
+    --facts) shift; [[ $# -gt 0 ]] || die '--facts requires a file' 64; facts_file="$1" ;;
+    --debug|--verbose) extra_args+=("$1") ;;
+    -h|--help) usage; exit 0 ;;
+    *) usage >&2; die "unknown argument: $1" 64 ;;
+  esac
+  shift
+done
+
+if [[ "${mode}" == 'apply' ]]; then
+  require_root
+  [[ -z "${facts_file}" ]] || die '--facts cannot be combined with --apply' 64
 fi
+
+puppet_bin="$(find_puppet)" || die 'puppet executable not found; run scripts/bootstrap-agent.sh or install puppet-agent' 127
 
 runtime_root="$(mktemp -d "${TMPDIR:-/tmp}/sasd-puppet-apply.XXXXXX")"
 trap 'rm -rf -- "${runtime_root}"' EXIT
 mkdir -p "${runtime_root}/conf" "${runtime_root}/var"
+
+if command -v flock >/dev/null 2>&1; then
+  if [[ "${EUID}" -eq 0 ]]; then
+    lock_file='/run/lock/sasd-puppet-software-baseline.lock'
+  else
+    lock_file="${XDG_RUNTIME_DIR:-/tmp}/sasd-puppet-software-baseline-${UID}.lock"
+  fi
+  exec 9>"${lock_file}"
+  flock -n 9 || die 'another local Puppet run is already active' 75
+fi
 
 arguments=(
   apply
@@ -41,19 +75,33 @@ arguments=(
   --detailed-exitcodes
 )
 
+if [[ -n "${facts_file}" ]]; then
+  [[ -r "${facts_file}" ]] || die "cannot read fact fixture: ${facts_file}" 66
+  mkdir -p "${runtime_root}/facter"
+  ruby "${REPOSITORY_ROOT}/scripts/render_fixture_facts.rb" \
+    "${facts_file}" "${runtime_root}/facter/fixture_facts.rb"
+fi
+arguments+=("${extra_args[@]}")
+
 if [[ "${mode}" == 'noop' ]]; then
   arguments+=(--noop)
+  log 'running local Puppet catalog in no-op mode'
 else
-  printf 'WARNING: applying catalog without --noop.\n' >&2
+  warn 'enforcing the local Puppet catalog without --noop'
 fi
 
 set +e
-puppet "${arguments[@]}"
+if [[ -n "${facts_file}" ]]; then
+  FACTERLIB="${runtime_root}/facter" "${puppet_bin}" "${arguments[@]}"
+else
+  "${puppet_bin}" "${arguments[@]}"
+fi
 status=$?
 set -e
 
-# With --detailed-exitcodes, 0 means no changes and 2 means successful changes.
-if [[ "${status}" -eq 0 || "${status}" -eq 2 ]]; then
-  exit 0
-fi
-exit "${status}"
+case "${status}" in
+  0) log 'Puppet completed successfully with no changes'; exit 0 ;;
+  2) log 'Puppet completed successfully and reported changes'; exit 0 ;;
+  1|4|6) die "Puppet failed with detailed exit code ${status}" "${status}" ;;
+  *) die "Puppet returned unexpected exit code ${status}" "${status}" ;;
+esac

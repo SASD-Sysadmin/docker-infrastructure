@@ -2,16 +2,18 @@
 
 ## Context
 
-The repository maintains persistent application-installation and configuration baselines. It is not an incident-response, diagnostic, or procedural remediation toolkit.
+The repository maintains persistent software-installation and configuration
+baselines. It is not an incident-response, diagnostic, or procedural repair
+toolkit.
 
-## Current architecture
+## Milestone 2 architecture
 
 ```text
-Git working copy / GitHub
+GitHub / local Git clone
           |
-          | validation
+          | bootstrap, validation, r10k Puppetfile install
           v
-Puppet environment
+standalone Puppet environment
   manifests/site.pp
           |
           v
@@ -19,31 +21,33 @@ Puppet environment
           |
           v
  profile::baseline
-          |
-          v
-    no resources
+     |          |
+  packages   /etc/sasd marker
 ```
 
-Local development uses `puppet apply --noop`. The future central architecture adds r10k and Puppet Server without changing the fundamental environment layout.
+The local execution path is `puppet apply`, not `puppet agent`. No-op is the
+default. The future central architecture inserts r10k deployment and Puppet
+Server while preserving this environment layout and roles/profiles boundary.
 
-## Module layers
+## Layers
 
+- `manifests`: classification only;
 - `role`: node-purpose composition only;
 - `profile`: organization-specific implementation policy;
-- `modules`: third-party dependencies installed from `Puppetfile`;
-- `data`: environment-level Hiera values;
-- `manifests`: classification only.
+- `data`: Hiera parameters and platform differences;
+- `modules`: generated third-party dependencies from `Puppetfile`;
+- `scripts`: privileged bootstrap and defensive local operation;
+- `tests`: static, catalog, bootstrap, and disposable integration checks.
 
-## Architectural constraints
+## Constraints
 
-- no productive resource declarations in `site.pp` or role classes;
-- no role includes from profile classes;
-- no unmanaged content under `modules`;
+- roles and `site.pp` declare no direct workload resources;
+- Milestone 2 profiles may declare only package and file resources;
+- unsupported platforms fail catalog compilation;
+- external modules are pinned and generated, never copied manually;
 - no clear-text secrets in Git;
-- every productive profile is documented and tested;
-- default local execution is no-op;
-- node-specific data remains exceptional.
+- real enforcement requires explicit `--apply` and root;
+- dirty or non-fast-forward deployments are refused;
+- node-specific Hiera remains exceptional.
 
-## Decisions
-
-See `docs/adr/` for durable architecture decisions.
+See `docs/adr/` for durable decisions.
