@@ -1,0 +1,13 @@
+<%- | String[1] $health_interval | -%>
+[Unit]
+Description=Run SASD Puppet control-plane health check periodically
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=<%= $health_interval %>
+RandomizedDelaySec=2min
+Persistent=true
+Unit=sasd-puppet-health.service
+
+[Install]
+WantedBy=timers.target

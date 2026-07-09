@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "certname": "node01.example.test",
+  "environment": "production",
+  "configuration_version": "v0.4.0-0-g0000000",
+  "transaction_uuid": "00000000-0000-0000-0000-000000000000",
+  "status": "unchanged",
+  "noop": false,
+  "time": "2026-07-09T12:00:00Z",
+  "start_time": "2026-07-09T12:00:00Z",
+  "end_time": "2026-07-09T12:00:02Z",
+  "event_counts": {}
+}

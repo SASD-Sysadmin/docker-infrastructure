@@ -2,7 +2,7 @@
 name: Integration baseline
 on:
   push:
-    branches: [main, production]
+    branches: [main, test, production]
     paths:
       - 'manifests/**'
       - 'site-modules/**'

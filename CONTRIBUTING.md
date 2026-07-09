@@ -1,19 +1,25 @@
 # Contributing
 
-English is the leading repository language. User-facing operational changes should update the corresponding German document in the same pull request.
+English is the leading repository language. Material operational documentation
+must also receive an equivalent German update.
 
-## Workflow
+## Change workflow
 
-1. Branch from `main`.
-2. Keep roles declarative and profiles focused.
-3. Put data in Hiera and classification in the allowlisted `site.pp` mapping.
-4. Add tests and Puppet Strings comments with every manifest change.
-5. Run `bundle exec rake`.
-6. Open a pull request to `main`.
-7. Promote tested releases separately from `main` to `production`.
+1. branch from `main`;
+2. keep roles free of direct resources;
+3. put technical resources in focused profiles;
+4. keep node/environment differences in Hiera;
+5. add Puppet Strings comments, RSpec-Puppet tests, smoke tests, and rollback notes;
+6. run `bundle exec rake`;
+7. merge to `main` through review;
+8. promote `main -> test -> production` with the repository script.
 
-Never commit generated `modules/`, deployed environments, package credentials, certificates, private keys, or production reports.
+## Milestone 4 boundaries
 
-## Milestone 3 boundaries
+Allowed direct resource types are package, file, service, and the single exact
+refresh-only systemd daemon-reload exec in `profile::server_operations`.
+Additional `exec`, user, group, mount, cron, firewall, or schedule resources
+require a new ADR, tests, documentation, and explicit scope change.
 
-Application catalogs may declare only package and file resources. Server installation and CA operations are explicit bootstrap scripts. Adding service/user/exec/firewall/application behavior is a new reviewed stepstone, not a drive-by change.
+Never force-push `test` or `production`, bypass test promotion, enable broad
+autosigning, or add secrets/backups/reports to Git.

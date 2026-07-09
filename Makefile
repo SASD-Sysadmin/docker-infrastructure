@@ -1,7 +1,7 @@
 SHELL := /usr/bin/env bash
 .PHONY: help setup validate spec catalog bootstrap test noop status server-status
 help:
-	@printf '%s\n' 'setup Install Ruby dependencies' 'validate Validate Milestone 3 source and security boundaries' 'spec Run RSpec-Puppet' 'catalog Compile fixture catalogs' 'bootstrap Run all bootstrap dry-runs' 'test Run complete suite' 'noop Preview local catalog' 'status Show local status' 'server-status Show Puppet Server status'
+	@printf '%s\n' 'setup Install Ruby dependencies' 'validate Validate Milestone 4 source and security boundaries' 'spec Run RSpec-Puppet' 'catalog Compile fixture catalogs' 'bootstrap Run all operational smoke tests' 'test Run complete suite' 'noop Preview local catalog' 'status Show local status' 'server-status Show Puppet Server status'
 setup:
 	./scripts/setup-development.sh
 validate:

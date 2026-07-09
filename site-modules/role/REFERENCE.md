@@ -1,6 +1,11 @@
 # Reference
 
 ## `role::baseline`
+Composes `profile::baseline`.
 
-Composes the SASD package and marker profile for supported standalone and
-centrally managed agents. This is the only allowed role in Milestone 3.
+## `role::managed_agent`
+Composes baseline and agent-service profiles for a signed central agent.
+
+## `role::puppet_server`
+Composes baseline, agent-service, and server-operations profiles for the central
+Puppet Server node.

@@ -1,0 +1,12 @@
+{
+  "name": "sasd-sasd_reporting",
+  "version": "0.4.0",
+  "author": "SASD SysAdmin",
+  "summary": "Compact JSON Puppet report processor for SASD control-plane monitoring.",
+  "license": "MIT",
+  "source": "https://github.com/SASD-Sysadmin/puppet-software-baseline",
+  "project_page": "https://github.com/SASD-Sysadmin/puppet-software-baseline",
+  "issues_url": "https://github.com/SASD-Sysadmin/puppet-software-baseline/issues",
+  "dependencies": [],
+  "requirements": [{"name": "puppet", "version_requirement": ">= 7.23.0 < 9.0.0"}]
+}

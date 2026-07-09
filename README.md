@@ -2,112 +2,103 @@
 
 [Deutsche Dokumentation](README.de.md) · [English documentation index](docs/en/README.md)
 
-Puppet control repository for installing applications and maintaining consistent package, service, and configuration baselines across SASD systems.
+Puppet control repository for installing applications and maintaining consistent package, service, configuration, and central-operation baselines across SASD systems.
 
-> **Status:** Milestone 3 complete (`0.3.0`). The repository now supports a central open-source Puppet Server, manual certificate enrollment, r10k deployment, and the existing safe standalone mode.
+> **Status:** Milestone 4 complete (`0.4.0`). Central operations now include controlled test/production promotion, regular agent service enforcement, compact reporting, health checks, verified backups, rollback preparation, and optional PuppetDB.
 
 ## Scope
 
-The repository describes persistent desired state. It is not an incident-response or ad-hoc repair toolkit. Roles compose profiles, profiles own technical resources, and environment/node data belongs in Hiera.
+Puppet describes persistent desired state. It is not an incident-response or ad-hoc repair runner. Roles compose profiles, profiles own technical resources, and environment/node data belongs in Hiera.
 
-The application workload remains deliberately small in Milestone 3: packages and the `/etc/sasd/puppet-baseline.conf` marker. The new work is the **control plane** around that catalog:
+Milestone 4 manages a deliberately conservative baseline and the Puppet control plane:
 
-- Puppet Server bootstrap on Debian 12 or Ubuntu 24.04;
-- explicit `production` branch and `production` environment;
-- r10k code deployment;
-- certificate-authority operations with autosigning disabled;
-- central-agent enrollment for Debian 12/13 and Ubuntu 24.04;
-- migration path from local `puppet apply` to central management.
+- packages and `/etc/sasd/puppet-baseline.conf`;
+- native Puppet agent service state after certificate enrollment;
+- Puppet Server operational scripts, state directories, health service/timer;
+- compact non-secret JSON report summaries;
+- `main -> test -> production` promotion and r10k deployment;
+- optional same-host PuppetDB for historical queries and reports.
 
 ## Architecture
 
 ```text
 GitHub control repository
-  main        integration and pull requests
-  production  approved release branch
-       |
-       | r10k deploy environment production --puppetfile
-       v
-Puppet Server + CA
-       |
-       | mutually authenticated HTTPS / compiled catalogs
-       v
-Puppet agents
+  main  ->  test  ->  production
+                  | r10k
+                  v
+             Puppet Server + CA
+              |           |
+      catalogs/reports    optional PuppetDB/PostgreSQL
+              |
+              v
+          Puppet agents
 ```
 
-The default catalog classification is data-driven but allowlisted:
+Allowlisted classification:
 
 ```text
-data/common.yaml: sasd::role = baseline
-            -> manifests/site.pp allowlist
-            -> role::baseline
-            -> profile::baseline
+sasd::role = baseline      -> role::baseline
+sasd::role = managed_agent -> role::managed_agent
+sasd::role = puppet_server -> role::puppet_server
 ```
 
-## Server quick start
+## Quick operational path
 
-Read [Puppet Server installation](docs/en/puppet-server-installation.md) first. On a fresh supported server:
+Promote and deploy test:
 
 ```bash
-sudo ./scripts/bootstrap-server.sh \
-  --server-name puppet.example.test \
-  --dns-alt-names puppet
+./scripts/promote-environment.sh --from main --to test --full-validation
+./scripts/promote-environment.sh --from main --to test --push
+sudo ./scripts/deploy-environment.sh --environment test --branch test
 ```
 
-The default package source is the distribution repository. For current Puppet Core packages, use `--package-source puppet-core` and provide a root-only API-key file; secrets are never accepted as command-line values or committed to Git.
-
-Status and code deployment:
+Promote approved test code and deploy production:
 
 ```bash
-sudo ./scripts/status-server.sh
+./scripts/promote-environment.sh --from test --to production --full-validation
+./scripts/promote-environment.sh --from test --to production --push
 sudo ./scripts/deploy-environment.sh --environment production --branch production
 ```
 
-## Agent enrollment
-
-On a supported agent:
+Configure a signed agent's regular service:
 
 ```bash
-sudo ./scripts/bootstrap-central-agent.sh \
-  --server puppet.example.test \
-  --certname node01.example.test
+sudo ./scripts/configure-agent-service.sh --runinterval 1h --splaylimit 15m
 ```
 
-On the Puppet Server, inspect and sign exactly that request:
+Enable compact server reports and inspect health:
 
 ```bash
-sudo ./scripts/list-certificates.sh
-sudo ./scripts/sign-certificate.sh --certname node01.example.test
+sudo ./scripts/configure-reporting.sh
+sudo ./scripts/server-health.sh
+sudo ./scripts/report-status.py
 ```
 
-Back on the agent, retrieve the certificate, preview the catalog, and enable periodic runs:
+Create and verify a sensitive control-plane backup:
 
 ```bash
-sudo ./scripts/activate-central-agent.sh --noop --enable-service
+sudo ./scripts/backup-control-plane.sh
+sudo ./scripts/verify-backup.sh /var/backups/sasd-puppet/puppet-control-plane-*.tar.gz
 ```
 
-Use `--apply` only after reviewing the no-op output.
-
-## Standalone mode remains supported
+Optional PuppetDB preflight and installation:
 
 ```bash
-sudo ./scripts/bootstrap-agent.sh --noop
-./scripts/apply-local.sh --noop
-sudo ./scripts/apply-local.sh --apply
+sudo ./scripts/bootstrap-puppetdb.sh --dry-run
+sudo ./scripts/bootstrap-puppetdb.sh --apply
+sudo ./scripts/status-puppetdb.sh
 ```
-
-The managed marker records `local-puppet-apply` or `puppet-server` according to trusted catalog authentication.
 
 ## Security defaults
 
-- no certificate autosigning;
-- no private keys, API keys, certificates, or keystores in Git;
-- exact certname validation and explicit certificate cleanup confirmation;
-- agent service disabled until signed and activated;
-- existing CA preserved, never silently regenerated;
-- production code deployed only from the `production` branch;
-- Puppet Core credentials read from a root-only file;
-- no webhook or unattended production deployment in Milestone 3.
+- no certificate autosigning or bulk signing;
+- no credentials, private keys, certificates, database dumps, or backups in Git;
+- test and production history is fast-forward only;
+- no unauthenticated webhook or unattended production deployment;
+- agent identity settings are not rewritten by Puppet manifests;
+- compact reports exclude facts, logs, diffs, and resource values;
+- PuppetDB is opt-in and requires Puppet Server 8+, packages, monitoring, and backup;
+- rollback is a new reviewed commit, never CA deletion or branch force-reset.
 
 ## Validation
 
@@ -117,20 +108,20 @@ gem install bundler
 bundle exec rake
 ```
 
-CI tests Puppet 7.23 and 8.10, validates all shell/YAML/JSON/Puppet sources, checks documentation links and secret extensions, compiles supported fixture catalogs, and exercises local/server/central-agent dry-runs.
+CI validates Puppet 7.23 and 8.10 compatibility, shell/YAML/JSON/Ruby/Puppet syntax, metadata, internal links, catalog fixtures, roles/profiles, report processor behavior, dry-runs, promotion guards, health output, and backup verification.
 
 ## Documentation
 
-- [Milestone 3 specification](docs/en/milestone-3.md)
-- [Puppet Server installation](docs/en/puppet-server-installation.md)
-- [r10k and environments](docs/en/r10k-deployment.md)
-- [Agent enrollment](docs/en/central-agent-enrollment.md)
-- [Certificate operations](docs/en/certificate-management.md)
-- [Server operations](docs/en/server-operations.md)
-- [Network and DNS requirements](docs/en/network-requirements.md)
-- [Backup and restore](docs/en/server-backup-restore.md)
-- [Migration from local mode](docs/en/migration-to-server.md)
-- [Troubleshooting](docs/en/server-troubleshooting.md)
+- [Milestone 4 specification](docs/en/milestone-4.md)
+- [Central operational model](docs/en/operational-model.md)
+- [Environments and promotion](docs/en/environments-and-promotion.md)
+- [Agent scheduling](docs/en/agent-scheduling.md)
+- [Compact reporting](docs/en/reporting.md)
+- [Health monitoring](docs/en/health-monitoring.md)
+- [Optional PuppetDB](docs/en/puppetdb.md)
+- [Backup operations](docs/en/backup-operations.md)
+- [Rollback operations](docs/en/rollback-operations.md)
+- [Implementation runbook](docs/en/milestone-4-runbook.md)
 - [German documentation](docs/de/README.md)
 
 ## License

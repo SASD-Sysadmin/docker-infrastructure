@@ -1,5 +1,11 @@
-# Node-Klassifizierung
+# Klassifizierung
 
-Hiera liefert `sasd::role`. `manifests/site.pp` ordnet den Wert über eine feste `case`-Allowlist einer Rollenklasse zu. Milestone 3 erlaubt ausschließlich `baseline`.
+Hiera liefert `sasd::role`; `manifests/site.pp` ordnet den Wert über eine feste
+Allowlist zu. Milestone 4 erlaubt:
 
-Knotenspezifische Dateien tragen den vertrauenswürdigen Certname, zum Beispiel `data/nodes/node01.example.test.yaml`. Klassen dürfen nicht dynamisch aus beliebigen Hiera-Strings inkludiert werden. Eine neue Rolle benötigt Manifest, Profile, Tests, Dokumentation und Release-Prüfung.
+- `baseline` für lokale/Standalone-Systeme;
+- `managed_agent` für eingebundene zentrale Agents;
+- `puppet_server` für den Agent-Katalog des zentralen Servers.
+
+Klassennamen werden niemals dynamisch aus Hiera gebildet. Neue Rollen benötigen
+Profile, Tests, Dokumentation, Hiera-Beispiel und einen geprüften `site.pp`-Zweig.

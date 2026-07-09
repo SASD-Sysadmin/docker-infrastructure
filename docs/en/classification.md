@@ -1,16 +1,11 @@
-# Node classification
+# Classification
 
-Hiera supplies `sasd::role`. `manifests/site.pp` maps the value through an explicit case allowlist. Milestone 3 accepts only `baseline`.
+Hiera supplies `sasd::role`; `manifests/site.pp` maps it through an explicit
+allowlist. Milestone 4 accepts:
 
-A per-node file is named after the trusted certificate name:
+- `baseline` for standalone/local nodes;
+- `managed_agent` for enrolled central agents;
+- `puppet_server` for the central server's own agent catalog.
 
-```text
-data/nodes/node01.example.test.yaml
-```
-
-```yaml
----
-sasd::role: baseline
-```
-
-Do not dynamically `include` arbitrary class names read from Hiera. A new role requires a manifest case branch, role class, profile composition, tests, documentation, and release review.
+Never construct a class name dynamically from Hiera. Add a role only together
+with its profiles, tests, documentation, Hiera example, and site-manifest branch.

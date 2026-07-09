@@ -1,28 +1,36 @@
 ---
-# Node classification is allowlisted in manifests/site.pp. A node-specific file
-# may override this value only with another role explicitly accepted there.
+# Classification remains allowlisted in manifests/site.pp.
 sasd::role: baseline
 
-# Automatic Parameter Lookup (APL) supplies these values to
-# profile::baseline. The unique merge permits a node or platform layer to add
-# packages without duplicating names already present here.
 lookup_options:
   profile::baseline::packages:
     merge: unique
 
 profile::baseline::manage_packages: true
 profile::baseline::manage_marker: true
-profile::baseline::baseline_version: '0.3.0'
+profile::baseline::baseline_version: '0.4.0'
 profile::baseline::marker_directory: '/etc/sasd'
 profile::baseline::marker_file: '/etc/sasd/puppet-baseline.conf'
-
-# Small, deliberately conservative administration baseline. Every package is
-# available from the standard repositories of all supported agent platforms.
 profile::baseline::packages:
   - ca-certificates
   - curl
   - git
   - jq
+  - python3
   - rsync
   - tree
   - unzip
+
+# The native agent service remains the supported scheduler. Puppet defaults to
+# a 30-minute interval; bootstrap/activation scripts set the reviewed one-hour
+# interval and enable splay before this profile enforces service state.
+profile::agent_service::service_name: puppet
+profile::agent_service::service_ensure: running
+profile::agent_service::service_enable: true
+
+# Server operational paths contain summaries only, never CA private keys or
+# complete serialized reports.
+profile::server_operations::state_root: '/var/lib/sasd-puppet'
+profile::server_operations::report_directory: '/var/lib/sasd-puppet/reports'
+profile::server_operations::health_directory: '/var/lib/sasd-puppet/health'
+profile::server_operations::health_interval: '15min'

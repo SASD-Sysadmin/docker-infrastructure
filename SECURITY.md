@@ -1,32 +1,37 @@
 # Security policy
 
-## Supported versions
+## Supported version
 
-Milestone `0.3.x` is the currently maintained repository line.
+Milestone 4 (`0.4.x`) is the current supported repository line.
 
 ## Never commit
 
-- private keys or certificates;
-- Puppet CA/agent SSL directories;
-- Forge/Puppet Core API keys;
-- Git deploy keys or access tokens;
-- passwords, Hiera eyaml private keys, keystores, or unredacted production reports.
+- private keys, CSRs, certificates, API keys, tokens, passwords;
+- Hiera secret values or unencrypted credential files;
+- Puppet CA directories or host SSL state;
+- PuppetDB/PostgreSQL dumps;
+- control-plane backup archives or extracted backup content;
+- full Puppet reports, facts, logs, or file diffs from production nodes.
 
-Repository validation rejects common secret-bearing file extensions, but that is not a substitute for review and secret scanning.
+## Control-plane rules
 
-## Puppet trust model
+- certificate autosigning remains disabled;
+- certificate operations identify exactly one reviewed certname;
+- `test` and `production` are fast-forward-only branches;
+- production code must pass through the test branch;
+- no unauthenticated deployment webhook is included;
+- agent manifests do not rewrite TLS identity settings;
+- PuppetDB is optional and must be monitored and backed up when enabled;
+- backup archives are private-key material and require encryption plus independent storage.
 
-- Autosigning is disabled.
-- Every CSR must be independently associated with an intended inventory node.
-- Certnames are unique and stable.
-- CA backup is encrypted, offline, access-controlled, and restore-tested.
-- An existing CA must not be deleted or regenerated as casual troubleshooting.
-- Agents remain disabled until signed and explicitly activated.
+## Report privacy
 
-## Code deployment
+`sasd_json` intentionally records only aggregate status metadata. Changes that
+add facts, logs, resource values, diffs, command output, or full serialization
+must be rejected unless a separate security review approves the exact fields.
 
-Only reviewed code promoted to `production` may be deployed to the production environment. Do not edit generated r10k environments. Protect both Git branches and tags; use least-privilege repository credentials on the server.
+## Vulnerability reporting
 
-## Reporting vulnerabilities
-
-Report security issues privately to the repository owner. Include affected version, reproduction, impact, and whether credentials or certificates may have been exposed. Do not open a public issue containing secrets.
+Open a private security advisory in the GitHub repository when possible. Do not
+include active secrets, private keys, personal data, or production reports in a
+public issue. Revoke exposed credentials before discussing implementation details.

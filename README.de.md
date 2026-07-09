@@ -2,109 +2,75 @@
 
 [English README](README.md) · [Deutscher Dokumentationsindex](docs/de/README.md)
 
-Puppet-Control-Repository zur Installation von Anwendungen und zur Sicherstellung konsistenter Paket-, Dienst- und Konfigurationsstände auf SASD-Systemen.
+Puppet-Control-Repository zur Installation von Anwendungen sowie zur Sicherstellung konsistenter Paket-, Dienst-, Konfigurations- und Betriebszustände auf SASD-Systemen.
 
-> **Status:** Milestone 3 abgeschlossen (`0.3.0`). Das Repository unterstützt jetzt einen zentralen Open-Source-Puppet-Server, manuelle Zertifikatsfreigabe, r10k-Deployment und weiterhin den sicheren lokalen Betrieb.
+> **Status:** Milestone 4 abgeschlossen (`0.4.0`). Der zentrale Regelbetrieb umfasst jetzt Test-/Produktions-Promotion, regelmäßige Agentläufe, kompaktes Reporting, Health-Checks, verifizierte Backups, Rollback-Vorbereitung und optional PuppetDB.
 
-## Umfang
+## Abgrenzung
 
-Der eigentliche Anwendungs-Workload bleibt bewusst klein: Basispakete und die verwaltete Datei `/etc/sasd/puppet-baseline.conf`. Neu ist die zentrale Steuerungsebene:
+Puppet beschreibt dauerhaften Sollzustand. Es ist kein Werkzeug für Incident-Response oder Ad-hoc-Reparaturen. Rollen kombinieren Profile, Profile besitzen technische Ressourcen und Hiera enthält Umgebungs- und Knotendaten.
 
-- Puppet-Server-Bootstrap auf Debian 12 oder Ubuntu 24.04;
-- eigener Branch `production` und gleichnamiges Puppet-Environment;
-- Code-Auslieferung mit r10k;
-- manuelle CA-Verwaltung ohne Autosigning;
-- zentrale Agent-Anbindung für Debian 12/13 und Ubuntu 24.04;
-- sauberer Übergang vom lokalen `puppet apply` zum Serverbetrieb.
+Milestone 4 verwaltet:
 
-## Architektur
+- Basispakete und `/etc/sasd/puppet-baseline.conf`;
+- den nativen Puppet-Agent-Dienst nach Zertifikatsfreigabe;
+- Betriebswerkzeuge, Zustandsverzeichnisse und Health-Timer des Puppet Servers;
+- kompakte datensparsame JSON-Reportzusammenfassungen;
+- Promotion `main -> test -> production` und r10k-Deployment;
+- optional PuppetDB für historische Reports und Abfragen.
 
-```text
-GitHub-Control-Repository
-  main        Integration und Pull Requests
-  production  freigegebener Stand
-       |
-       | r10k
-       v
-Puppet Server + CA
-       |
-       | gegenseitig authentifiziertes HTTPS
-       v
-Puppet Agents
-```
-
-## Server einrichten
-
-Vorher bitte die [Server-Installationsanleitung](docs/de/puppet-server-installation.md) lesen:
+## Schnelleinstieg Regelbetrieb
 
 ```bash
-sudo ./scripts/bootstrap-server.sh \
-  --server-name puppet.example.test \
-  --dns-alt-names puppet
-```
+./scripts/promote-environment.sh --from main --to test --full-validation
+./scripts/promote-environment.sh --from main --to test --push
+sudo ./scripts/deploy-environment.sh --environment test --branch test
 
-Status und manuelles Deployment:
-
-```bash
-sudo ./scripts/status-server.sh
+./scripts/promote-environment.sh --from test --to production --full-validation
+./scripts/promote-environment.sh --from test --to production --push
 sudo ./scripts/deploy-environment.sh --environment production --branch production
 ```
 
-## Agent anbinden
-
-Auf dem Agent:
+Agenttaktung und Reporting:
 
 ```bash
-sudo ./scripts/bootstrap-central-agent.sh \
-  --server puppet.example.test \
-  --certname node01.example.test
+sudo ./scripts/configure-agent-service.sh --runinterval 1h --splaylimit 15m
+sudo ./scripts/configure-reporting.sh
+sudo ./scripts/server-health.sh
+sudo ./scripts/report-status.py
 ```
 
-Auf dem Server prüfen und exakt diesen CSR signieren:
+Backup und optionale PuppetDB-Stufe:
 
 ```bash
-sudo ./scripts/list-certificates.sh
-sudo ./scripts/sign-certificate.sh --certname node01.example.test
-```
-
-Danach auf dem Agent zunächst als No-op aktivieren:
-
-```bash
-sudo ./scripts/activate-central-agent.sh --noop --enable-service
+sudo ./scripts/backup-control-plane.sh
+sudo ./scripts/verify-backup.sh /var/backups/sasd-puppet/puppet-control-plane-*.tar.gz
+sudo ./scripts/bootstrap-puppetdb.sh --dry-run
 ```
 
 ## Sicherheitsvorgaben
 
-- kein Autosigning;
-- keine API-Keys, privaten Schlüssel oder Zertifikate im Repository;
-- Agent-Dienst erst nach manueller Freigabe;
-- vorhandene CA wird nie stillschweigend ersetzt;
-- produktiver Code ausschließlich aus `production`;
-- Puppet-Core-Zugangsdaten nur aus einer root-lesbaren Datei;
-- noch keine Webhooks oder unbeaufsichtigten Produktionsdeployments.
-
-## Lokaler Betrieb
-
-Der lokale Milestone-2-Weg bleibt erhalten:
-
-```bash
-sudo ./scripts/bootstrap-agent.sh --noop
-./scripts/apply-local.sh --noop
-sudo ./scripts/apply-local.sh --apply
-```
+- kein Autosigning und kein Bulk-Signing;
+- keine Secrets, Schlüssel, Zertifikate, Dumps oder Backups in Git;
+- nur Fast-Forward-Historie für `test` und `production`;
+- keine ungeprüften Webhooks oder automatischen Produktionsdeployments;
+- Identitätswerte des Agents werden nicht durch Manifeste umgeschrieben;
+- kompakte Reports enthalten keine Facts, Logs, Diffs oder Ressourcenwerte;
+- PuppetDB ist opt-in und benötigt Monitoring sowie Backup;
+- Rollback erfolgt als neuer geprüfter Commit.
 
 ## Dokumentation
 
-- [Milestone 3](docs/de/milestone-3.md)
-- [Puppet-Server installieren](docs/de/puppet-server-installation.md)
-- [r10k und Environments](docs/de/r10k-deployment.md)
-- [Agent-Anbindung](docs/de/central-agent-enrollment.md)
-- [Zertifikatsverwaltung](docs/de/certificate-management.md)
-- [Serverbetrieb](docs/de/server-operations.md)
-- [Netzwerk und DNS](docs/de/network-requirements.md)
-- [Backup und Wiederherstellung](docs/de/server-backup-restore.md)
-- [Migration vom lokalen Betrieb](docs/de/migration-to-server.md)
-- [Fehlerbehebung](docs/de/server-troubleshooting.md)
+- [Milestone 4](docs/de/milestone-4.md)
+- [Zentraler Betriebsmodus](docs/de/operational-model.md)
+- [Environments und Promotion](docs/de/environments-and-promotion.md)
+- [Agent-Zeitplanung](docs/de/agent-scheduling.md)
+- [Reporting](docs/de/reporting.md)
+- [Health-Monitoring](docs/de/health-monitoring.md)
+- [Optionales PuppetDB](docs/de/puppetdb.md)
+- [Backup-Betrieb](docs/de/backup-operations.md)
+- [Rollback](docs/de/rollback-operations.md)
+- [Milestone-4-Runbook](docs/de/milestone-4-runbook.md)
 
 ## Lizenz
 

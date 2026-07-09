@@ -1,13 +1,12 @@
 # Tests
 
-Milestone 3 has five layers:
+Milestone 4 validation layers:
 
-1. static source, secret, link, and repository validation;
-2. RSpec-Puppet catalog tests on all supported agent platforms;
-3. local, central-agent, and Puppet Server bootstrap dry-runs;
-4. fixture catalog compilation with Puppet 7 and Puppet 8;
-5. optional disposable-container baseline enforcement/idempotence tests.
+1. syntax, YAML/JSON/metadata, links, structure, and security boundary;
+2. RSpec-Puppet role/profile and report-processor tests;
+3. fixture catalog compilation for supported agents;
+4. bootstrap, CA, reporting, health, promotion, and backup smoke tests;
+5. disposable-container apply and idempotence checks.
 
-Run `bundle exec rake`. Server installation itself is intentionally not executed
-in public CI because current Puppet Core packages can require credentials and a
-real CA lifecycle must not be created in an untrusted runner.
+`bundle exec rake` runs the complete development suite. Smoke scripts are also
+individually executable and avoid modifying the host by using dry-runs/fixtures.

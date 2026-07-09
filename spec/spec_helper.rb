@@ -29,4 +29,4 @@ SUPPORTED_FACTS = {
   }
 }.freeze
 
-EXPECTED_COMMON_PACKAGES = %w[ca-certificates curl git jq rsync tree unzip lsof procps].freeze
+EXPECTED_COMMON_PACKAGES = %w[ca-certificates curl git jq python3 rsync tree unzip lsof procps].freeze

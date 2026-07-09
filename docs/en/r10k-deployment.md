@@ -4,7 +4,7 @@
 
 - `main`: integration branch; pull requests and CI converge here first.
 - `production`: approved release branch; r10k maps it to the `production` environment.
-- feature branches: may be tested in development, but are not automatically deployed by Milestone 3.
+- `test`: pre-production environment; feature branches are not automatically deployed.
 
 r10k maps branch names to directory environments. Therefore branch and environment names must match. The deployment wrapper rejects a different pair.
 
@@ -39,7 +39,7 @@ The wrapper:
 - runs `puppet parser validate` on deployed manifests;
 - records a timestamp under `/var/lib/sasd-puppet/deployments`.
 
-Milestone 3 intentionally has no timer or webhook. A reviewed human action triggers production deployment. During server bootstrap, a stable copy of the wrapper is installed below `/usr/local/libexec/sasd-puppet/`, together with the manual `sasd-puppet-deploy.service` oneshot unit. It can be started explicitly with:
+Milestone 4 still has no deployment timer or unauthenticated webhook. A reviewed human action triggers production deployment. During server bootstrap, a stable copy of the wrapper is installed below `/usr/local/libexec/sasd-puppet/`, together with the manual `sasd-puppet-deploy.service` oneshot unit. It can be started explicitly with:
 
 ```bash
 sudo systemctl start sasd-puppet-deploy.service

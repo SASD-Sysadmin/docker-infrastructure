@@ -1,0 +1,3 @@
+---
+sasd::role: puppet_server
+profile::server_operations::health_interval: '15min'

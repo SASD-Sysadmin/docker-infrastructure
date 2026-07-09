@@ -1,37 +1,16 @@
 # Deutsche Dokumentation
 
-## Einstieg
-
-- [Milestone 3](milestone-3.md)
+- [Milestone 4](milestone-4.md)
+- [Betriebsmodell](operational-model.md)
+- [Environments und Promotion](environments-and-promotion.md)
+- [Agent-Zeitplanung](agent-scheduling.md)
+- [Reporting](reporting.md)
+- [Health-Monitoring](health-monitoring.md)
+- [Optionales PuppetDB](puppetdb.md)
+- [Backup-Betrieb](backup-operations.md)
+- [Rollback](rollback-operations.md)
+- [Umsetzungs-Runbook](milestone-4-runbook.md)
 - [Architektur](architecture.md)
-- [Betriebsmodell](operating-model.md)
 - [Sicherheit](security.md)
-
-## Zentraler Puppet Server
-
-- [Puppet-Server installieren](puppet-server-installation.md)
-- [r10k-Deployment und Branch-Modell](r10k-deployment.md)
-- [Zentrale Agent-Anbindung](central-agent-enrollment.md)
-- [Zertifikatsverwaltung](certificate-management.md)
-- [Serverbetrieb](server-operations.md)
-- [Netzwerk- und DNS-Anforderungen](network-requirements.md)
-- [Backup und Wiederherstellung](server-backup-restore.md)
-- [Migration vom lokalen Betrieb](migration-to-server.md)
-- [Fehlerbehebung](server-troubleshooting.md)
-
-- [Upstream-Referenzen](references.md)
-
-## Entwicklung
-
-- [Repository-Struktur](repository-layout.md)
-- [Klassifizierung](classification.md)
-- [Baseline](baseline.md)
 - [Validierung](validation.md)
-- [Release-Prozess](release-process.md)
 - [Roadmap](roadmap.md)
-- [Architekturentscheidungen](../adr/)
-
-## Historische Meilensteine
-
-- [Milestone 1](milestone-1.md)
-- [Milestone 2](milestone-2.md)

@@ -9,7 +9,7 @@ sudo ./scripts/list-certificates.sh
 sudo journalctl -u puppetserver --since today
 ```
 
-Review failed agent reports through the selected reporting mechanism. PuppetDB is not part of Milestone 3, so report aggregation remains a later stepstone.
+Review compact summaries with `report-status.py`. PuppetDB is optional in Milestone 4 and is enabled only when historical/query requirements justify it.
 
 ## Deploy approved code
 

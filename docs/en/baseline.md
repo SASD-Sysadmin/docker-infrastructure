@@ -1,12 +1,12 @@
 # Baseline
 
-Milestone 3 keeps the application baseline deliberately unchanged while changing its delivery model. It installs the conservative administration package list and manages `/etc/sasd/puppet-baseline.conf`.
+Milestone 4 retains the conservative package/file baseline and adds controlled
+service consistency for centrally managed nodes. The marker contains version
+`0.4.0`, platform, trusted certname, and management mode.
 
-The marker records:
+Common packages include CA certificates, curl, Git, jq, Python 3, rsync, tree,
+unzip, plus Debian-family process/open-file tools. New packages require support
+on every targeted platform or explicit Hiera separation.
 
-- repository baseline version `0.3.0`;
-- operating system and major version;
-- trusted certificate name;
-- `local-puppet-apply` or `puppet-server` management mode.
-
-Only `package` and `file` resources are allowed by the milestone scope checker. Server installation and certificate operations are explicit control-plane scripts, not hidden catalog resources.
+`role::managed_agent` and `role::puppet_server` keep the Puppet agent service
+running only after remote certificate authentication.

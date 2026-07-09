@@ -1,0 +1,17 @@
+<%- | Pattern[/^\//] $health_directory | -%>
+[Unit]
+Description=SASD Puppet control-plane health check
+After=network-online.target puppetserver.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+ExecStart=/usr/local/sbin/sasd-puppet-health --output <%= $health_directory %>/last.json
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=<%= $health_directory %>

@@ -2,14 +2,11 @@
 
 Implementation profiles for SASD systems.
 
-Milestone 3 provides `profile::baseline`, which:
+Milestone 4 provides:
 
-- rejects unsupported agent platforms during catalog compilation;
-- installs a small administration package set supplied by Hiera;
-- manages `/etc/sasd/puppet-baseline.conf`;
-- records whether the catalog came from local `puppet apply` or Puppet Server;
-- deliberately avoids services, users, repositories, firewall state, and
-  arbitrary `exec` resources.
+- `profile::baseline`: conservative packages and managed marker;
+- `profile::agent_service`: keeps an already enrolled native Puppet agent service running and enabled;
+- `profile::server_operations`: installs compact report/health state directories, the health command, and its hardened systemd timer.
 
-Control-plane bootstrap scripts install Puppet Server and enroll agents; those
-operations are intentionally not hidden inside an application profile.
+Identity-bearing agent settings remain in reviewed bootstrap scripts. Profiles do
+not change certnames, CA paths, private keys, DNS identities, or server names.

@@ -4,6 +4,7 @@
 # Generated module content is never committed to this control repository.
 forge 'https://forge.puppet.com'
 
-# Milestone 3 uses only Puppet built-in types and resources, so no external
-# module is required yet. Future workload stepstones must pin an explicit Forge
-# version or immutable Git reference; floating branches/latest are forbidden.
+# Milestone 4 keeps the active SASD catalog on Puppet built-in resource types.
+# PuppetDB remains an explicitly optional control-plane component and is
+# bootstrapped outside r10k with a pinned puppetlabs-puppetdb module version.
+# This prevents an unused reporting stack from expanding every environment.

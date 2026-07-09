@@ -81,7 +81,7 @@ validate_environment "${environment}"
 [[ -n "${branch}" && "${branch}" != -* && "${branch}" != *$'\n'* ]] || die 'branch must be non-empty, single-line, and not start with a dash' 64
 [[ -n "${repository_url}" && "${repository_url}" != -* && "${repository_url}" != *$'\n'* ]] || die 'repository URL must be non-empty, single-line, and not start with a dash' 64
 [[ "${repository_url}" != *"'"* ]] || die "repository URL must not contain a single quote" 64
-[[ "${branch}" == "${environment}" ]] || die 'branch and environment must match for Milestone 3 r10k deployment' 64
+[[ "${branch}" == "${environment}" ]] || die 'branch and environment must match for Milestone 4 r10k deployment' 64
 [[ "${package_source}" =~ ^(distribution|puppet-core)$ ]] || die 'package source must be distribution or puppet-core' 64
 [[ "${jvm_memory}" =~ ^[0-9]+[mMgG]$ ]] || die 'JVM memory must look like 768m or 2g' 64
 if [[ "${package_source}" == 'puppet-core' && -z "${api_key_file}" ]]; then die '--api-key-file is required for puppet-core' 64; fi
@@ -89,7 +89,7 @@ read_os_release "${os_release_file}"
 is_supported_server_platform || die "unsupported Puppet Server platform ${ID} ${VERSION_ID}; use Debian 12 or Ubuntu 24.04" 69
 [[ -n "${architecture}" ]] || architecture="$(dpkg --print-architecture 2>/dev/null || uname -m)"
 [[ "${architecture}" == 'x86_64' ]] && architecture='amd64'
-[[ "${architecture}" == 'amd64' ]] || die "unsupported Puppet Server architecture ${architecture}; Milestone 3 supports amd64" 69
+[[ "${architecture}" == 'amd64' ]] || die "unsupported Puppet Server architecture ${architecture}; Milestone 4 supports amd64" 69
 
 all_dns_names="${server_name}"
 if [[ -n "${dns_alt_names}" ]]; then
@@ -193,7 +193,7 @@ sources:
 EOF
 
 # Install a stable operational copy outside the r10k-managed environment. The
-# oneshot unit remains manual: Milestone 3 deliberately has no timer/webhook.
+# oneshot unit remains manual: Milestone 4 deliberately has no timer/webhook.
 libexec_dir=/usr/local/libexec/sasd-puppet
 install -d -m 0755 "${libexec_dir}/lib"
 install -m 0755 "${SCRIPT_DIR}/deploy-environment.sh" "${libexec_dir}/deploy-environment.sh"

@@ -1,0 +1,4 @@
+---
+sasd::role: managed_agent
+profile::baseline::packages:
+  - htop

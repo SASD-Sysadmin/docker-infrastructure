@@ -2,7 +2,7 @@
 name: Validate control repository
 on:
   push:
-    branches: [main, production]
+    branches: [main, test, production]
   pull_request:
   workflow_dispatch:
 permissions:

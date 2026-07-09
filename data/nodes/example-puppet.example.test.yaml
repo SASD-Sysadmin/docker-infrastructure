@@ -1,0 +1,3 @@
+---
+# Example Puppet Server classification for Milestone 4 operations.
+sasd::role: puppet_server

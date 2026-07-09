@@ -14,7 +14,7 @@ If the remote already contains the same Milestone 1 history, publish normally:
 
 ```bash
 git push origin main
-git push origin main production --tags
+git push origin main test production --tags
 ```
 
 If the remote still contains only an unrelated GitHub placeholder commit,
