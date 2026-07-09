@@ -1,3 +1,6 @@
 ---
-# Command-line development host.
+# Milestone 6 example node data.
 sasd::role: development
+sasd::lifecycle_state: active
+sasd::owner: sasd-sysadmin
+sasd::description: Example development node

@@ -2,8 +2,14 @@
 set -euo pipefail
 ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd -P)"; tmp=$(mktemp -d); trap 'rm -rf -- "$tmp"' EXIT
 cp -a "$ROOT" "$tmp/repo"; cd "$tmp/repo"
-git config user.name 'Milestone 4 Test'; git config user.email 'test@example.invalid'
+git config user.name 'Milestone 6 Test'; git config user.email 'test@example.invalid'
 git switch main >/dev/null
+# Validation is covered by the outer suite; this fixture isolates branch guards.
+cat > scripts/validate.sh <<'STUB'
+#!/usr/bin/env bash
+exit 0
+STUB
+chmod +x scripts/validate.sh
 if [[ -n "$(git status --porcelain)" ]]; then
   git add -A
   git commit -m 'Milestone 4 fixture state' >/dev/null

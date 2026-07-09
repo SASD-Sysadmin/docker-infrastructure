@@ -42,3 +42,8 @@ Thumbs.db
 
 # Generated release evidence and archives
 /dist/
+
+# Python bytecode and local candidates
+__pycache__/
+*.py[cod]
+hiera.yaml.eyaml-candidate

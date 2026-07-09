@@ -1,0 +1,8 @@
+---
+sasd::role: server
+sasd::lifecycle_state: maintenance
+sasd::owner: operations
+sasd::description: Example server in an approved maintenance window
+sasd::lifecycle_reason: Kernel and firmware maintenance
+sasd::lifecycle_ticket: CHG-2026-0042
+sasd::lifecycle_expires_at: '2026-07-10T18:00:00Z'

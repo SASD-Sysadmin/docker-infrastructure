@@ -1,6 +1,6 @@
 # @summary Install the reviewed daemonless OCI container-tool package group.
 #
-# Milestone 5 deliberately selects distribution-provided Podman tooling. The
+# Milestone 6 deliberately selects distribution-provided Podman tooling. The
 # profile does not configure registries, pull images, create containers, open
 # network ports, or enable a long-running Docker-compatible daemon.
 #

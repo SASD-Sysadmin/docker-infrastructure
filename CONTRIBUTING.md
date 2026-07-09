@@ -14,7 +14,7 @@ must also receive an equivalent German update.
 7. merge to `main` through review;
 8. promote `main -> test -> production` with the repository script.
 
-## Milestone 5 boundaries
+## Milestone 6 boundaries
 
 Allowed direct resource types remain package, file, service, and the single exact
 refresh-only systemd daemon-reload exec in `profile::server_operations`.

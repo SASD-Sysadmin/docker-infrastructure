@@ -1,20 +1,15 @@
 # Repository layout
 
-Important Milestone 5 paths:
+Important Milestone 6 paths:
 
-```text
-manifests/site.pp                  allowlisted classification
-data/                              Hiera policy and node data
-site-modules/{role,profile}/       SASD-owned Puppet code
-modules/                           r10k-generated dependencies (ignored)
-scripts/bootstrap-server.sh       fresh central server bootstrap
-scripts/deploy-environment.sh      manual locked r10k deployment
-scripts/bootstrap-central-agent.sh CSR submission and agent configuration
-scripts/activate-central-agent.sh  signed-certificate activation
-scripts/*certificate.sh            CA operator wrappers
-examples/{server,agent}/           non-secret configuration examples
-systemd/                           optional reviewed unit example
-tests/                             unit, fixture, dry-run, integration tests
-docs/{en,de}/                      bilingual operations documentation
-docs/adr/                          architecture decisions
-```
+- `manifests/site.pp`: allowlisted role and lifecycle dispatcher;
+- `site-modules/profile`: implementation profiles and templates;
+- `site-modules/role`: complete node roles;
+- `data/nodes`: active/maintenance/retirement-pending node records;
+- `data/retired`: archived decommission records, not loaded by Hiera;
+- `config/role-catalog.json`: machine-readable role contract;
+- `config/node-data-contract.json`: node-data and lifecycle contract;
+- `secrets`: encrypted-data staging area with no private keys;
+- `scripts`: bootstrap, operations, lifecycle, compliance, release, and recovery tools;
+- `tests`: smoke, RSpec-Puppet, and container integration tests;
+- `docs/en` and `docs/de`: English and German operational documentation.

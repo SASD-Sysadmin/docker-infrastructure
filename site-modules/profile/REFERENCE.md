@@ -20,3 +20,9 @@ Keeps an already-enrolled native Puppet agent enabled and running.
 
 ## `profile::server_operations`
 Puppet Server health/reporting directories, command, timer, and service.
+
+## `profile::lifecycle_state`
+
+Writes non-secret lifecycle evidence for centrally managed nodes. Maintenance
+requires reason, ticket, and UTC expiry. Retired nodes are rejected by
+`manifests/site.pp` before this class is compiled.

@@ -1,32 +1,18 @@
 # Security
 
-## Milestone 5 controls
+## Milestone 6 controls
 
-- no-op remains the default for standalone bootstrap/update and optional PuppetDB planning;
-- applying catalogs and all CA-changing operations require explicit action;
-- unsupported platforms fail before installation or enforcement;
-- catalog resources are limited to package, file, service, and one exact refresh-only systemd daemon reload;
-- no users, groups, firewall, mounts, cron, schedules, or arbitrary command execution;
-- autosigning is disabled and certificate operations target one exact certname;
-- a pre-existing CA is never regenerated, renamed, or silently assigned DNS names;
-- agent services remain disabled until certificate approval and an explicit activation test;
-- agent identity values are configured by enrollment scripts, not rewritten by manifests;
-- `main -> test -> production` promotion is fast-forward only;
-- production deployment remains manual and authenticated;
-- compact reports exclude facts, logs, diffs, command output, and resource values;
-- backups are mode `0600`, checksummed, private-key-bearing artifacts requiring encryption;
-- PuppetDB is opt-in and blocked without Puppet Server 8+, packages, monitoring, and backup.
+- fixed role and lifecycle allowlists in `site.pp`;
+- mutual-TLS identity and manual certificate signing;
+- exact-certname confirmation for destructive CA operations;
+- retired nodes receive no catalog;
+- maintenance requires ticket, reason, and expiry;
+- no general-purpose `exec`, user, firewall, mount, or cron management;
+- no third-party package repositories or image pulls;
+- private keys and plaintext credentials are rejected by repository validation;
+- Hiera eyaml remains opt-in and keys stay outside Git;
+- backups and CA data remain sensitive control-plane material.
 
-## Privileged-code review
-
-Treat changes under `scripts/`, `manifests/`, `site-modules/`, `data/`,
-`Puppetfile`, `.github/workflows/`, and `systemd/` as privileged. Review exact
-diffs, run the complete suite, test on snapshot-backed systems, and retain no-op
-and promotion evidence with the change record.
-
-## Certificate identity
-
-A Puppet certname is a durable machine identity. Verify DNS, hostname, asset
-ownership, and the pending CSR before signing. Never copy another node's private
-key or SSL directory. Use the documented revoke/clean/re-enrollment process for
-rebuilds or renames.
+Encrypted values can still appear in catalog/report contexts if manifests do not
+use Puppet's `Sensitive` type appropriately. Every future secret-consuming
+profile therefore requires its own threat model and tests.

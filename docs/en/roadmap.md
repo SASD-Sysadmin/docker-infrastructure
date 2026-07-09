@@ -5,17 +5,16 @@
 - Milestone 1: control-repository foundation and validation.
 - Milestone 2: standalone local package/file baseline.
 - Milestone 3: central Puppet Server, r10k, CA enrollment, production branch.
-- Milestone 4: promotion, regular agents, compact reporting, health, backup, rollback, optional PuppetDB.
-- Milestone 5: application package profiles, explicit operational roles, machine-readable policy, release assurance.
+- Milestone 4: promotion, agents, compact reporting, health, backup, rollback, optional PuppetDB.
+- Milestone 5: application profiles, explicit roles, policy, release assurance.
+- Milestone 6: node lifecycle, inventory/compliance, guarded decommissioning, opt-in encrypted-data foundation.
 
-## Candidate stepstones after 0.5.0
+## Candidate stepstones after 0.6.0
 
-1. Add one application/service profile at a time with rollback and data-migration documentation.
-2. Add encrypted Hiera only for a concrete secret use case and with key custody defined.
-3. Add selected Red Hat-family agents after separate package and Puppet-agent tests.
-4. Integrate health/report JSON into the separate monitoring platform.
-5. Add PuppetDB query examples and retention tuning if PuppetDB is enabled.
-6. Evaluate a second Puppet Server/PuppetDB disaster-recovery topology only when scale requires it.
-7. Add language SDK profiles (.NET, Java, PHP) independently rather than expanding the generic development group.
-
-Puppet remains desired-state management; incident repair remains Ansible/admin-toolkit territory.
+1. Enable Hiera eyaml only for a concrete secret-consuming profile after key custody and recovery tests.
+2. Add selected Red Hat-family agents after separate package and agent validation.
+3. Integrate compliance JSON into the independent monitoring platform.
+4. Add language SDK profiles independently (.NET, Java, PHP).
+5. Define PuppetDB retention and node-deactivation policy if PuppetDB becomes production-critical.
+6. Test full CA and encrypted-data disaster recovery on an isolated replacement server.
+7. Evaluate a second compiler only when measured load or availability requirements justify it.

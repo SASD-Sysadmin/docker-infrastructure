@@ -5,7 +5,9 @@
 - [ ] `VERSION`, module metadata, baseline marker, changelog, and documentation match.
 - [ ] Package groups are sorted, unique, available, and owned by one profile.
 - [ ] Role catalog matches `site.pp` and role manifests.
-- [ ] No credentials, private keys, certificates, backups, database dumps, or generated modules are committed.
+- [ ] Node-data contract passes; owners and lifecycle metadata are complete.
+- [ ] No expired maintenance window or retired node remains unresolved in active inventory.
+- [ ] No plaintext credentials, private keys, certificates, backups, database dumps, decrypted eyaml files, or generated modules are committed.
 - [ ] Resource boundary and exact `exec` allowlist pass.
 
 ## Tests
@@ -15,7 +17,7 @@
 - [ ] Relevant disposable-container installation reaches an unchanged second run.
 - [ ] Representative signed-node no-op has been reviewed.
 - [ ] Test-environment apply and report health are successful.
-- [ ] Backup verification and rollback preparation are current.
+- [ ] Backup verification, rollback preparation, inventory, compliance, and secret-policy checks are current.
 
 ## Release
 

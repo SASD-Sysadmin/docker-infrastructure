@@ -1,0 +1,32 @@
+name: Node lifecycle and compliance
+
+on:
+  pull_request:
+  push:
+    branches: [main, test, production]
+
+permissions:
+  contents: read
+
+jobs:
+  lifecycle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Validate Ruby and Python syntax
+        run: |
+          ruby -c scripts/manage-node.rb
+          ruby -c scripts/check_node_data.rb
+          ruby -c scripts/node-inventory.rb
+          ruby -c scripts/fleet-compliance.rb
+          python3 -m py_compile scripts/check_secret_policy.py
+      - name: Validate node contract and secret policy
+        run: |
+          ruby scripts/check_node_data.rb
+          python3 scripts/check_secret_policy.py
+      - name: Run lifecycle smoke tests
+        run: |
+          tests/smoke/node-lifecycle.sh
+          tests/smoke/inventory-compliance.sh
+          tests/smoke/secret-policy.sh
+          tests/smoke/decommission-guards.sh

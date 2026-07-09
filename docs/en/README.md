@@ -10,16 +10,18 @@
 
 ## Current milestone
 
-- [Milestone 5](milestone-5.md)
+- [Milestone 6](milestone-6.md)
+- [Node lifecycle](node-lifecycle.md)
+- [Inventory and compliance](inventory-and-compliance.md)
+- [Maintenance windows](maintenance-windows.md)
+- [Decommissioning](decommissioning.md)
+- [Secure-data foundation](secure-data-foundation.md)
+- [Milestone 6 runbook](milestone-6-runbook.md)
+
+## Applications and central operations
+
 - [Application profiles](application-profiles.md)
 - [Role catalog](role-catalog.md)
-- [Compliance and drift](compliance-and-drift.md)
-- [Release assurance](release-assurance.md)
-- [Production readiness](production-readiness.md)
-- [Milestone 5 runbook](milestone-5-runbook.md)
-
-## Central operations
-
 - [Environments and promotion](environments-and-promotion.md)
 - [Agent scheduling](agent-scheduling.md)
 - [Reporting](reporting.md)

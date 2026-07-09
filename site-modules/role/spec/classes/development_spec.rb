@@ -7,6 +7,7 @@ describe 'role::development' do
   it { is_expected.to contain_class('profile::baseline') }
   it { is_expected.to contain_class('profile::administration_tools') }
   it { is_expected.to contain_class('profile::development_tools') }
+  it { is_expected.to contain_class('profile::lifecycle_state') }
   it { is_expected.to contain_class('profile::application_state') }
   it { is_expected.to contain_class('profile::agent_service') }
 end

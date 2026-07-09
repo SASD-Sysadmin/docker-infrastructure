@@ -7,6 +7,6 @@ python3 scripts/generate-release-manifest.py --output "${tmp}/manifest.json"
 python3 scripts/verify-release-manifest.py "${tmp}/manifest.json"
 python3 - "${tmp}/manifest.json" <<'PYTEST'
 import json,sys
-x=json.load(open(sys.argv[1])); assert x['version']=='0.5.0'; assert x['file_count']>100
+x=json.load(open(sys.argv[1])); assert x['version']=='0.6.0'; assert x['file_count']>100
 PYTEST
 printf 'Release-manifest smoke test passed.\n'

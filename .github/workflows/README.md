@@ -6,3 +6,9 @@ and Ubuntu 24.04 containers to detect non-idempotent changes.
 
 Production deployment remains a manual, authenticated r10k operation; workflows
 do not deploy directly to the Puppet Server.
+
+## Milestone 6
+
+`node-lifecycle.yml` validates the node-data contract, lifecycle transition
+helper, inventory/compliance correlation, secret policy, eyaml preparation, and
+decommission guards on pull requests and the three managed branches.

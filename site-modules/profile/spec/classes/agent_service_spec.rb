@@ -13,3 +13,12 @@ describe 'profile::agent_service' do
     it { is_expected.to compile.and_raise_error(%r{requires a remotely authenticated}) }
   end
 end
+
+# Lifecycle-specific behavior is intentionally tested separately from Hiera.
+describe 'profile::agent_service maintenance behavior' do
+  let(:facts) { SUPPORTED_FACTS[:debian12] }
+  let(:trusted_facts) { { 'certname'=>'agent.example.test','authenticated'=>'remote','extensions'=>{} } }
+  let(:params) { { lifecycle_state: 'maintenance' } }
+  it { is_expected.to compile.with_all_deps }
+  it { is_expected.to contain_service('puppet').with(ensure: 'stopped', enable: false) }
+end

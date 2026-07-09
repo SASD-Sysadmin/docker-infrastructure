@@ -1,0 +1,7 @@
+---
+sasd::role: server
+sasd::lifecycle_state: retired
+sasd::owner: operations
+sasd::description: Example node awaiting final decommission
+sasd::lifecycle_reason: Hardware removed
+sasd::lifecycle_ticket: CHG-2026-0051

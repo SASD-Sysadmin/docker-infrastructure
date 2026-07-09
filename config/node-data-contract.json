@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "version": "0.6.0",
+  "allowed_roles": [
+    "managed_agent",
+    "server",
+    "development",
+    "container_host",
+    "puppet_server"
+  ],
+  "allowed_lifecycle_states": [
+    "active",
+    "maintenance",
+    "retired"
+  ],
+  "required_keys": [
+    "sasd::role",
+    "sasd::lifecycle_state",
+    "sasd::owner"
+  ],
+  "maintenance_required_keys": [
+    "sasd::lifecycle_reason",
+    "sasd::lifecycle_ticket",
+    "sasd::lifecycle_expires_at"
+  ],
+  "certname_pattern": "^[a-z0-9](?:[a-z0-9.-]{0,251}[a-z0-9])?$",
+  "utc_timestamp_pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+}

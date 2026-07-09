@@ -1,14 +1,13 @@
 # Baseline
 
-Milestone 5 retains the conservative common baseline and adds opt-in application
-profiles. `/etc/sasd/puppet-baseline.conf` records version `0.5.0`, platform,
-trusted certname, and management mode. Central roles additionally write
-`/etc/sasd/applications.d/assigned.conf` with non-secret intended role/profile
-evidence.
+Milestone 6 retains the conservative package/file baseline and reviewed
+application profiles. `/etc/sasd/puppet-baseline.conf` records version `0.6.0`,
+platform, management mode, and trusted certname.
 
-Common packages include CA certificates, curl, Git, jq, Python 3, rsync, tree,
-unzip, plus Debian-family process/open-file tools. Administration, development,
-and container packages are installed only by roles that compose their profiles.
+Central roles additionally write:
 
-Central roles keep the Puppet agent service running only after remote certificate
-authentication.
+- `/etc/sasd/applications.d/assigned.conf` for intended role/profile evidence;
+- `/etc/sasd/lifecycle.d/state.conf` for active or maintenance state.
+
+These marker files contain no secrets and do not replace Puppet reports or the
+operating-system package database.

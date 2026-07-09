@@ -10,20 +10,22 @@
 
 ## Aktueller Milestone
 
-- [Milestone 5](milestone-5.md)
+- [Milestone 6](milestone-6.md)
+- [Knoten-Lebenszyklus](node-lifecycle.md)
+- [Inventar und Compliance](inventory-and-compliance.md)
+- [Wartungsfenster](maintenance-windows.md)
+- [Außerbetriebnahme](decommissioning.md)
+- [Verschlüsselte Hiera-Daten](secure-data-foundation.md)
+- [Milestone-6-Runbook](milestone-6-runbook.md)
+
+## Anwendungen und zentraler Betrieb
+
 - [Anwendungsprofile](application-profiles.md)
 - [Rollenkatalog](role-catalog.md)
-- [Compliance und Drift](compliance-and-drift.md)
-- [Release-Absicherung](release-assurance.md)
-- [Produktionsbereitschaft](production-readiness.md)
-- [Milestone-5-Runbook](milestone-5-runbook.md)
-
-## Zentraler Betrieb
-
 - [Environments und Promotion](environments-and-promotion.md)
 - [Agent-Taktung](agent-scheduling.md)
 - [Reporting](reporting.md)
 - [Health-Monitoring](health-monitoring.md)
-- [Backup](backup-operations.md)
+- [Backups](backup-operations.md)
 - [Rollback](rollback-operations.md)
 - [Optionales PuppetDB](puppetdb.md)

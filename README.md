@@ -2,98 +2,95 @@
 
 [Deutsche Dokumentation](README.de.md) · [English documentation index](docs/en/README.md)
 
-Puppet control repository for installing reviewed application groups and maintaining consistent package, service, configuration, reporting, and control-plane baselines across SASD systems.
+Puppet control repository for reviewed application installation, consistent system state, central Puppet operations, node lifecycle, fleet compliance, and an opt-in encrypted-data foundation across SASD systems.
 
-> **Status:** Milestone 5 complete (`0.5.0`). The repository now provides explicit server, development, container-host, managed-agent, and Puppet-Server roles; tested application package profiles; machine-readable policy checks; and release-assurance tooling.
+> **Status:** Milestone 6 complete (`0.6.0`). The repository adds reviewed node lifecycle states, Git-native inventory and compliance tooling, guarded decommissioning, and a deliberately opt-in Hiera eyaml foundation.
 
 ## Scope
 
-Puppet declares persistent desired state. It does not replace Ansible runbooks, the Linux admin toolkit, incident response, or one-time repairs. Milestone 5 adds applications only through reviewed distribution packages:
+Puppet declares persistent desired state. It does not replace Ansible runbooks, the Linux admin toolkit, incident response, or one-time repairs.
 
-- minimal baseline packages;
-- administration tools;
-- command-line development tools;
-- daemonless Podman/OCI tooling;
-- native Puppet agent service consistency;
-- Puppet Server health/reporting operations;
-- controlled `main -> test -> production` promotion;
-- release manifests, readiness gates, backups, and rollback preparation.
+Milestone 6 supports:
 
-No role adds third-party repositories, pulls container images, creates users, opens firewall ports, stores secrets, or runs general shell commands.
+- reviewed distribution package profiles;
+- explicit roles and central Puppet agent consistency;
+- Puppet Server health, reporting, backup, rollback, and promotion;
+- lifecycle states `active`, `maintenance`, and `retired`;
+- machine-readable node-data contracts and inventory;
+- fleet compliance correlation with compact Puppet reports;
+- exact-confirmation certificate and node decommissioning;
+- Hiera eyaml preparation without automatic activation.
 
-## Role catalog
+No role adds third-party repositories, pulls container images, creates users, opens firewall ports, commits secrets, or runs general shell remediation.
 
-| Role | Purpose | Application groups |
-|---|---|---|
-| `baseline` | Standalone/local bootstrap baseline | baseline |
-| `managed_agent` | Minimal centrally managed node | baseline |
-| `server` | General-purpose server | baseline, administration |
-| `development` | CLI development host | baseline, administration, development |
-| `container_host` | Daemonless OCI host | baseline, administration, container tools |
-| `puppet_server` | Puppet control plane | baseline, administration, server operations |
-
-Classification stays allowlisted in [`manifests/site.pp`](manifests/site.pp). The same contract is represented in [`config/role-catalog.json`](config/role-catalog.json) and validated automatically.
-
-## Application profiles
-
-```text
-profile::baseline
-profile::administration_tools
-profile::development_tools
-profile::container_tools
-profile::application_state
-profile::agent_service
-profile::server_operations
-```
-
-Package arrays are in [`data/common.yaml`](data/common.yaml), use Hiera `unique` merge, contain no duplicates between groups, and use only package names—not unreviewed version expressions.
-
-Example node classification:
+## Node classification
 
 ```yaml
 ---
 sasd::role: development
+sasd::lifecycle_state: active
+sasd::owner: operations
+sasd::description: Command-line development host
 ```
 
-Save it as `data/nodes/<trusted-certname>.yaml`, promote through `main`, `test`, and `production`, deploy with r10k, then run the agent in no-op before applying.
+Save the file as `data/nodes/<trusted-certname>.yaml`. Classification remains allowlisted in [`manifests/site.pp`](manifests/site.pp), roles are mirrored in [`config/role-catalog.json`](config/role-catalog.json), and node requirements are defined in [`config/node-data-contract.json`](config/node-data-contract.json).
+
+## Lifecycle
+
+- `active`: normal convergence and regular agent service;
+- `maintenance`: assigned role converges once, lifecycle evidence is written, then the periodic agent is stopped and disabled;
+- `retired`: catalog compilation is rejected until the guarded decommission workflow is completed.
+
+```bash
+ruby scripts/manage-node.rb register --certname node01.example.net --role server --owner operations
+ruby scripts/manage-node.rb maintenance --certname node01.example.net \
+  --reason 'Kernel maintenance' --ticket CHG-42 --expires-at 2026-07-10T18:00:00Z
+ruby scripts/manage-node.rb activate --certname node01.example.net
+ruby scripts/manage-node.rb retire --certname node01.example.net --reason 'Removed' --ticket CHG-51
+```
+
+## Inventory and compliance
+
+```bash
+ruby scripts/check_node_data.rb
+ruby scripts/node-inventory.rb
+ruby scripts/node-inventory.rb --format json --include-retired
+ruby scripts/fleet-compliance.rb --reports /var/lib/sasd-puppet/reports
+```
+
+## Secure-data foundation
+
+Hiera eyaml remains disabled by default. Install the pinned backend and create keys outside Git only after key custody, backup, and recovery have been agreed:
+
+```bash
+sudo ./scripts/setup-hiera-eyaml.sh --mode server
+./scripts/prepare-hiera-eyaml.sh --output /tmp/hiera.yaml.candidate
+python3 scripts/check_secret_policy.py
+```
 
 ## Quality and release gates
 
 ```bash
-ruby scripts/check_package_policy.rb
-python3 scripts/check_role_catalog.py
-./scripts/release-readiness.sh --require-branch main
-python3 scripts/generate-release-manifest.py
-python3 scripts/verify-release-manifest.py dist/release-manifest.json
-```
-
-Complete developer validation:
-
-```bash
-gem install bundler
-./scripts/setup-development.sh
+./scripts/validate.sh
 bundle exec rake
+./scripts/release-readiness.sh --require-branch main
 ```
 
-GitHub Actions validate Puppet 7.23 and Puppet 8 compatibility, RSpec-Puppet catalogs, Puppet/EPP syntax, shell/YAML/JSON/Ruby, package and role policy, release manifests, smoke tests, and disposable-container idempotence.
-
-## Operational flow
+Operational flow remains:
 
 ```text
 feature branch -> main -> test -> production -> r10k -> Puppet Server -> signed agents
 ```
 
-Promotion remains fast-forward only. Production rollback creates a new reviewed descendant commit; it never force-pushes history or removes the CA.
-
 ## Documentation
 
-- [Milestone 5 specification](docs/en/milestone-5.md)
-- [Application profiles](docs/en/application-profiles.md)
-- [Role catalog](docs/en/role-catalog.md)
-- [Compliance and drift](docs/en/compliance-and-drift.md)
-- [Release assurance](docs/en/release-assurance.md)
-- [Production readiness](docs/en/production-readiness.md)
-- [Milestone 5 runbook](docs/en/milestone-5-runbook.md)
+- [Milestone 6](docs/en/milestone-6.md)
+- [Node lifecycle](docs/en/node-lifecycle.md)
+- [Inventory and compliance](docs/en/inventory-and-compliance.md)
+- [Maintenance windows](docs/en/maintenance-windows.md)
+- [Decommissioning](docs/en/decommissioning.md)
+- [Secure-data foundation](docs/en/secure-data-foundation.md)
+- [Milestone 6 runbook](docs/en/milestone-6-runbook.md)
 - [German documentation](docs/de/README.md)
 
 ## License

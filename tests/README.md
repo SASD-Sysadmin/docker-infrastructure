@@ -1,6 +1,6 @@
 # Tests
 
-Milestone 5 validation layers:
+Milestone 6 validation layers:
 
 1. syntax, YAML/JSON/metadata, links, structure, and resource boundary;
 2. deterministic package ownership and role-catalog parity;

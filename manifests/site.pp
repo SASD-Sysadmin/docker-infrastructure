@@ -1,20 +1,32 @@
 # Main classification entry point for this Puppet environment.
 #
-# Hiera supplies the logical role through `sasd::role`. Only the reviewed values
-# below can become classes. Never replace this case statement with a dynamic
-# `include $assigned_role`: data must not be able to select arbitrary code.
+# Hiera supplies the reviewed role through `sasd::role` and the lifecycle state
+# through `sasd::lifecycle_state`. Both values are allowlisted below. Never
+# replace this dispatcher with a dynamic `include $value`: data must not be able
+# to select arbitrary Puppet classes.
 #
-# Milestone 5 roles:
-# - baseline: small standalone/local package and marker baseline;
-# - managed_agent: central baseline plus native Puppet agent service;
-# - server: central server utilities and agent service;
-# - development: central server utilities, development tools, and agent service;
-# - container_host: central server utilities, rootless-container tools, and agent service;
-# - puppet_server: central control-plane operations and administration tools.
+# Lifecycle contract:
+# - active: compile and enforce the assigned role normally;
+# - maintenance: compile the same role, write maintenance evidence, and stop the
+#   periodic Puppet agent after the current run completes;
+# - retired: reject catalog compilation until the node is decommissioned and its
+#   certificate and node data are removed through the documented workflow.
 $assigned_role = lookup('sasd::role', String[1], 'first', 'baseline')
+$lifecycle_state = lookup('sasd::lifecycle_state', String[1], 'first', 'active')
+
+unless $lifecycle_state in ['active', 'maintenance', 'retired'] {
+  fail("Unsupported sasd::lifecycle_state '${lifecycle_state}'. Allowed values: active, maintenance, retired")
+}
+
+if $lifecycle_state == 'retired' {
+  fail("Node '${trusted['certname']}' is marked retired. No catalog is compiled; complete the decommission runbook.")
+}
 
 case $assigned_role {
   'baseline': {
+    if $lifecycle_state != 'active' {
+      fail('The standalone baseline role supports only lifecycle_state=active')
+    }
     include role::baseline
   }
   'managed_agent': {
@@ -33,6 +45,6 @@ case $assigned_role {
     include role::puppet_server
   }
   default: {
-    fail("Unsupported sasd::role '${assigned_role}'. Allowed roles in Milestone 5: baseline, managed_agent, server, development, container_host, puppet_server")
+    fail("Unsupported sasd::role '${assigned_role}'. Allowed roles: baseline, managed_agent, server, development, container_host, puppet_server")
   }
 }

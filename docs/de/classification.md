@@ -1,10 +1,15 @@
 # Klassifizierung
 
-Hiera liefert `sasd::role`; `manifests/site.pp` ordnet den Wert über eine feste
-Allowlist zu. Milestone 5 erlaubt `baseline`, `managed_agent`, `server`,
-`development`, `container_host` und `puppet_server`.
+`manifests/site.pp` erlaubt ausschließlich die Rollen aus
+`config/role-catalog.json` sowie die Lebenszykluswerte `active`, `maintenance`
+und `retired`. Hiera-Daten dürfen keine beliebigen Klassen auswählen.
 
-Klassennamen dürfen niemals dynamisch aus Hiera konstruiert werden.
-`config/role-catalog.json` spiegelt die Allowlist für Prüfungen, steuert sie aber
-nicht. Eine neue Rolle benötigt Profile, Tests, Dokumentation, Hiera-Beispiel und
-einen expliziten Zweig im Site-Manifest.
+```yaml
+---
+sasd::role: server
+sasd::lifecycle_state: active
+sasd::owner: operations
+```
+
+Wartung benötigt zusätzlich Grund, Ticket und UTC-Ablaufzeit. Bei `retired`
+wird die Katalogerstellung vor der Rollenkompilierung abgebrochen.

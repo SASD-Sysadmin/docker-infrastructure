@@ -1,0 +1,5 @@
+---
+sasd::role: server
+sasd::lifecycle_state: active
+sasd::owner: operations
+sasd::description: Example active server

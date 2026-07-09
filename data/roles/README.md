@@ -1,7 +1,7 @@
 # Role data
 
 Role classification is selected with `sasd::role` and allowlisted in
-`manifests/site.pp`. Milestone 5 roles are `baseline`, `managed_agent`, `server`,
+`manifests/site.pp`. Milestone 6 roles are `baseline`, `managed_agent`, `server`,
 `development`, `container_host`, and `puppet_server`.
 
 Roles are code composition rather than a free-form Hiera layer. Node files may

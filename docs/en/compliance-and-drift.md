@@ -1,25 +1,15 @@
 # Compliance and drift
 
-Puppet convergence is the primary consistency mechanism. Milestone 5 adds supporting evidence but does not claim that a marker file replaces Puppet reports or the package database.
+Puppet convergence remains the primary consistency mechanism. Marker files are
+local evidence, not a substitute for reports or the package database.
 
-## Evidence sources
+Milestone 6 adds fleet-level correlation:
 
-1. Signed node identity and allowlisted role classification.
-2. Compiled catalog and configuration version.
-3. Puppet report status and event counts.
-4. `/etc/sasd/puppet-baseline.conf` for baseline/version evidence.
-5. `/etc/sasd/applications.d/assigned.conf` for intended role/profile evidence.
-6. Distribution package database for installed package versions.
+```bash
+ruby scripts/fleet-compliance.rb --reports /var/lib/sasd-puppet/reports
+```
 
-## Review pattern
-
-- no-op before first apply or role expansion;
-- apply only after reviewing package additions/removals;
-- confirm a second run reports no changes;
-- inspect compact report freshness centrally;
-- investigate repeated changes as drift or non-idempotent code;
-- never use Puppet to hide a recurring failure with an arbitrary repair command.
-
-## Package compliance
-
-`check_package_policy.rb` enforces sorted non-empty groups, valid package-name syntax, no duplicates inside a group, and no ownership overlap between groups. Platform availability is then verified by container integration and representative test nodes.
+Active nodes require a recent successful compact report. Maintenance nodes are
+reported separately and become warnings after their expiry. Retired nodes still
+present in active inventory are errors. Missing and stale reports are warnings;
+failed or malformed reports are errors.

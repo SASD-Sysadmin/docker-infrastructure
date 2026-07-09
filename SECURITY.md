@@ -2,12 +2,12 @@
 
 ## Supported version
 
-Milestone 5 (`0.5.x`) is the current supported repository line.
+Milestone 6 (`0.6.x`) is the current supported repository line.
 
 ## Never commit
 
 - private keys, CSRs, certificates, API keys, tokens, passwords;
-- Hiera secret values or unencrypted credential files;
+- plaintext Hiera secret values or unencrypted credential files; encrypted `.eyaml` values are allowed only after the reviewed opt-in procedure;
 - Puppet CA directories or host SSL state;
 - PuppetDB/PostgreSQL dumps;
 - control-plane backup archives or extracted backup content;
@@ -22,7 +22,9 @@ Milestone 5 (`0.5.x`) is the current supported repository line.
 - no unauthenticated deployment webhook is included;
 - agent manifests do not rewrite TLS identity settings;
 - PuppetDB is optional and must be monitored and backed up when enabled;
-- backup archives are private-key material and require encryption plus independent storage.
+- backup archives and eyaml private keys are sensitive control-plane material and require encryption plus independent storage.
+- maintenance records require a ticket and expiry; retired nodes receive no catalog.
+- `scripts/check_secret_policy.py` is a gate, not a substitute for human review or dedicated secret scanning.
 
 ## Report privacy
 

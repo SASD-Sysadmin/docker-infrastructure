@@ -2,12 +2,16 @@
 
 ## Abgeschlossen
 
-- Milestone 1: Control-Repository-Grundlage und Validierung.
-- Milestone 2: lokale Paket-/Datei-Baseline.
-- Milestone 3: zentraler Puppet Server, r10k, CA und Produktionsbranch.
-- Milestone 4: Promotion, Agentbetrieb, Reporting, Health, Backup, Rollback und optionales PuppetDB.
-- Milestone 5: Anwendungspaketprofile, explizite Rollen, maschinenlesbare Regeln und Release-Absicherung.
+Milestones 1 bis 6: Repository-Grundlage, lokaler Testbetrieb, Puppet Server,
+zentraler Regelbetrieb, Anwendungsprofile und Release-Qualität sowie
+Knoten-Lebenszyklus, Inventar/Compliance, Außerbetriebnahme und optionale
+eyaml-Grundlage.
 
 ## Mögliche nächste Stepstones
 
-Einzelne Anwendungs-/Dienstprofile mit Rollback, verschlüsseltes Hiera erst bei echtem Secret-Bedarf, ausgewählte Red-Hat-Agenten nach separaten Tests, Monitoring-Integration, PuppetDB-Abfragen/Retention, spätere DR-Topologie sowie getrennte SDK-Profile für .NET, Java oder PHP.
+1. eyaml erst für ein konkretes Secret-verbrauchendes Profil aktivieren.
+2. Red-Hat-Familie separat testen.
+3. Compliance-JSON in das unabhängige Monitoring integrieren.
+4. SDK-Profile für .NET, Java und PHP getrennt entwickeln.
+5. PuppetDB-Aufbewahrung und Node-Deaktivierung verbindlich festlegen.
+6. CA- und eyaml-Recovery auf einem isolierten Ersatzserver testen.

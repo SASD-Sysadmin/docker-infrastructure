@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "0.5.0",
+  "version": "0.6.0",
   "roles": {
     "baseline": {
       "central_only": false,
@@ -13,6 +13,7 @@
       "central_only": true,
       "profiles": [
         "baseline",
+        "lifecycle_state",
         "application_state",
         "agent_service"
       ],
@@ -23,6 +24,7 @@
       "profiles": [
         "baseline",
         "administration_tools",
+        "lifecycle_state",
         "application_state",
         "agent_service"
       ],
@@ -34,6 +36,7 @@
         "baseline",
         "administration_tools",
         "development_tools",
+        "lifecycle_state",
         "application_state",
         "agent_service"
       ],
@@ -45,6 +48,7 @@
         "baseline",
         "administration_tools",
         "container_tools",
+        "lifecycle_state",
         "application_state",
         "agent_service"
       ],
@@ -55,6 +59,7 @@
       "profiles": [
         "baseline",
         "administration_tools",
+        "lifecycle_state",
         "application_state",
         "agent_service",
         "server_operations"

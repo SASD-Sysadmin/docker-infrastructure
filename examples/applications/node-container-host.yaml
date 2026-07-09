@@ -1,3 +1,5 @@
 ---
 # Copy to data/nodes/<trusted-certname>.yaml after review.
 sasd::role: container_host
+sasd::lifecycle_state: active
+sasd::owner: operations

@@ -1,0 +1,7 @@
+<%- | String $lifecycle_state, String $reason, String $ticket, String $expires_at, String $certname | -%>
+# Managed by Puppet. Local edits are replaced.
+lifecycle_state=<%= $lifecycle_state %>
+trusted_certname=<%= $certname %>
+reason=<%= $reason %>
+ticket=<%= $ticket %>
+expires_at=<%= $expires_at %>

@@ -1,3 +1,6 @@
 ---
-# Minimal centrally managed agent.
+# Milestone 6 example node data.
 sasd::role: managed_agent
+sasd::lifecycle_state: active
+sasd::owner: sasd-sysadmin
+sasd::description: Example managed agent node

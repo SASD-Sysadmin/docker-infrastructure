@@ -1,11 +1,10 @@
 # Baseline
 
-Milestone 5 behält die konservative gemeinsame Basis und ergänzt optionale
-Anwendungsprofile. `/etc/sasd/puppet-baseline.conf` enthält Version `0.5.0`,
-Plattform, vertrauenswürdigen Certname und Betriebsmodus. Zentrale Rollen schreiben
-zusätzlich `/etc/sasd/applications.d/assigned.conf` als nicht geheimen Nachweis
-der vorgesehenen Rolle und Profile.
+Milestone 6 behält die konservative Paket-/Datei-Basis und die geprüften
+Anwendungsprofile. `/etc/sasd/puppet-baseline.conf` enthält Version `0.6.0`,
+Plattform, Verwaltungsart und vertrauenswürdigen Certname.
 
-Administrations-, Entwicklungs- und Container-Pakete werden nur durch Rollen
-installiert, die das jeweilige Profil ausdrücklich zusammensetzen. Der Agentdienst
-wird ausschließlich nach remote authentifizierter Zertifikatsanmeldung verwaltet.
+Zentrale Rollen schreiben zusätzlich den Anwendungsnachweis unter
+`/etc/sasd/applications.d/assigned.conf` und den Lebenszyklusnachweis unter
+`/etc/sasd/lifecycle.d/state.conf`. Diese Dateien enthalten keine Secrets und
+ersetzen weder Puppet-Reports noch die Paketdatenbank.
