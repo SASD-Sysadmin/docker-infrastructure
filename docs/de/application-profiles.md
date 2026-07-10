@@ -44,3 +44,7 @@ Das Profil installiert weder Webserver noch PHP-FPM oder PECL-Erweiterungen und
 `/etc/sasd/toolchains.d`. Sprachprofile schreiben dort nicht sensitive
 Erwartungsdateien. Das Werkzeug meldet zugewiesene Toolchains und gefundene
 Programmversionen, verändert aber weder Pakete noch Alternativen.
+
+## .NET-SDK
+
+`profile::dotnet_sdk` installiert .NET 10 LTS aus der geprüften Plattform-Paketquelle. Das Debian-Repository wird explizit und getrennt eingerichtet; Workloads und Benutzerzustände werden nicht verwaltet.

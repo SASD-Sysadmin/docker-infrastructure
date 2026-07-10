@@ -1,0 +1,5 @@
+---
+sasd::role: dotnet_development
+sasd::lifecycle_state: active
+sasd::owner: development
+sasd::description: .NET 10 LTS command-line development host

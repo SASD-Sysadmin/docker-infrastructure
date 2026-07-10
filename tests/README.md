@@ -1,6 +1,6 @@
 # Tests
 
-Milestone 9 validation layers:
+Milestone 10 validation layers:
 
 1. syntax, YAML/JSON/metadata, links, structure, and resource boundaries;
 2. deterministic package ownership, platform policy, SDK policy, and role-catalog parity;
@@ -32,3 +32,9 @@ rehearsal, upgrade preflight, and PuppetDB retention/deactivation guards.
 OS-family package mappings. `tests/smoke/sdk-status.sh` verifies the local SDK
 status helper without installing software. `tests/integration/sdk-package-availability.sh`
 checks Java and PHP package availability in disposable supported-platform images.
+
+## Milestone 10
+
+- `dotnet-profile.sh`: profile, role, package, catalog, and scope parity.
+- `dotnet-repository.sh`: Debian/Ubuntu/EL9 trust-path dry runs and rejection tests.
+- `dotnet-package-availability.sh`: disposable x86_64 package/CLI checks in CI.

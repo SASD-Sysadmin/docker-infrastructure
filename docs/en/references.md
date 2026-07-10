@@ -1,6 +1,6 @@
 # References
 
-Checked through Milestone 9 on 2026-07-09:
+Checked through Milestone 10 on 2026-07-10:
 
 - Puppet Core documentation: Hiera 5 hierarchies and the `eyaml_lookup_key` backend;
 - Puppet Core security guidance for sensitive data and Hiera eyaml;
@@ -32,3 +32,13 @@ pinned, reviewed, and tested independently before production use.
 - RHEL 9 PHP installation and AppStream lifecycle: <https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/9/html/installing_and_using_dynamic_programming_languages/assembly_the-php-scripting-language_installing-and-using-dynamic-programming-languages>
 - Debian PHP development package: <https://packages.debian.org/trixie/php-dev>
 - Debian Composer package: <https://packages.debian.org/trixie/composer>
+
+## Milestone 10
+
+- .NET support policy: <https://dotnet.microsoft.com/en-us/platform/support/policy/dotnet-core>
+- .NET release list and support dates: <https://dotnet.microsoft.com/en-us/download/dotnet>
+- Debian installation: <https://learn.microsoft.com/en-us/dotnet/core/install/linux-debian>
+- Ubuntu installation and feed ownership: <https://learn.microsoft.com/en-us/dotnet/core/install/linux-ubuntu-install>
+- RHEL installation: <https://learn.microsoft.com/en-us/dotnet/core/install/linux-rhel>
+- Microsoft Debian configuration packages: <https://packages.microsoft.com/config/debian/>
+- Rocky Linux 9 AppStream package index: <https://download.rockylinux.org/pub/rocky/9/AppStream/x86_64/os/Packages/d/>

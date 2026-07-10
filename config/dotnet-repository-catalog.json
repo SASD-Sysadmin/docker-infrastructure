@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "version": "0.10.0",
+  "sdk_major": 10,
+  "support_end": "2028-11-14",
+  "platforms": {
+    "Debian 12": {
+      "strategy": "microsoft",
+      "architecture": "amd64",
+      "config_package_url": "https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb",
+      "expected_package": "packages-microsoft-prod"
+    },
+    "Debian 13": {
+      "strategy": "microsoft",
+      "architecture": "amd64",
+      "config_package_url": "https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb",
+      "expected_package": "packages-microsoft-prod"
+    },
+    "Ubuntu 24.04": {
+      "strategy": "distribution",
+      "architecture": "amd64",
+      "package": "dotnet-sdk-10.0"
+    },
+    "AlmaLinux 9": {
+      "strategy": "distribution",
+      "architecture": "x86_64",
+      "package": "dotnet-sdk-10.0"
+    },
+    "Rocky 9": {
+      "strategy": "distribution",
+      "architecture": "x86_64",
+      "package": "dotnet-sdk-10.0"
+    }
+  },
+  "security": {
+    "https_only": true,
+    "apt_key_forbidden": true,
+    "curl_to_shell_forbidden": true,
+    "package_metadata_validation": true,
+    "repository_setup_is_separate_from_puppet_catalog": true,
+    "operator_checksum_supported": true
+  }
+}

@@ -34,3 +34,7 @@ Installs protected aggregate compliance/health exports and a hardened systemd ti
 ## `profile::systemd_reload`
 
 Defines the single refresh-only `systemctl daemon-reload` resource shared by operational systemd profiles.
+
+## `profile::dotnet_sdk`
+
+Installs the reviewed .NET 10 LTS SDK package and non-secret expectation marker. Debian repository setup is separate and explicit.

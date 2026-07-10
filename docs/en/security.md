@@ -20,3 +20,7 @@ profile therefore requires its own threat model and tests.
 ## EL9 repository credentials
 
 Puppet Core API keys are supplied only through root-owned files. The generated yum repository file is mode `0600`; support bundles must redact it. Milestone 7 does not modify SELinux or firewall policy.
+
+## .NET repository exception
+
+Debian .NET nodes use a reviewed external Microsoft repository configuration package. Setup is manual, dry-run by default, HTTPS-only, package-metadata checked, and optionally SHA-256 pinned. Puppet catalog compilation never downloads repository bootstrap packages.

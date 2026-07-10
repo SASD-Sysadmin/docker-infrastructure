@@ -1,0 +1,5 @@
+---
+sasd::role: dotnet_development
+sasd::lifecycle_state: active
+sasd::owner: development
+sasd::description: Example .NET 10 LTS development host

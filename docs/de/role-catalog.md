@@ -29,3 +29,7 @@ Prüfung:
 python3 scripts/check_role_catalog.py
 python3 scripts/check_sdk_catalog.py
 ```
+
+## `dotnet_development`
+
+Zentrale x86_64-Entwicklungsrolle aus allgemeiner Entwicklungsbaseline und `profile::dotnet_sdk`.

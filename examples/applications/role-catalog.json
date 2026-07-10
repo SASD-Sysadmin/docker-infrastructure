@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "0.9.0",
+  "version": "0.10.0",
   "roles": {
     "baseline": {
       "central_only": false,
@@ -118,6 +118,21 @@
         "agent_service"
       ],
       "purpose": "Combined Java and PHP command-line development host."
+    },
+    "dotnet_development": {
+      "central_only": true,
+      "profiles": [
+        "baseline",
+        "platform_state",
+        "administration_tools",
+        "development_tools",
+        "sdk_status",
+        "dotnet_sdk",
+        "lifecycle_state",
+        "application_state",
+        "agent_service"
+      ],
+      "purpose": ".NET 10 LTS command-line development host."
     }
   }
 }

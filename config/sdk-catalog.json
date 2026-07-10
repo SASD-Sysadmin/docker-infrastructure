@@ -1,6 +1,6 @@
 {
-  "schema_version": 1,
-  "version": "0.9.0",
+  "schema_version": 2,
+  "version": "0.10.0",
   "profiles": {
     "java_sdk": {
       "purpose": "OpenJDK 17 command-line software development with Maven from distribution repositories.",
@@ -34,11 +34,37 @@
       "installs_web_server": false,
       "starts_services": false,
       "external_repositories": false
+    },
+    "dotnet_sdk": {
+      "purpose": ".NET 10 LTS command-line SDK from a reviewed platform package feed.",
+      "supported_os_families": [
+        "Debian",
+        "RedHat"
+      ],
+      "dotnet_major": 10,
+      "support_end": "2028-11-14",
+      "supported_architectures": [
+        "amd64",
+        "x86_64"
+      ],
+      "repository_policy": {
+        "Debian 12": "Microsoft Linux package repository",
+        "Debian 13": "Microsoft Linux package repository",
+        "Ubuntu 24.04": "Ubuntu built-in feed",
+        "AlmaLinux 9": "distribution AppStream",
+        "Rocky 9": "distribution AppStream"
+      },
+      "installs_workloads": false,
+      "installs_global_tools": false,
+      "manages_nuget_sources": false,
+      "manages_global_json": false,
+      "starts_services": false
     }
   },
   "deferred": {
-    "dotnet": "Requires a separate repository-trust and lifecycle ADR.",
     "php_el9_stream_selection": "Changing AppStream module streams requires a separate reviewed migration step.",
-    "upstream_sdk_installers": "Curl-to-shell and vendor bootstrap installers are not allowed."
+    "upstream_sdk_installers": "Curl-to-shell and vendor bootstrap installers are not allowed.",
+    "dotnet_arm64": "Requires separate package-feed and integration validation.",
+    "dotnet_workloads": "Workloads and global tools are project concerns, not machine baseline resources."
   }
 }

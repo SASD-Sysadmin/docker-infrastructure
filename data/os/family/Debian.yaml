@@ -60,3 +60,6 @@ profile::php_sdk::packages:
   - php-sqlite3
   - php-xml
   - php-zip
+
+profile::dotnet_sdk::packages:
+  - dotnet-sdk-10.0

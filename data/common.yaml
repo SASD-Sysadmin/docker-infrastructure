@@ -19,7 +19,7 @@ lookup_options:
 
 profile::baseline::manage_packages: true
 profile::baseline::manage_marker: true
-profile::baseline::baseline_version: '0.9.0'
+profile::baseline::baseline_version: '0.10.0'
 profile::baseline::marker_directory: '/etc/sasd'
 profile::baseline::marker_file: '/etc/sasd/puppet-baseline.conf'
 

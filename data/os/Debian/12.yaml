@@ -1,3 +1,6 @@
 ---
 # Debian 12 (Bookworm) is supported with the distribution Puppet 7.23 agent.
 # No release-specific package overrides are currently required.
+
+# .NET 10 SDK repository trust strategy.
+profile::dotnet_sdk::repository_strategy: 'microsoft'

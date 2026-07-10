@@ -45,3 +45,9 @@ Puppet uses manifests and classes; operational procedures are documented as runb
 - `check_sdk_catalog.py` validates SDK policy and role/package parity.
 - `check_milestone9_scope.py` blocks upstream installers, services, alternatives, EL module-stream changes, and .NET.
 - Managed SDK nodes use `/usr/local/sbin/sasd-sdk-status` for read-only local evidence.
+
+## Milestone 10 .NET checks
+
+- `setup-dotnet-repository.sh` prepares the official Debian Microsoft package feed, dry-run by default.
+- `check_dotnet_repository_catalog.py` validates per-platform trust strategy.
+- `check_milestone10_scope.py` blocks workloads, global tools, user state, services, unsafe installers, and unvalidated architectures.

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "0.9.0",
+  "version": "0.10.0",
   "allowed_roles": [
     "managed_agent",
     "server",
@@ -9,7 +9,8 @@
     "puppet_server",
     "java_development",
     "php_development",
-    "polyglot_development"
+    "polyglot_development",
+    "dotnet_development"
   ],
   "allowed_lifecycle_states": [
     "active",

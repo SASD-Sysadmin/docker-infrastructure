@@ -22,3 +22,7 @@ Bootstrap scripts target Apt/systemd hosts. Other architectures or operating-sys
 ## Milestone 7 agents
 
 AlmaLinux 9 and Rocky Linux 9 are supported as central agents on x86_64 and aarch64. They require authenticated Puppet Core packages. They are not supported by the standalone local bootstrap or as Puppet Server hosts.
+
+## Milestone 10 .NET SDK
+
+The .NET 10 LTS profile is supported on x86_64/amd64 agents only. Debian 12/13 use the explicit Microsoft package repository bootstrap; Ubuntu 24.04 and AlmaLinux/Rocky 9 use distribution feeds. Arm64 remains a candidate after separate package and integration validation.

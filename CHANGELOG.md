@@ -1,5 +1,26 @@
 # Changelog
 
+## [0.10.0] - 2026-07-10
+
+### Added
+
+- .NET 10 LTS SDK profile and explicit `dotnet_development` role;
+- guarded Debian Microsoft-repository setup and machine-readable trust catalog;
+- .NET major-version reporting in `sasd-sdk-status`;
+- RSpec, smoke, container, CI, ADRs, examples, and bilingual runbooks.
+
+### Changed
+
+- repository and module versions are 0.10.0;
+- package policy and SDK catalog include `dotnet-sdk-10.0`;
+- role allowlist and catalog include the .NET development role.
+
+### Security
+
+- Debian repository setup is dry-run by default, HTTPS-only, and validates package metadata;
+- Ubuntu 24.04 and EL9 receive no Microsoft repository;
+- .NET workloads, global tools, NuGet sources, user state, services, and arm64 remain out of scope.
+
 ## [0.9.0] - 2026-07-09
 
 ### Added

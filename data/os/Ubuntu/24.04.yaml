@@ -1,3 +1,6 @@
 ---
 # Ubuntu 24.04 LTS (Noble) is supported with the distribution Puppet 8.4 agent.
 # The bootstrap script enables the Universe component when required.
+
+# .NET 10 SDK repository trust strategy.
+profile::dotnet_sdk::repository_strategy: 'distribution'

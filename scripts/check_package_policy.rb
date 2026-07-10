@@ -10,6 +10,7 @@ keys = %w[
   profile::container_tools::packages
   profile::java_sdk::packages
   profile::php_sdk::packages
+  profile::dotnet_sdk::packages
 ]
 pattern = /\A[a-zA-Z0-9][a-zA-Z0-9+._-]*\z/
 failures=[]; totals={}

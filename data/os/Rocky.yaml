@@ -1,2 +1,5 @@
 ---
 # Rocky Linux 9 currently uses the reviewed RedHat-family package mapping.
+
+# .NET 10 SDK repository trust strategy.
+profile::dotnet_sdk::repository_strategy: 'distribution'

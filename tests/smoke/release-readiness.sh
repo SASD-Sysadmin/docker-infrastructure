@@ -8,6 +8,6 @@ cd "${tmp}/repo"
 ./scripts/release-readiness.sh --require-branch main --output "${tmp}/readiness.json"
 python3 - "${tmp}/readiness.json" <<'PYTEST'
 import json,sys
-x=json.load(open(sys.argv[1])); assert x['status']=='pass'; assert x['version']=='0.9.0'
+x=json.load(open(sys.argv[1])); assert x['status']=='pass'; assert x['version']=='0.10.0'
 PYTEST
 printf 'Release-readiness smoke test passed.\n'

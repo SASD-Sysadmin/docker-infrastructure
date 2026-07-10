@@ -107,6 +107,23 @@ def evaluate_policy(
                     violations.append(
                         f"{command} major {observed} does not match expected {expected}"
                     )
+    dotnet_marker = markers.get("dotnet")
+    if dotnet_marker:
+        expected_text = dotnet_marker.get("expected_dotnet_major")
+        try:
+            expected = int(expected_text) if expected_text else None
+        except ValueError:
+            violations.append("invalid expected_dotnet_major marker")
+            expected = None
+        result = checks.get("dotnet", {})
+        if expected is not None and result.get("present"):
+            match = re.match(r"^(\d+)(?:\.|$)", result.get("version") or "")
+            if not match:
+                violations.append("unable to determine dotnet major version")
+            elif int(match.group(1)) != expected:
+                violations.append(
+                    f"dotnet major {match.group(1)} does not match expected {expected}"
+                )
     return violations
 
 
@@ -123,6 +140,9 @@ def main() -> int:
         checks["java"] = command_version("java", ["-version"])
         checks["javac"] = command_version("javac", ["-version"])
         checks["maven"] = command_version("mvn", ["-version"])
+
+    if "dotnet" in markers:
+        checks["dotnet"] = command_version("dotnet", ["--version"])
 
     if "php" in markers:
         checks["php"] = command_version("php", ["--version"])

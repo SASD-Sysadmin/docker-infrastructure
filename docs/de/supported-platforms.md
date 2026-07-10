@@ -9,3 +9,7 @@ Die Bootstrap-Skripte setzen Apt und systemd voraus. Andere Plattformen benötig
 ## Milestone-7-Agents
 
 AlmaLinux 9 und Rocky Linux 9 werden als zentrale Agents auf x86_64 und aarch64 unterstützt. Sie benötigen authentifizierte Puppet-Core-Pakete und sind weder für den Standalone-Bootstrap noch als Puppet Server freigegeben.
+
+## Milestone-10-.NET-SDK
+
+Das .NET-10-LTS-Profil ist zunächst nur auf x86_64/amd64-Agents freigegeben. Debian 12/13 verwenden das explizite Microsoft-Repository-Setup; Ubuntu 24.04 und AlmaLinux/Rocky 9 verwenden Distributionsfeeds. Arm64 bleibt bis zu einer separaten Paket- und Integrationsprüfung zurückgestellt.

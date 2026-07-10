@@ -54,3 +54,7 @@ installers, or change the EL9 AppStream module.
 `/etc/sasd/toolchains.d`. Language profiles write non-secret expectation files
 there. The helper reports assigned toolchains and observed command versions but
 does not alter packages or alternatives.
+
+## .NET SDK
+
+`profile::dotnet_sdk` installs .NET 10 LTS from the reviewed platform feed. Debian repository setup is explicit and separate; workloads and user state are not managed.

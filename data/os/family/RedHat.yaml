@@ -63,3 +63,6 @@ profile::php_sdk::packages:
   - php-pdo
   - php-process
   - php-xml
+
+profile::dotnet_sdk::packages:
+  - dotnet-sdk-10.0

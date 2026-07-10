@@ -14,6 +14,9 @@ Repository validation:
 ```bash
 python3 scripts/check_sdk_catalog.py
 python3 scripts/check_milestone9_scope.py
+python3 scripts/check_milestone10_scope.py
+python3 scripts/check_dotnet_repository_catalog.py
 tests/smoke/sdk-profiles.sh
+tests/smoke/dotnet-profile.sh
 tests/smoke/sdk-status.sh
 ```

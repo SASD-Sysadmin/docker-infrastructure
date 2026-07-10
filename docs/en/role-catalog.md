@@ -34,3 +34,7 @@ python3 scripts/check_sdk_catalog.py
 The checks compare versions, allowlisted site values, role manifest existence,
 expected profile composition, SDK policy, and package mappings. They prevent
 documentation or automation from silently drifting away from Puppet code.
+
+## `dotnet_development`
+
+A central x86_64 development role combining the general development baseline with `profile::dotnet_sdk`.

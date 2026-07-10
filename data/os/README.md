@@ -14,3 +14,7 @@ Package names are complete per-family contracts:
 Do not place cross-family package names in `data/common.yaml`. Exact OS files may
 contain narrow overrides, but they must not silently enable EPEL or another
 third-party repository.
+
+## Milestone 10 .NET repository strategies
+
+Exact OS data sets `profile::dotnet_sdk::repository_strategy`: `microsoft` for Debian 12/13 and `distribution` for Ubuntu 24.04, AlmaLinux 9, and Rocky Linux 9. Package names remain in family mappings.

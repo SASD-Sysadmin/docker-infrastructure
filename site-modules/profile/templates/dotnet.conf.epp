@@ -1,0 +1,7 @@
+<%- | Integer $dotnet_major, String $repository_strategy, Array[String] $packages, String $certname | -%>
+# Managed by Puppet. Local changes are overwritten.
+sdk=dotnet
+expected_dotnet_major=<%= $dotnet_major %>
+repository_strategy=<%= $repository_strategy %>
+packages=<%= $packages.sort.join(',') %>
+trusted_certname=<%= $certname %>

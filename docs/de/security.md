@@ -16,3 +16,7 @@
 ## EL9-Repository-Zugangsdaten
 
 Puppet-Core-API-Keys werden nur über root-eigene Dateien eingelesen. Die erzeugte Yum-Repository-Datei erhält Modus `0600`; Support-Bundles müssen sie aussparen oder schwärzen. SELinux und Firewall werden nicht verändert.
+
+## Ausnahme für das .NET-Repository
+
+Debian-.NET-Knoten verwenden ein geprüftes externes Microsoft-Repository-Konfigurationspaket. Die Einrichtung erfolgt manuell, standardmäßig als Trockenlauf, ausschließlich über HTTPS, mit Paketmetadatenprüfung und optionaler SHA-256-Festlegung. Die Puppet-Katalogkompilierung lädt keine Repository-Bootstrap-Pakete.

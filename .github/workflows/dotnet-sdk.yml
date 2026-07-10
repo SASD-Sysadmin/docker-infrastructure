@@ -1,0 +1,58 @@
+---
+name: .NET SDK profile
+on:
+  push:
+    branches: [main, test, production]
+    paths:
+      - 'config/dotnet-repository-catalog.json'
+      - 'config/sdk-catalog.json'
+      - 'data/os/**'
+      - 'site-modules/profile/**dotnet*'
+      - 'site-modules/role/**dotnet*'
+      - 'scripts/setup-dotnet-repository.sh'
+      - 'scripts/check_dotnet_repository_catalog.py'
+      - 'scripts/check_milestone10_scope.py'
+      - 'tests/smoke/dotnet-*'
+      - 'tests/integration/dotnet-package-availability.sh'
+      - '.github/workflows/dotnet-sdk.yml'
+  pull_request:
+    paths:
+      - 'config/dotnet-repository-catalog.json'
+      - 'config/sdk-catalog.json'
+      - 'data/os/**'
+      - 'site-modules/**dotnet*'
+      - 'scripts/setup-dotnet-repository.sh'
+      - 'scripts/check_dotnet_repository_catalog.py'
+      - 'scripts/check_milestone10_scope.py'
+      - 'tests/smoke/dotnet-*'
+      - 'tests/integration/dotnet-package-availability.sh'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  contract:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: Validate .NET contracts and dry runs
+        run: |
+          tests/smoke/dotnet-profile.sh
+          tests/smoke/dotnet-repository.sh
+          tests/smoke/sdk-status.sh
+  packages:
+    name: .NET 10 on ${{ matrix.platform }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {image: 'debian:12', platform: debian12}
+          - {image: 'debian:13', platform: debian13}
+          - {image: 'ubuntu:24.04', platform: ubuntu2404}
+          - {image: 'rockylinux:9', platform: rocky9}
+          - {image: 'almalinux:9', platform: almalinux9}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Verify .NET 10 package and CLI
+        run: tests/integration/dotnet-package-availability.sh '${{ matrix.image }}' '${{ matrix.platform }}'
