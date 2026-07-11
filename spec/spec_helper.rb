@@ -4,7 +4,7 @@ CONTROL_REPOSITORY_ROOT = File.expand_path('..', __dir__)
 RSpec.configure do |config|
   config.module_path = [File.join(CONTROL_REPOSITORY_ROOT,'site-modules'),File.join(CONTROL_REPOSITORY_ROOT,'modules')].join(File::PATH_SEPARATOR)
   config.manifest_dir = File.join(CONTROL_REPOSITORY_ROOT,'manifests')
-  config.hiera_config = File.join(CONTROL_REPOSITORY_ROOT,'hiera.yaml')
+  config.hiera_config = File.join(CONTROL_REPOSITORY_ROOT,'spec','hiera.yaml')
   config.strict_variables = true
 end
 SUPPORTED_FACTS = {

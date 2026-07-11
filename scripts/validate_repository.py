@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check the Milestone 10 structural, SDK, repository-trust, platform, lifecycle, and security contract."""
+"""Check the Milestone 11 structural, SDK, repository-trust, platform, lifecycle, and security contract."""
 from __future__ import annotations
 import json,pathlib,sys
 ROOT=pathlib.Path(__file__).resolve().parents[1]
@@ -24,14 +24,14 @@ def main():
     for rel in REQUIRED:
         if not (ROOT/rel).is_file(): fail(f'missing required file: {rel}'); failures+=1
     version=(ROOT/'VERSION').read_text().strip()
-    if version!='0.10.0': fail('VERSION must be 0.10.0 for Milestone 10'); failures+=1
+    if version!='0.11.0': fail('VERSION must be 0.11.0 for Milestone 11'); failures+=1
     for rel in ('site-modules/profile/metadata.json','site-modules/role/metadata.json','site-modules/sasd_reporting/metadata.json'):
         try:
             d=json.loads((ROOT/rel).read_text())
             if d.get('version')!=version: fail(f'{rel}: version differs from VERSION'); failures+=1
             if not d.get('name','').startswith('sasd-'): fail(f'{rel}: module name must use sasd namespace'); failures+=1
         except Exception as exc: fail(f'{rel}: {exc}'); failures+=1
-    for rel in ('config/role-catalog.json','config/node-data-contract.json','config/platform-catalog.json','config/operations-policy.json','config/sdk-catalog.json','config/dotnet-repository-catalog.json'):
+    for rel in ('config/role-catalog.json','config/node-data-contract.json','config/platform-catalog.json','config/operations-policy.json','config/sdk-catalog.json','config/dotnet-repository-catalog.json','config/secure-data-policy.json'):
         d=json.loads((ROOT/rel).read_text())
         if d.get('version')!=version: fail(f'{rel}: version differs from VERSION'); failures+=1
     common=(ROOT/'data/common.yaml').read_text()
@@ -50,5 +50,5 @@ def main():
         rel=str(p.relative_to(ROOT))
         if p.suffix.lower() in forbidden_suffix: fail(f'potential secret material: {rel}'); failures+=1
     if failures: print(f'Repository validation failed with {failures} error(s).',file=sys.stderr); return 1
-    print('Milestone 10 repository structure validation passed.'); return 0
+    print('Milestone 11 repository structure validation passed.'); return 0
 if __name__=='__main__': raise SystemExit(main())

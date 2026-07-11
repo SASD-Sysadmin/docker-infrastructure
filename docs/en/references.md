@@ -42,3 +42,9 @@ pinned, reviewed, and tested independently before production use.
 - RHEL installation: <https://learn.microsoft.com/en-us/dotnet/core/install/linux-rhel>
 - Microsoft Debian configuration packages: <https://packages.microsoft.com/config/debian/>
 - Rocky Linux 9 AppStream package index: <https://download.rockylinux.org/pub/rocky/9/AppStream/x86_64/os/Packages/d/>
+## Milestone 11
+
+- Puppet Core: Configuring a hierarchy level with Hiera-eyaml.
+- Puppet Core: Securing sensitive data and Sensitive EPP templates.
+- Vox Pupuli: Hiera-eyaml 5.0.1 usage, PKCS7 key custody, and CLI.
+- Debian apt_auth.conf(5): machine/login/password credential format.

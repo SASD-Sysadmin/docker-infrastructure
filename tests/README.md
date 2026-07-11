@@ -38,3 +38,5 @@ checks Java and PHP package availability in disposable supported-platform images
 - `dotnet-profile.sh`: profile, role, package, catalog, and scope parity.
 - `dotnet-repository.sh`: Debian/Ubuntu/EL9 trust-path dry runs and rejection tests.
 - `dotnet-package-availability.sh`: disposable x86_64 package/CLI checks in CI.
+
+Milestone 11 adds the encrypted APT credential policy, smoke, roundtrip, and catalog tests.

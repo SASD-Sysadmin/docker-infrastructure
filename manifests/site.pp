@@ -56,7 +56,10 @@ case $assigned_role {
   'dotnet_development': {
     include role::dotnet_development
   }
+  'apt_repository_client': {
+    include role::apt_repository_client
+  }
   default: {
-    fail("Unsupported sasd::role '${assigned_role}'. Allowed roles: baseline, managed_agent, server, development, container_host, puppet_server, java_development, php_development, polyglot_development, dotnet_development")
+    fail("Unsupported sasd::role '${assigned_role}'. Allowed roles: baseline, managed_agent, server, development, container_host, puppet_server, java_development, php_development, polyglot_development, dotnet_development, apt_repository_client")
   }
 }

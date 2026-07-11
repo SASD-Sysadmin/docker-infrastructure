@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Validate source formats, documentation, manifests, and Milestone 10 boundaries.
+# Validate source formats, documentation, manifests, and Milestone 11 boundaries.
 set -euo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"; ROOT="$(cd -- "${SCRIPT_DIR}/.." && pwd -P)"
 strict=false; promotion_context=false
@@ -10,22 +10,9 @@ cd "${ROOT}"
 echo '==> Shell syntax'; while IFS= read -r -d '' f; do bash -n "$f"; done < <(find scripts tests -type f -name '*.sh' -print0 | sort -z)
 echo '==> YAML, JSON, structure, links, scope, package, role, node, and secret policy'
 ruby scripts/validate_yaml.rb
-python3 scripts/validate_repository.py
-python3 scripts/check_markdown_links.py
-python3 scripts/check_milestone6_scope.py
-python3 scripts/check_milestone7_scope.py
-python3 scripts/check_milestone8_scope.py
-python3 scripts/check_milestone9_scope.py
-python3 scripts/check_milestone10_scope.py
-python3 scripts/check_dotnet_repository_catalog.py
-python3 scripts/check_sdk_catalog.py
-python3 scripts/check_operations_policy.py
-python3 scripts/check_platform_catalog.py
+python3 scripts/validate_python_suite.py
 ruby scripts/check_package_policy.rb
-python3 scripts/check_role_catalog.py
 ruby scripts/check_node_data.rb
-python3 scripts/check_secret_policy.py
-python3 -c "import json,pathlib; fs=sorted(p for p in pathlib.Path('.').rglob('*.json') if '.git' not in p.parts and 'vendor' not in p.parts and 'dist' not in p.parts); [json.loads(p.read_text()) for p in fs]; print(f'JSON validation passed for {len(fs)} file(s).')"
 if [[ "${promotion_context}" == false ]]; then
   tests/smoke/bootstrap-dry-run.sh
   tests/smoke/server-dry-run.sh
@@ -54,13 +41,16 @@ if [[ "${promotion_context}" == false ]]; then
   tests/smoke/sdk-status.sh
   tests/smoke/dotnet-profile.sh
   tests/smoke/dotnet-repository.sh
+  tests/smoke/secure-data-policy.sh
+  tests/smoke/hiera-eyaml-operations.sh
+  tests/smoke/apt-repository-credentials.sh
 fi
 if require_or_warn yamllint; then mapfile -d '' fs < <(find . -path './.git' -prune -o -path './vendor' -prune -o -path './modules' -prune -o -path './dist' -prune -o -type f \( -name '*.yaml' -o -name '*.yml' \) -print0 | sort -z); yamllint "${fs[@]}"; fi
 if command -v systemd-analyze >/dev/null 2>&1; then systemd-analyze verify systemd/*.service; fi
 if require_or_warn shellcheck; then mapfile -d '' fs < <(find scripts tests -type f -name '*.sh' -print0 | sort -z); shellcheck -x "${fs[@]}"; fi
 if require_or_warn puppet; then mapfile -d '' fs < <(find manifests site-modules -type f -name '*.pp' -print0 | sort -z); puppet parser validate "${fs[@]}"; while IFS= read -r -d '' f; do puppet epp validate "$f"; done < <(find site-modules -type f -name '*.epp' -print0 | sort -z); fi
 if require_or_warn puppet-lint; then puppet-lint manifests site-modules; fi
-echo '==> Ruby syntax'; while IFS= read -r -d '' f; do ruby -c "$f" >/dev/null; done < <(find site-modules scripts spec -type f -name '*.rb' -print0 | sort -z)
+echo '==> Ruby syntax'; ruby scripts/validate_ruby_syntax.rb
 if require_or_warn metadata-json-lint; then metadata-json-lint site-modules/profile/metadata.json; metadata-json-lint site-modules/role/metadata.json; metadata-json-lint site-modules/sasd_reporting/metadata.json; fi
 [[ "${missing}" -eq 0 ]] || exit 1
 echo 'Validation completed successfully.'

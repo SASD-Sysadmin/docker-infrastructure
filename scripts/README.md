@@ -51,3 +51,11 @@ Puppet uses manifests and classes; operational procedures are documented as runb
 - `setup-dotnet-repository.sh` prepares the official Debian Microsoft package feed, dry-run by default.
 - `check_dotnet_repository_catalog.py` validates per-platform trust strategy.
 - `check_milestone10_scope.py` blocks workloads, global tools, user state, services, unsafe installers, and unvalidated architectures.
+
+## Milestone 11 secure data
+
+- `verify-hiera-eyaml.sh`: verify backend, keypair, hierarchy, and optional roundtrip.
+- `encrypt-hiera-value.sh`: encrypt stdin/file data without putting the secret in argv.
+- `stage-hiera-eyaml-key-rotation.sh`: create an isolated candidate keypair only.
+- `check_secure_data_policy.py`: validate active hierarchy and consumer contract.
+- `check_milestone11_scope.py`: enforce the narrow APT credential boundary.

@@ -42,8 +42,30 @@ if [[ "${mode}" == server ]]; then
 else
   install -d -o root -g root -m 0700 "${key_directory}"
 fi
+set_key_permissions() {
+  if [[ "${mode}" == server ]]; then
+    chown root:"${server_group}" "${key_directory}"/*.pem
+    chmod 0640 "${key_directory}/private_key.pkcs7.pem"
+    chmod 0644 "${key_directory}/public_key.pkcs7.pem"
+  else
+    chown root:root "${key_directory}"/*.pem
+    chmod 0600 "${key_directory}/private_key.pkcs7.pem"
+    chmod 0644 "${key_directory}/public_key.pkcs7.pem"
+  fi
+}
+verify_keypair() {
+  local private_modulus public_modulus
+  private_modulus="$(openssl rsa -in "${key_directory}/private_key.pkcs7.pem" -noout -modulus 2>/dev/null | openssl sha256)"
+  public_modulus="$(openssl x509 -in "${key_directory}/public_key.pkcs7.pem" -noout -modulus 2>/dev/null | openssl sha256)"
+  [[ -n "${private_modulus}" && "${private_modulus}" == "${public_modulus}" ]] || { echo 'ERROR: existing public certificate does not match private key' >&2; exit 65; }
+}
 if [[ -e "${key_directory}/private_key.pkcs7.pem" || -e "${key_directory}/public_key.pkcs7.pem" ]]; then
-  echo 'ERROR: keys already exist; rotate them through the documented procedure' >&2; exit 73
+  [[ -f "${key_directory}/private_key.pkcs7.pem" && ! -L "${key_directory}/private_key.pkcs7.pem" ]] || { echo 'ERROR: private key must be a regular non-symlink file' >&2; exit 73; }
+  [[ -f "${key_directory}/public_key.pkcs7.pem" && ! -L "${key_directory}/public_key.pkcs7.pem" ]] || { echo 'ERROR: public key must be a regular non-symlink file' >&2; exit 73; }
+  verify_keypair
+  set_key_permissions
+  echo 'Existing complete matching keypair retained; ownership and modes were enforced.'
+  exit 0
 fi
 if [[ "${mode}" == server ]]; then
   puppetserver gem list -i hiera-eyaml >/dev/null
@@ -54,13 +76,6 @@ fi
     -subj '/CN=SASD Hiera eyaml/' \
     -keyout "${key_directory}/private_key.pkcs7.pem" \
     -out "${key_directory}/public_key.pkcs7.pem" >/dev/null 2>&1 )
-if [[ "${mode}" == server ]]; then
-  chown root:"${server_group}" "${key_directory}"/*.pem
-  chmod 0640 "${key_directory}/private_key.pkcs7.pem"
-  chmod 0644 "${key_directory}/public_key.pkcs7.pem"
-else
-  chown root:root "${key_directory}"/*.pem
-  chmod 0600 "${key_directory}/private_key.pkcs7.pem"
-  chmod 0644 "${key_directory}/public_key.pkcs7.pem"
-fi
-echo "hiera-eyaml ${version} installed and keys created in ${key_directory}. The hierarchy remains disabled until reviewed and committed."
+verify_keypair
+set_key_permissions
+echo "hiera-eyaml ${version} installed and keys created in ${key_directory}. The active hierarchy is ready for reviewed encrypted per-node data."

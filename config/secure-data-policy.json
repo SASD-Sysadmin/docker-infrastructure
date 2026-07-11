@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "version": "0.11.0",
+  "backend": {
+    "name": "hiera-eyaml",
+    "version": "5.0.1",
+    "encryptor": "pkcs7"
+  },
+  "hierarchy": {
+    "scope": "per-node",
+    "path": "../secrets/nodes/%{trusted.certname}.eyaml",
+    "private_key": "/etc/sasd-puppet/eyaml/private_key.pkcs7.pem",
+    "public_key": "/etc/sasd-puppet/eyaml/public_key.pkcs7.pem",
+    "cache_decrypted": false
+  },
+  "allowed_secret_parameters": [
+    "profile::apt_repository_credentials::password"
+  ],
+  "allowed_consumers": {
+    "apt_repository_client": {
+      "profile": "apt_repository_credentials",
+      "platform_family": "Debian",
+      "target": "/etc/apt/auth.conf.d/sasd-private-repository.conf",
+      "mode": "0600",
+      "credential_scope": "read-only package repository credential"
+    }
+  },
+  "forbidden_secret_classes": [
+    "private keys",
+    "CA keys",
+    "SSH host keys",
+    "signing keys",
+    "database master keys",
+    "human passwords"
+  ],
+  "catalog_risk": {
+    "sensitive_redacts_reports": true,
+    "cached_catalog_contains_plaintext": true,
+    "accepted_scope": "machine-specific read-only package repository credential",
+    "node_encrypt_deferred": true
+  },
+  "key_custody": {
+    "repository_keys_allowed": false,
+    "server_directory_mode": "0750",
+    "server_private_key_mode": "0640",
+    "server_public_key_mode": "0644",
+    "backup_required": true,
+    "isolated_roundtrip_required": true
+  }
+}

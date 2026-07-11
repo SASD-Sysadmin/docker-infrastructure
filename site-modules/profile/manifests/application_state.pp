@@ -9,7 +9,7 @@
 # @param state_directory SASD-owned marker directory.
 # @param state_file Marker file path.
 class profile::application_state (
-  Enum['managed_agent', 'server', 'development', 'container_host', 'puppet_server'] $role_name,
+  Enum['managed_agent', 'server', 'development', 'container_host', 'puppet_server', 'java_development', 'php_development', 'polyglot_development', 'dotnet_development', 'apt_repository_client'] $role_name,
   Array[String[1], 1] $enabled_profiles,
   Pattern[/^\//] $state_directory = '/etc/sasd/applications.d',
   Pattern[/^\//] $state_file = '/etc/sasd/applications.d/assigned.conf',

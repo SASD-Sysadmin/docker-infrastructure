@@ -38,3 +38,9 @@ Bis Milestone 10 am 10.07.2026 geprüft:
 - RHEL-Installation: <https://learn.microsoft.com/en-us/dotnet/core/install/linux-rhel>
 - Microsoft-Konfigurationspakete: <https://packages.microsoft.com/config/debian/>
 - Rocky-Linux-9-AppStream-Paketindex: <https://download.rockylinux.org/pub/rocky/9/AppStream/x86_64/os/Packages/d/>
+## Milestone 11
+
+- Puppet Core: Hiera-eyaml-Hierarchie und Schutz sensibler Daten.
+- Puppet Core: Sensitive-EPP-Vorlagen.
+- Vox Pupuli: Hiera-eyaml 5.0.1, PKCS7-Schlüssel und CLI.
+- Debian apt_auth.conf(5): Format für machine/login/password.

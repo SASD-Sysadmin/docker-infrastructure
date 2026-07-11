@@ -1,0 +1,43 @@
+---
+name: Secure data
+on:
+  push:
+    branches: [main, test, production]
+    paths:
+      - 'hiera.yaml'
+      - 'config/secure-data-policy.json'
+      - 'secrets/**'
+      - 'site-modules/profile/**apt*'
+      - 'site-modules/role/**apt*'
+      - 'scripts/*hiera-eyaml*'
+      - 'scripts/check_secure_data_policy.py'
+      - 'scripts/check_milestone11_scope.py'
+      - 'tests/smoke/*credential*'
+      - 'tests/smoke/hiera-eyaml-operations.sh'
+      - 'tests/integration/hiera-eyaml-roundtrip.sh'
+      - '.github/workflows/secure-data.yml'
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  policy:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - name: Static secure-data policy
+        run: |
+          tests/smoke/secure-data-policy.sh
+          tests/smoke/apt-repository-credentials.sh
+          tests/smoke/hiera-eyaml-operations.sh
+  roundtrip:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+      - name: Install pinned hiera-eyaml
+        run: gem install hiera-eyaml --version 5.0.1 --no-document
+      - name: Encrypt/decrypt isolated value
+        run: tests/integration/hiera-eyaml-roundtrip.sh

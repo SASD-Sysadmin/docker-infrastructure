@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "0.10.0",
+  "version": "0.11.0",
   "roles": {
     "baseline": {
       "central_only": false,
@@ -133,6 +133,19 @@
         "agent_service"
       ],
       "purpose": ".NET 10 LTS command-line development host."
+    },
+    "apt_repository_client": {
+      "central_only": true,
+      "profiles": [
+        "baseline",
+        "platform_state",
+        "administration_tools",
+        "apt_repository_credentials",
+        "lifecycle_state",
+        "application_state",
+        "agent_service"
+      ],
+      "purpose": "Debian-family client with one Hiera-eyaml-backed read-only APT repository credential."
     }
   }
 }

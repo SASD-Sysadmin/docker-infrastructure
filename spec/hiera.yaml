@@ -1,0 +1,12 @@
+---
+version: 5
+defaults:
+  datadir: ../data
+  data_hash: yaml_data
+hierarchy:
+  - name: Unit-test node data
+    path: "nodes/%{trusted.certname}.yaml"
+  - name: Unit-test OS family
+    path: "os/family/%{facts.os.family}.yaml"
+  - name: Unit-test common data
+    path: common.yaml

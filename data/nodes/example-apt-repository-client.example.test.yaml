@@ -1,0 +1,7 @@
+---
+sasd::role: apt_repository_client
+sasd::lifecycle_state: active
+sasd::owner: operations
+sasd::description: Example Debian host using an encrypted read-only APT credential
+profile::apt_repository_credentials::machine: packages.example.test
+profile::apt_repository_credentials::login: sasd-readonly

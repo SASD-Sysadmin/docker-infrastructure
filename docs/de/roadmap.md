@@ -2,14 +2,13 @@
 
 ## Abgeschlossen
 
-- Milestones 1–8: Grundlage, zentraler Dienst, Betrieb, Lifecycle, plattformübergreifende Agents und Produktionsabsicherung.
-- Milestone 9: OpenJDK-17-/Maven- und PHP-Kommandozeilenprofile.
-- Milestone 10: .NET-10-LTS-SDK-Profil mit explizitem Debian-Repository-Vertrauen und Distributionsfeeds auf Ubuntu/EL9.
+- Milestones 1–10: Grundlage, zentraler Betrieb, Lifecycle, Produktionsabsicherung, plattformübergreifende Anwendungsprofile und Java-/PHP-/.NET-SDKs.
+- Milestone 11: aktive per-Node-Hiera-eyaml-Ebene mit eng begrenztem Debian-APT-Lesekennwort sowie Recovery-/Rotationskontrollen.
 
-## Mögliche Stepstones nach 0.10.0
+## Mögliche Stepstones nach 0.11.0
 
-1. Hiera eyaml erst für ein konkretes Secret-verbrauchendes Profil aktivieren.
-2. Einen vollständigen CA- und eyaml-Service-Restore auf einem isolierten Ersatzserver testen.
-3. .NET-arm64-Paketquellen vor einer Erweiterung der Architektur-Allowlist validieren.
+1. Vollständigen CA-, PuppetDB- und Secret-Service-Restore auf einem isolierten Ersatzserver testen.
+2. Agent-seitige Deferred-Secret-Abfrage prüfen, falls Katalogcache-Risiko nicht akzeptabel ist.
+3. .NET-arm64-Paketquellen vor Erweiterung der Architektur-Allowlist validieren.
 4. EL10 erst nach eigener Puppet- und Paketvalidierung prüfen.
-5. Einen zweiten Compiler erst bei messbarem Last- oder Verfügbarkeitsbedarf bewerten.
+5. Zweiten Compiler erst bei messbarer Last oder Verfügbarkeitsanforderung bewerten.

@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.11.0] - 2026-07-11
+
+### Added
+
+- active per-node Hiera-eyaml hierarchy and machine-readable secure-data policy;
+- Debian-only APT repository credential profile and role;
+- safe encryption wrapper, key verification, candidate rotation staging, integration roundtrip, RSpec, smoke, CI, ADRs, and bilingual runbooks.
+
+### Changed
+
+- repository and module versions are 0.11.0;
+- local bootstrap installs the Hiera-eyaml backend and new Puppet Servers initialize or retain the external PKCS7 pair;
+- unit/catalog tests use a non-secret test hierarchy while production uses encrypted per-node data.
+
+### Security
+
+- the password is converted to `Sensitive`, rendered through Sensitive EPP, stored root-only with mode 0600, and excluded from diffs;
+- repository source and signing-key management remain separate;
+- cached catalogs can still contain the clear value, so high-value keys and human credentials remain prohibited.
+
 ## [0.10.0] - 2026-07-10
 
 ### Added

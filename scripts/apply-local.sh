@@ -16,6 +16,7 @@ readonly REPOSITORY_ROOT
 
 mode='noop'
 facts_file=''
+hiera_config="${REPOSITORY_ROOT}/hiera.yaml"
 extra_args=()
 
 usage() {
@@ -25,6 +26,7 @@ Usage: apply-local.sh [--noop|--apply] [--facts FILE] [--debug|--verbose]
   --noop        Preview drift without changing the system (default).
   --apply       Enforce the catalog; requires root.
   --facts FILE  Override facts for compilation tests. Never use with --apply.
+  --hiera-config FILE  Alternate Hiera configuration; tests only with --noop.
   --debug       Enable Puppet debug output.
   --verbose     Enable Puppet verbose output.
 EOF
@@ -35,6 +37,7 @@ while (($#)); do
     --noop) mode='noop' ;;
     --apply) mode='apply' ;;
     --facts) shift; [[ $# -gt 0 ]] || die '--facts requires a file' 64; facts_file="$1" ;;
+    --hiera-config) shift; [[ $# -gt 0 ]] || die '--hiera-config requires a file' 64; hiera_config="$1" ;;
     --debug|--verbose) extra_args+=("$1") ;;
     -h|--help) usage; exit 0 ;;
     *) usage >&2; die "unknown argument: $1" 64 ;;
@@ -45,6 +48,7 @@ done
 if [[ "${mode}" == 'apply' ]]; then
   require_root
   [[ -z "${facts_file}" ]] || die '--facts cannot be combined with --apply' 64
+  [[ "${hiera_config}" == "${REPOSITORY_ROOT}/hiera.yaml" ]] || die '--hiera-config cannot be combined with --apply' 64
 fi
 
 puppet_bin="$(find_puppet)" || die 'puppet executable not found; run scripts/bootstrap-agent.sh or install puppet-agent' 127
@@ -67,7 +71,7 @@ arguments=(
   apply
   "${REPOSITORY_ROOT}/manifests/site.pp"
   --modulepath "${REPOSITORY_ROOT}/site-modules:${REPOSITORY_ROOT}/modules"
-  --hiera_config "${REPOSITORY_ROOT}/hiera.yaml"
+  --hiera_config "${hiera_config}"
   --confdir "${runtime_root}/conf"
   --vardir "${runtime_root}/var"
   --strict_variables

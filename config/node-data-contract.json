@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "0.10.0",
+  "version": "0.11.0",
   "allowed_roles": [
     "managed_agent",
     "server",
@@ -10,7 +10,8 @@
     "java_development",
     "php_development",
     "polyglot_development",
-    "dotnet_development"
+    "dotnet_development",
+    "apt_repository_client"
   ],
   "allowed_lifecycle_states": [
     "active",

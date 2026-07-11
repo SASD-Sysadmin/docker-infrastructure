@@ -80,7 +80,7 @@ if [[ "${ID}" == 'ubuntu' ]] && ! apt-cache show puppet-agent >/dev/null 2>&1; t
 fi
 
 log 'installing distribution Puppet Agent and r10k packages'
-apt-get install --yes puppet-agent r10k
+apt-get install --yes puppet-agent r10k hiera-eyaml
 git check-ref-format --branch "${branch}" >/dev/null || die "invalid Git branch name: ${branch}" 64
 
 # Local mode must not start periodic server-oriented agent runs. Service names

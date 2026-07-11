@@ -19,3 +19,5 @@ Milestone 10 profiles cover:
 Package names are supplied by reviewed OS-family Hiera mappings. Profiles do not
 enable EPEL, select EL9 module streams, change
 SELinux/firewall policy, or run troubleshooting commands. Debian .NET repository setup is an explicit operator bootstrap outside catalog compilation.
+
+Milestone 11 adds the encrypted APT credential profile.

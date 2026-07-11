@@ -137,6 +137,7 @@ EOF
   chmod 0755 /usr/sbin/policy-rc.d
 fi
 apt-get install --yes puppetserver r10k
+"${SCRIPT_DIR}/setup-hiera-eyaml.sh" --mode server --server-group puppet --apply
 cleanup_policy
 trap - EXIT
 systemctl stop puppetserver.service 2>/dev/null || true

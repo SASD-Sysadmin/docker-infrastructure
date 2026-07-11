@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "0.10.0",
+  "version": "0.11.0",
   "sdk_major": 10,
   "support_end": "2028-11-14",
   "platforms": {

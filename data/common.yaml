@@ -16,10 +16,12 @@ lookup_options:
     merge: unique
   profile::php_sdk::packages:
     merge: unique
+  profile::apt_repository_credentials::password:
+    convert_to: Sensitive
 
 profile::baseline::manage_packages: true
 profile::baseline::manage_marker: true
-profile::baseline::baseline_version: '0.10.0'
+profile::baseline::baseline_version: '0.11.0'
 profile::baseline::marker_directory: '/etc/sasd'
 profile::baseline::marker_file: '/etc/sasd/puppet-baseline.conf'
 
